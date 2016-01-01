@@ -1,1 +1,2 @@
 django==1.9
+factory_boy==2.6.0
