@@ -1,0 +1,182 @@
+[
+  {
+    "model": "diagnostic.survey",
+    "pk": 1,
+    "fields": {
+      "name": "The Hamilton Rating Scale for Depression"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 1,
+    "fields": {
+      "survey": 1,
+      "text": "DEPRESSED MOOD",
+      "label": "Sadness, hopeless, helpless, worthless"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 2,
+    "fields": {
+      "survey": 1,
+      "text": "FEELINGS OF GUILT"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 3,
+    "fields": {
+      "survey": 1,
+      "text": "SUICIDE"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 4,
+    "fields": {
+      "survey": 1,
+      "text": "INSOMNIA EARLY"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 5,
+    "fields": {
+      "survey": 1,
+      "text": "INSOMNIA MIDDLE"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 6,
+    "fields": {
+      "survey": 1,
+      "text": "INSOMNIA LATE"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 7,
+    "fields": {
+      "survey": 1,
+      "text": "WORK AND ACTIVITIES"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 8,
+    "fields": {
+      "survey": 1,
+      "text": "RETARDATION: PSYCHOMOTOR",
+      "label": "Slowness of though and speech; impaired ability to concentrate; decreased motor activity"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 9,
+    "fields": {
+      "survey": 1,
+      "text": "AGITATION"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 10,
+    "fields": {
+      "survey": 1,
+      "text": "ANXIETY (PSYCHOLOGICAL)"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 11,
+    "fields": {
+      "survey": 1,
+      "text": "ANXIETY SOMATIC",
+      "label": "Physiological concomitants of anxiety, avoid asking about possible medication side effects"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 12,
+    "fields": {
+      "survey": 1,
+      "text": "SOMATIC SYMPTOMS (GASTROINTESTINAL)"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 13,
+    "fields": {
+      "survey": 1,
+      "text": "SOMATIC SYMPTOMS GENERAL"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 14,
+    "fields": {
+      "survey": 1,
+      "text": "GENITAL SYMPTOMS",
+      "label": "Loss of libido; impaired sexual performance; menstrual disturbances"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 15,
+    "fields": {
+      "survey": 1,
+      "text": "HYPOCHONDRIASIS"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 16,
+    "fields": {
+      "survey": 1,
+      "text": "LOSS OF WEIGHT"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 17,
+    "fields": {
+      "survey": 1,
+      "text": "INSIGHT"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 18,
+    "fields": {
+      "survey": 1,
+      "text": "DIURNAL VARIATION"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 19,
+    "fields": {
+      "survey": 1,
+      "text": "DEPERSONALIZATION AND DEREALIZATION",
+      "label": "Feelings of unreality; Nihilistic ideas"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 20,
+    "fields": {
+      "survey": 1,
+      "text": "PARANOID SYMPTOMS"
+    }
+  },
+  {
+    "model": "diagnostic.question",
+    "pk": 21,
+    "fields": {
+      "survey": 1,
+      "text": "OBSESSIONAL AND COMPULSIVE SYMPTOMS"
+    }
+  }
+]

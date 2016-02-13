@@ -20,6 +20,5 @@ from django.contrib import admin
 from tracks import urls as tracks_urls
 
 urlpatterns = [
-    url(r'^tracks/', include(tracks_urls)),
     url(r'^admin/', admin.site.urls),
 ]
