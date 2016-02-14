@@ -16,6 +16,7 @@ class Question(models.Model):
     survey = models.ForeignKey(Survey)
     text = models.CharField(max_length=500)
     label = models.CharField(max_length=300, blank=True, null=True)
+    order = models.PositiveSmallIntegerField(default=0)
 
     def __unicode__(self):
         return "%s / %s" % (self.survey.name, self.text)
