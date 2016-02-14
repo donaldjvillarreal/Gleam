@@ -4,5 +4,5 @@ from diagnostic import views
 
 
 urlpatterns = [
-    url(r'^$', views.hamd_survey, name='hamd_survey'),
+    url(r'^hamd/$', views.hamd_survey, name='hamd_survey'),
 ]

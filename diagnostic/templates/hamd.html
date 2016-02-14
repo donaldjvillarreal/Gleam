@@ -5,13 +5,21 @@
     <title>HAMD Survey</title>
 </head>
 <body>
-<dl>
+<form method="post">
+    {% csrf_token %}
+    <dl>
     {% for qa in qa_list %}
         <dt>{{ qa.0.text }}</dt>
         {% for answer in qa.1 %}
-            <dd>{{ answer.response }}</dd>
+            <dd>
+                <label for="{{ answer.pk }}">
+                    <input type="radio" name="{{ answer.question.pk }}" id="{{ answer.pk }}" value="{{ answer.value }}" required>{{ answer.response }}
+                </label>
+            </dd>
         {% endfor %}
     {% endfor %}
-</dl>
+    </dl>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>
