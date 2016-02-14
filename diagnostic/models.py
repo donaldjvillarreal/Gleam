@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 
 
 class Survey(models.Model):
+    """
+    Model for basic survey info
+    """
     name = models.CharField(max_length=300)
 
     def __unicode__(self):
@@ -13,6 +16,9 @@ class Survey(models.Model):
 
 
 class Question(models.Model):
+    """
+    Model for a question for a survey
+    """
     survey = models.ForeignKey(Survey)
     text = models.CharField(max_length=500)
     label = models.CharField(max_length=300, blank=True, null=True)
@@ -21,8 +27,14 @@ class Question(models.Model):
     def __unicode__(self):
         return "%s / %s" % (self.survey.name, self.text)
 
+    class Meta:
+        unique_together = (("survey", "text"),)
+
 
 class Answer(models.Model):
+    """
+    Fixed answers for surveys
+    """
     value = models.PositiveSmallIntegerField(default=0)
     response = models.CharField(max_length=300)
 
@@ -31,9 +43,19 @@ class Answer(models.Model):
     def __unicode__(self):
         return "%s / %s / %s" % (self.question.survey.name, self.question.text, self.response)
 
+    class Meta:
+        unique_together = (("response", "question"),)
+
 
 class SurveySet(models.Model):
+    """
+    Model to store user responses to surveys
+    """
     user = models.ForeignKey(User)
-    answers = models.ManyToManyField(Answer)
+    survey = models.ForeignKey(Survey)
+    answer = models.ForeignKey(Answer, null=True, blank=True)
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     completed_on = models.DateTimeField(blank=True, null=True)

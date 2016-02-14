@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HAMD Survey</title>
+</head>
+<body>
+<dl>
+    {% for qa in qa_list %}
+        <dt>{{ qa.0.text }}</dt>
+        {% for answer in qa.1 %}
+            <dd>{{ answer.response }}</dd>
+        {% endfor %}
+    {% endfor %}
+</dl>
+</body>
+</html>

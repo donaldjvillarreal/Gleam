@@ -17,8 +17,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from tracks import urls as tracks_urls
+from diagnostic import urls as diagnostic_urls
 
 urlpatterns = [
+    url(r'^survey/', include(diagnostic_urls)),
     url(r'^admin/', admin.site.urls),
 ]
