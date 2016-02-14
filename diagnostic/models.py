@@ -18,7 +18,7 @@ class Question(models.Model):
     label = models.CharField(max_length=300, blank=True, null=True)
 
     def __unicode__(self):
-        return self.text
+        return "%s / %s" % (self.survey.name, self.text)
 
 
 class Answer(models.Model):
@@ -26,6 +26,9 @@ class Answer(models.Model):
     response = models.CharField(max_length=300)
 
     question = models.ForeignKey(Question)
+
+    def __unicode__(self):
+        return "%s / %s / %s" % (self.question.survey.name, self.question.text, self.response)
 
 
 class SurveySet(models.Model):
