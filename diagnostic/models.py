@@ -10,6 +10,7 @@ class Survey(models.Model):
     Model for basic survey info
     """
     name = models.CharField(max_length=300)
+    short_name = models.CharField(max_length=60, null=True)
 
     def __unicode__(self):
         return self.name
@@ -25,7 +26,7 @@ class Question(models.Model):
     order = models.PositiveSmallIntegerField(default=0)
 
     def __unicode__(self):
-        return "%s / %s" % (self.survey.name, self.text)
+        return "%s / %s" % (self.survey.short_name, self.text)
 
     class Meta:
         unique_together = (("survey", "text"),)
@@ -41,7 +42,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
 
     def __unicode__(self):
-        return "%s / %s / %s" % (self.question.survey.name, self.question.text, self.response)
+        return "%s / %s / %s / %s" % (self.question.survey.short_name, self.question.text, self.response, self.value)
 
     class Meta:
         unique_together = (("response", "question"),)

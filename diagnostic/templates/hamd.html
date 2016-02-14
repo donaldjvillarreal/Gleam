@@ -9,7 +9,7 @@
     {% csrf_token %}
     <dl>
     {% for qa in qa_list %}
-        <dt>{{ qa.0.text }}</dt>
+        <dt><strong>{{ qa.0.text }}</strong> {% if qa.0.label %} {{ qa.0.label }} {% endif %}</dt>
         {% for answer in qa.1 %}
             <dd>
                 <label for="{{ answer.pk }}">
@@ -17,6 +17,7 @@
                 </label>
             </dd>
         {% endfor %}
+        <br>
     {% endfor %}
     </dl>
     <input type="submit" value="Submit">
