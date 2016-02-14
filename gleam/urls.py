@@ -19,6 +19,7 @@ from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from diagnostic import urls as diagnostic_urls
 from registration.backends.simple.views import RegistrationView
+from gleam import views
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
