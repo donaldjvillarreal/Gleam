@@ -18,9 +18,13 @@ Including another URLconf
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from diagnostic import urls as diagnostic_urls
+from authenticate import views as auth_views
 
 urlpatterns = patterns('',
+    url(r'^$', auth_views.index, name='index'),
+    url(r'^register/$', auth_views.register, name='register'),
+    url(r'^login/$', auth_views.user_login, name='login'),
+    url(r'^logout/$', auth_views.user_logout, name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^survey/', include(diagnostic_urls)),
-    url(r'^accounts/', include('registration.backends.simple.urls')),
 )
