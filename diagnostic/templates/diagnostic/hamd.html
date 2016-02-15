@@ -1,0 +1,30 @@
+{% extends 'diagnostic/base.html' %}
+{% block title %}BDI Survey{% endblock %}
+{% block body %}
+    <div class="container">
+        <div>
+            <form method="post" id="wizard" action="#">
+                {% csrf_token %}
+                {% for qa in qa_list %}
+                    <h3><strong>{{ qa.0.text }}</strong> {% if qa.0.label %} {{ qa.0.label }} {% endif %}</h3>
+                    <fieldset class="form-control jumbotron">
+                    {% for answer in qa.1 %}
+                        <div class="card card-block">
+                            <label for="{{ answer.pk }}">
+                                <input type="radio" name="{{ answer.question.pk }}" id="{{ answer.pk }}" value="{{ answer.value }}" required> {{ answer.response }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    </fieldset>
+                    <br>
+                {% endfor %}
+                <div class="card card-block">
+                    <input type="submit" value="submit" class="btn btn-success">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}
+    <script src="/static/survey-init.js"></script>
+{% endblock %}

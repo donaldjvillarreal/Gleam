@@ -9,7 +9,7 @@ def hamd_survey(request):
     qa_list = []
     for question in models.Question.objects.filter(survey__short_name='HAM-D').order_by('order'):
         qa_list.append((question, models.Answer.objects.filter(question=question.pk).order_by('value')))
-    return render(request, 'hamd.html', {'qa_list': qa_list})
+    return render(request, 'diagnostic/hamd.html', {'qa_list': qa_list})
 
 
 def bdi_survey(request):
@@ -19,4 +19,4 @@ def bdi_survey(request):
     qa_list = []
     for question in models.Question.objects.filter(survey__short_name='BDI').order_by('order'):
         qa_list.append((question, models.Answer.objects.filter(question=question.pk).order_by('value')))
-    return render(request, 'bdi.html', {'qa_list': qa_list})
+    return render(request, 'diagnostic/bdi.html', {'qa_list': qa_list})
