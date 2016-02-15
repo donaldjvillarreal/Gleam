@@ -3,24 +3,22 @@
 {% block body %}
     <div class="container">
         <div>
-            <form method="post" id="wizard" action="#">
+            <form method="post" action="">
                 {% csrf_token %}
-                {% for qa in qa_list %}
-                    <h3><strong>{{ qa.0.text }}</strong> {% if qa.0.label %} {{ qa.0.label }} {% endif %}</h3>
+                <input type="hidden" name="current" value="{{ current }}">
+                    <h3><strong>{{ qa_set.0.text }}</strong> {% if qa_set.0.label %} {{ qa_set.0.label }} {% endif %}</h3>
                     <fieldset class="form-control jumbotron">
-                    {% for answer in qa.1 %}
+                    {% for answer in qa_set.1 %}
+                        <input type="hidden" name="answer_pk" value="{{ answer_pk }}">
                         <div class="card card-block">
                             <label for="{{ answer.pk }}">
-                                <input type="radio" name="{{ answer.pk }}" id="{{ answer.pk }}" value="{{ answer.value }}" required> {{ answer.response }}
+                                <input type="radio" name="answer" id="{{ answer.pk }}" value="{{ answer.value }}" required> {{ answer.response }}
                             </label>
                         </div>
                     {% endfor %}
+                        <input type="submit" value="submit" class="btn btn-primary">
                     </fieldset>
-                    <br>
-                {% endfor %}
-                    <div class="card card-block">
-                        <input type="submit" value="submit" class="btn btn-success">
-                    </div>
+
             </form>
         </div>
     </div>
