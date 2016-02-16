@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Gleam</title>
-    </head>
+{% extends "base.html" %}
 
-    <body>
-        <h1>Login to Gleam</h1>
 
-        <form id="login_form" method="post" action="/login/">
-            {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" />
-            <br />
-            Password: <input type="password" name="password" value="" size="50" />
-            <br />
+{% block body_block %}
 
-            <input type="submit" value="submit" />
-        </form>
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 
-    </body>
-</html>
+<form class="form-signin" role="form" method="post" action=".">
+	{% csrf_token %}
+	Username: <input type="text" name="username" value="" size="50" />
+	<br />
+	Password: <input type="password" name="password" value="" size="50" />
+	<br />
+
+	<input type="submit" value="submit" />
+</form>
+
+{% endblock %}

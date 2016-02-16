@@ -1,28 +1,16 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <ul>
+    {% if user.is_authenticated %}
+        <li><a href="/logout/">Logout</a></li>
+    {% else %}
+        <li><a href="/register/">Register Here</a></li>
+        <li><a href="/login/">Login</a></li>
+    {% endif %}
 
-<html>
-    <head>
-        <title>Gleam</title>
-    </head>
+        <li><a href="/about/">About</a></li>
+    </ul>
+</div>
 
-    <body>
-        <div>
-            {% block body_block %}{% endblock %}
-        </div>
-
-        <hr />
-
-        <div>
-            <ul>
-            {% if user.is_authenticated %}
-                <li><a href="/logout/">Logout</a></li>
-            {% else %}
-                <li><a href="/register/">Register Here</a></li>
-                <li><a href="/login/">Login</a></li>
-            {% endif %}
-
-                <li><a href="/about/">About</a></li>
-            </ul>
-        </div>
-    </body>
-</html>
+{% endblock %}
