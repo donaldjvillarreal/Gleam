@@ -46,7 +46,7 @@ def bdi_survey_pagination(request):
         bdi_dict = request.session['bdi_dict']
         bdi_dict[question_number - 1] = request.POST['answer']
         request.session['bdi_dict'] = bdi_dict
-    print request.session['bdi_dict']
+
     question = models.Question.objects.filter(survey__short_name='BDI').get(order=question_number)
     qa_set = (question, models.Answer.objects.filter(question=question.pk).order_by('value'))
     return render(request, 'diagnostic/hamd-pagination.html', {'qa_set': qa_set,
