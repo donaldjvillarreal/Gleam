@@ -2,16 +2,23 @@
 
 
 {% block body_block %}
-<form role="form"  method="post" action=".">
-                {% csrf_token %}
 
-<h2 class="form-signin-heading">Sign Up Here</h2>
+	{% if registered %}
+        <strong>Thank you for registering!</strong>
+        <a href="/">Return to the homepage.</a><br />
+    {% else %}
+        <h1>Register here!</h1><br />
+		<form role="form"  method="post" action=".">
+		                {% csrf_token %}
 
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
+		    {{ user_form.as_p }}
+		    {{ profile_form.as_p }}
 
-    <!-- Provide a button to click to submit the form. -->
-    <input type="submit" name="submit" value="Register" />
+		    <!-- Provide a button to click to submit the form. -->
+		    <input type="submit" name="submit" value="Register" />
 
-        </form>
+		</form>
+	{% endif %}
 {% endblock %}
+
+
