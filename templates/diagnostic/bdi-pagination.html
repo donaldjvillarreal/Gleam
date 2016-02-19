@@ -1,6 +1,5 @@
 {% extends 'diagnostic/base.html' %}
-
-{% block title %}HAM-D Survey{% endblock %}
+{% block title %}BDI Survey{% endblock %}
 {% block body %}
     <div class="container">
         <div>
@@ -28,7 +27,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-1 col-md-offset-10">
-                            {% if current == 21 %}
+                            {% if current|add:"-1" == 21 %}
                             <input type="submit" value="submit" class="btn btn-primary">
                             {% else %}
                                 <input type="submit" value="next" class="btn btn-primary pull-right">
@@ -39,7 +38,4 @@
             </form>
         </div>
     </div>
-{% endblock %}
-{% block js_scripts %}
-    <script src="/static/survey-init.js"></script>
 {% endblock %}
