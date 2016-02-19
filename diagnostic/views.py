@@ -14,16 +14,6 @@ def hamd_survey(request):
     return render(request, 'diagnostic/hamd.html', {'qa_list': qa_list})
 
 
-def bdi_survey(request):
-    if request.method == 'POST':
-        print request.POST
-
-    qa_list = []
-    for question in models.Question.objects.filter(survey__short_name='BDI').order_by('order'):
-        qa_list.append((question, models.Answer.objects.filter(question=question.pk).order_by('value')))
-    return render(request, 'diagnostic/bdi.html', {'qa_list': qa_list})
-
-
 def bdi_survey_pagination(request):
     if request.method == 'GET':
         question_number = 1
@@ -50,4 +40,5 @@ def bdi_survey_pagination(request):
     question = models.Question.objects.filter(survey__short_name='BDI').get(order=question_number)
     qa_set = (question, models.Answer.objects.filter(question=question.pk).order_by('value'))
     return render(request, 'diagnostic/hamd-pagination.html', {'qa_set': qa_set,
-                                                               'current': question_number + 1})
+                                                               'current': question_number + 1,
+                                                               'progress': int((question_number / 21.0) * 100)})

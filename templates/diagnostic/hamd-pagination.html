@@ -1,0 +1,45 @@
+{% extends 'diagnostic/base.html' %}
+{% block title %}BDI Survey{% endblock %}
+{% block body %}
+    <div class="container">
+        <div>
+            <form method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" name="current" value="{{ current }}">
+                    <h3><strong>{{ qa_set.0.text }}/21</strong> {% if qa_set.0.label %} {{ qa_set.0.label }} {% endif %}</h3>
+                        <progress class="progress progress-striped progress-info" value="{{ progress }}" max="100">{{ progress }}%</progress>
+                    <fieldset class="form-control jumbotron">
+                     <div class="card">
+                            <div class="card-block">
+                                <div class="card-text">
+                                    Please select the statement that you <strong>most</strong> identify with.
+                                </div>
+                            </div>
+                     </div>
+                    <div class="row">
+                        {% for answer in qa_set.1 %}
+                        <input type="hidden" name="answer_pk" value="{{ answer_pk }}">
+                        <div class="card card-block">
+                            <label for="{{ answer.pk }}">
+                                <input type="radio" name="answer" id="{{ answer.pk }}" value="{{ answer.value }}" required> {{ answer.response }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-md-offset-10">
+                            {% if current == 21 %}
+                            <input type="submit" value="submit" class="btn btn-primary">
+                            {% else %}
+                                <input type="submit" value="next" class="btn btn-primary pull-right">
+                            {% endif %}
+                        </div>
+                    </div>
+                    </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}
+    <script src="/static/survey-init.js"></script>
+{% endblock %}
