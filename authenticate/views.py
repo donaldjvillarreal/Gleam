@@ -1,14 +1,13 @@
+# coding=utf-8
 from authenticate.forms import UserForm, UserProfileForm
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
-def index(request):
-    return render(request, 'index.html')
 
 def register(request):
-
     registered = False
 
     if request.method == 'POST':
@@ -40,7 +39,7 @@ def register(request):
             profile.save()
 
             # Update our variable to tell the template registration was successful.
-            registered = True
+            return HttpResponseRedirect(reverse('login'))
 
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
@@ -56,11 +55,11 @@ def register(request):
 
     # Render the template depending on the context.
     return render(request,
-            'register.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
+                  'authenticate/register.html',
+                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
 
 def user_login(request):
-
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -81,9 +80,8 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
 
     else:
-        return render(request, 'login.html', {})
+        return render(request, 'authenticate/login.html', {})
 
-from django.contrib.auth import logout
 
 @login_required
 def user_logout(request):
