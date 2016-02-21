@@ -15,9 +15,9 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1,
                               choices=GENDER,
                               default='U')
-    picture = models.ImageField(upload_to='profile_images', null=True)
+    picture = models.ImageField(upload_to='profile_images', null=True, blank=True)
 
-    dob = models.DateField(null=False)
+    dob = models.DateField(null=False, blank=False)
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
