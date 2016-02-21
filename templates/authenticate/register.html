@@ -2,24 +2,81 @@
 
 
 {% block body %}
-    <div class="container">
-    <div class="row">
-        <div class="card">
-            <div class="card-block">
-                <div class="card-content">
-                    <form role="form"  method="post" action="">
-                    {% csrf_token %}
-                    {{ user_form.as_p }}
-                    {{ profile_form.as_p }}
 
-                      <!-- Provide a button to click to submit the form. -->
-                     <input type="submit" name="submit" value="Register" />
-                    </form>
-                </div>
+<div class="container jumbotron">
+    <form role="form" method="post" action="">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <label for="usernameInput" class="col-md-2">Username</label>
+            <div class="col-md-5">
+                <input id="usernameInput" name="username" class="form-control" type="text">
             </div>
-        </div>
-    </div>
-    </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="emailInput" class="col-md-2">Email</label>
+            <div class="col-md-5">
+                <input id="emailInput" name="email" class="form-control" type="text">
+            </div>
+        </fieldset>
+ 
+        <fieldset class="form-group">
+            <label for="passwordInput" class="col-md-2">Password</label>
+            <div class="col-md-5">
+                <input id="passwordInput" name="password" type="password" class="form-control">
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="firstnameInput" class="col-md-2">First Name</label>
+            <div class="col-md-5">
+                <input id="firstnameInput" name="first_name" type="text" class="form-control">
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="lastnameInput" class="col-md-2">Last Name</label>
+            <div class="col-md-5">
+                <input id="lastnameInput" name="last_name" type="text" class="form-control">
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="dobInput" class="col-md-2">Date of Birth</label>
+            <div class="col-md-5">
+                <input id="dobInput" name="dob" type="date" class="form-control">
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="genderInput" class="col-md-2">Gender</label>
+            <div class="col-md-5">
+                <label class="radio">
+                    <input type="radio" name="gender" value="M">
+                    Male
+                </label>
+                <label class="radio">
+                    <input type="radio" name="gender" value="F">
+                    Female
+                </label>
+                <label class="radio">
+                    <input type="radio" name="gender" value="U" checked>
+                    Prefer Not to Answer
+                </label>
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="pictureInput" class="col-md-2">Upload Image</label>
+            <div class="col-md-5">
+                <input id="PictureInput" name="picture" type="file" class="form-control">
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <input type="submit" value="submit" class="btn btn-primary"/>
+        </fieldset>
+        
+    </form>
+</div>
 {% endblock %}
-
-
