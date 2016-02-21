@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+    <div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-content">
+                    <form role="form"  method="post" action="">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
+
+                      <!-- Provide a button to click to submit the form. -->
+                     <input type="submit" name="submit" value="Register" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+
