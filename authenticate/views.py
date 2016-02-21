@@ -1,8 +1,10 @@
+# coding=utf-8
 from authenticate.forms import UserForm, UserProfileForm
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 
 def register(request):
@@ -37,7 +39,7 @@ def register(request):
             profile.save()
 
             # Update our variable to tell the template registration was successful.
-            registered = True
+            return HttpResponseRedirect(reverse('login'))
 
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
@@ -79,9 +81,6 @@ def user_login(request):
 
     else:
         return render(request, 'authenticate/login.html', {})
-
-
-from django.contrib.auth import logout
 
 
 @login_required
