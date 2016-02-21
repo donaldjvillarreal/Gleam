@@ -13,4 +13,4 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
     	gender = forms.ChoiceField(choices=UserProfile.GENDER, widget=forms.RadioSelect)
-        fields = ('picture', 'gender',)
+        fields = ('picture', 'gender', 'dob',)
