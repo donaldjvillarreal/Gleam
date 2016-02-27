@@ -23,5 +23,5 @@ from authenticate import urls as auth_urls
 urlpatterns = [
     url(r'^users/', include(auth_urls)),
     url(r'^survey/', include(diagnostic_urls)),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 ]
