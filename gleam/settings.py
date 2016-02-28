@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+from __future__ import unicode_literals
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,6 +30,39 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Spirit Settings
+
+ST_TOPIC_PRIVATE_CATEGORY_PK = 1
+
+ST_RATELIMIT_ENABLE = True
+ST_RATELIMIT_CACHE_PREFIX = 'srl'
+ST_RATELIMIT_CACHE = 'default'
+
+ST_NOTIFICATIONS_PER_PAGE = 20
+
+ST_MENTIONS_PER_COMMENT = 30
+
+ST_YT_PAGINATOR_PAGE_RANGE = 3
+
+ST_SEARCH_QUERY_MIN_LEN = 3
+
+ST_USER_LAST_SEEN_THRESHOLD_MINUTES = 1
+
+ST_PRIVATE_FORUM = False
+
+ST_ALLOWED_UPLOAD_IMAGE_FORMAT = ('jpeg', 'png', 'gif')
+ST_ALLOWED_URL_PROTOCOLS = {
+    'http', 'https', 'mailto', 'ftp', 'ftps',
+    'git', 'svn', 'magnet', 'irc', 'ircs'}
+
+ST_UNICODE_SLUGS = True
+
+ST_UNIQUE_EMAILS = True
+ST_CASE_INSENSITIVE_EMAILS = True
+
+ST_BASE_DIR = os.path.dirname(__file__)
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +75,56 @@ INSTALLED_APPS = [
     'authenticate',
     'gleam',
     'diagnostic',
+
+    # Spirit apps
+    'spirit.core',
+    'spirit.admin',
+    'spirit.search',
+
+    'spirit.user',
+    'spirit.user.admin',
+    'spirit.user.auth',
+
+    'spirit.category',
+    'spirit.category.admin',
+
+    'spirit.topic',
+    'spirit.topic.admin',
+    'spirit.topic.favorite',
+    'spirit.topic.moderate',
+    'spirit.topic.notification',
+    'spirit.topic.poll',
+    'spirit.topic.private',
+    'spirit.topic.unread',
+
+    'spirit.comment',
+    'spirit.comment.bookmark',
+    'spirit.comment.flag',
+    'spirit.comment.flag.admin',
+    'spirit.comment.history',
+    'spirit.comment.like',
+    'spirit.comment.poll',
+    'djconfig',
+    'haystack',
 ]
+
+# python manage.py createcachetable
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'spirit_cache',
+    },
+}
+
+AUTHENTICATION_BACKENDS = [
+    'spirit.user.auth.backends.UsernameAuthBackend',
+    'spirit.user.auth.backends.EmailAuthBackend',
+]
+
+
+LOGIN_URL = 'gleam:authenticate:login'
+LOGIN_REDIRECT_URL = '/'
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,6 +135,13 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'spirit.user.middleware.TimezoneMiddleware',
+    'spirit.user.middleware.LastIPMiddleware',
+    'spirit.user.middleware.LastSeenMiddleware',
+    'spirit.user.middleware.ActiveUserMiddleware',
+    'spirit.core.middleware.PrivateForumMiddleware',
+    'djconfig.middleware.DjConfigMiddleware',
 ]
 
 ROOT_URLCONF = 'gleam.urls'
@@ -66,6 +156,14 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                # Spirit
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.template.context_processors.request',
+                'djconfig.context_processors.config',
+
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -127,3 +225,10 @@ STATIC_PATH = os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'search/whoosh_index'),
+    },
+}
