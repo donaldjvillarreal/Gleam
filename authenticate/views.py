@@ -90,3 +90,9 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
+
+
+def profile(request, user_id):
+    user_ob = User.objects.get(id=user_id)
+    user = UserProfile.objects.get(user=user_ob)
+    return render(request, 'authenticate/profile.html', {'user': user})
