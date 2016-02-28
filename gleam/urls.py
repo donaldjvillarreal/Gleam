@@ -19,9 +19,11 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from diagnostic import urls as diagnostic_urls
 from authenticate import urls as auth_urls
+from qa import urls as qa_urls
 
 urlpatterns = [
     url(r'^users/', include(auth_urls)),
     url(r'^survey/', include(diagnostic_urls)),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^qa/', include(qa_urls)),
 ]
