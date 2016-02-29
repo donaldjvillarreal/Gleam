@@ -3,6 +3,7 @@
 {% block body %}
 
 <div class="container">
+  {% include "qa/header.html" %}
 
   {% if message %}
   <strong>Enter a valid Question!</strong>
@@ -10,7 +11,7 @@
 
   {% if user.is_authenticated %}
 
-  <form id="add_q" method="post" action="/add/">
+  <form id="add_q" method="post" action="/qa/add/">
     {% csrf_token %}
     <input class="input-lg" style="width:100%" placeholder="Enter your question....." type="text" name="question"/> <br/><br/>
 
@@ -20,7 +21,7 @@
   </form>
   <p>Note. Question cannot be empty!</p>
   {% else %}
-  <small><a href="users/login">Please Login to Add Questions!</a></small>
+  <small><a href="/users/login">Please Login to Add Questions!</a></small>
   {% endif %}
 
 </div>

@@ -39,6 +39,7 @@ router.register(r'api/users', UserViewSet)
 router.register(r'api/questions', QuestionViewSet)
 
 urlpatterns = [
+    url(r'^$', views.index, name='index'),
     url(r'^q/(?P<question_id>\d+)/$', views.detail, name='detail'),
     url(r'^answer/(?P<question_id>\d+)/$', views.answer, name='answer'),
     url(r'^admin/', include(admin.site.urls)),
