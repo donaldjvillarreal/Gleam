@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock %}
 {% block body %}
-<div class="container">
+<div class="container jumbotron">
 
   {% include "qa/header.html" %}
 
@@ -11,7 +11,7 @@
 
   {% if user.is_authenticated %}
 
-  <form id="add_q" method="post" action="/comment/{{ answer_id }}/">
+  <form id="add_q" method="post" action="/qa/comment/{{ answer_id }}/">
     {% csrf_token %}
     <input class="input-lg" style="width:100%" placeholder="Enter your comment....." type="text" name="comment"/> <br/><br/>
     <input type="hidden" value="{{ user.id }}" name="user" />
@@ -19,10 +19,9 @@
   </form>
   <p>Note. Comment cannot be empty!</p>
   {% else %}
-  <small><a href="/login">Please Login to Add comment!</a></small>
+  <small><a href="/users/login">Please Login to Add comment!</a></small>
   {% endif %}
 
 </div>
 
-{% include "qa/footer.html" %}
 {% endblock %}

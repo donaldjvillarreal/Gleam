@@ -1,18 +1,27 @@
-
-<div class="container">
-
-  {% include "qa/header.html" %}
-
-<h2 class="pull-right">Points: {{ user.points }}</h1>
-<ul>
-	<li><b>Username:</b> {{ user.user.username }} </li>
-	<li><b>Name:</b> {{ user.user.first_name }} {{ user.user.last_name }} </li>
-	<li><b>e-mail:</b> {{ user.user.email }} </li>
-	<li><b>Gender:</b> {{ user.gender }} </li>
-	<li><b>Date of Birth:</b> {{ user.dob }} </li>
-	<li><b>Date Joined :</b> {{ user.user.date_joined }} </li>
-<ul>
-
+{% extends "base.html" %}
+{% block title %}Profile - {{ user.user.username }}{% endblock %}
+{% block body %}
+<div class="container jumbotron">
+	<h2 class="pull-right">Profile</h2>
+	<ul>
+		<li><b>Username:</b> {{ user.user.username }} </li>
+		<li><b>Name:</b> {{ user.user.first_name }} {{ user.user.last_name }} </li>
+		<li><b>e-mail:</b> {{ user.user.email }} </li>
+		<li><b>Gender:</b>
+			{% if user.gender == 'M' %}
+                Male
+            {% elif user.gender == 'F' %}
+                Female
+            {% elif user.gender == 'U' %}
+                Prefer Not to Answer
+            {% else %}
+            	Error
+        	{% endif %}
+        </li>
+		<li><b>Date of Birth:</b> {{ user.dob }} </li>
+		<li><b>Date Joined:</b> {{ user.user.date_joined }} </li>
+		<li><b>Points:</b> {{ user.points }} </li>
+	<ul>
 </div>
 
-{% include "qa/footer.html" %}
+{% endblock %}

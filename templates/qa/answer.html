@@ -3,7 +3,7 @@
 {% block body %}
 {% load django_markdown %}
 
-<div class="container">
+<div class="container jumbotron">
 
   {% include "qa/header.html" %}
 
@@ -13,7 +13,7 @@
 <h4>Answering Question : {{ question.question_text }}</h4>
 
 {% if user.is_authenticated %}
-<form id="answer" method="post" action="/answer/">
+<form id="answer" method="post" action="/qa/answer/">
   {% csrf_token %}
   <textarea id="ans" rows="7" style="width:100%" placeholder="Enter your Answer....." type="text" name="answer"></textarea>
   {% markdown_editor "#ans" %}
@@ -24,10 +24,8 @@
   <input class="btn btn-success" type="submit" value="Submit Answer" />
 </form>
 {% else %}
-<small><a href="/login">Please Login to Add Questions!</a></small>
+<small><a href="/users/login">Please Login to Add Questions!</a></small>
 {% endif %}
 </div>
-
-{% include "qa/footer.html" %}
 
 {% endblock %}
