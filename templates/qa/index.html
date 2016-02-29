@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <style>
 .topbar {
   width:100%;
@@ -9,6 +10,8 @@
 }
 </style>
 
+{% block title %}{% endblock %}
+{% block body %}
 <div class="topbar"></div>
 
 <div class="container">
@@ -33,10 +36,10 @@
   <div class="col-sm-1 ans"><small><div class="ques">{{ question.answer_set.count }}</div>Answers</small></div>
   <div class="col-sm-1 ans"><small><div class="ques">{{ question.views }}</div>Views</small></div>
   <p>
-    {% if question.reward %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="/q/{{ question.id }}/">{{ question.question_text }}</a>
+    {% if question.reward %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="/qa/q/{{ question.id }}/">{{ question.question_text }}</a>
     <br/>
     {% for tag in question.tags.all %}
-    <a href="/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
+    <a href="/qa/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
     {% endfor %}
     <small> {{ question.pub_date}}</small>
   </p>
@@ -72,10 +75,10 @@
   <div class="col-sm-1 ans"><small><div class="ques">{{ question.answer_set.count }}</div>Answers</small></div>
   <div class="col-sm-1 ans"><small><div class="ques">{{ question.views }}</div>Views</small></div>
   <p>
-    {% if question.answer_set.count %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="/q/{{ question.id }}/">{{ question.question_text }}</a>
+    {% if question.answer_set.count %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="/qa/q/{{ question.id }}/">{{ question.question_text }}</a>
     <br/>
     {% for tag in question.tags.all %}
-    <a href="/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
+    <a href="/qa/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
     {% endfor %}
     <small> {{ question.pub_date}}</small>
   </p>
@@ -95,11 +98,11 @@
   <div class="col-sm-1 ans"><small><div class="ques">{{ question.answer_set.count }}</div>Answers</small></div>
   <div class="col-sm-1 ans"><small><div class="ques">{{ question.views }}</div>Views</small></div>
   <p>
-    {% if question.answer_set.count %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="/q/{{ question.id }}/">{{ question.question_text }}</a>
+    {% if question.answer_set.count %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="/qa/q/{{ question.id }}/">{{ question.question_text }}</a>
     <br/>
     <reward>Earn <b>{{ question.reward }}</b> points</reward>
     {% for tag in question.tags.all %}
-    <a href="/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
+    <a href="/qa/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
     {% endfor %}
     <small> {{ question.pub_date}}</small>
   </p>
@@ -131,7 +134,7 @@
     <div class="panel-body">
       {% for question in questions %}
       {% for tag in question.tags.all %}
-      <a href="/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
+      <a href="/qa/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
       {% endfor %}
       {% endfor %}
     </div>
@@ -145,7 +148,7 @@
     <div class="panel-body">
     <ul>
       {% for question in noans %}
-      <li><a href="/q/{{ question.id }}/">{{ question.question_text }}</a></li>
+      <li><a href="/qa/q/{{ question.id }}/">{{ question.question_text }}</a></li>
       {% endfor %}
     </ul>
     </div>
@@ -156,17 +159,18 @@
 
   <div class="span3 well">
     <center>
-      <a href="/profile/{{ user.id }}" data-toggle="modal"><img src="/static/qa/user.png" name="aboutme" width="100" height="100" class="img-circle"></a>
+      <a href="/users/profile/{{ user.id }}" data-toggle="modal"><img src="/static/qa/user.png" name="aboutme" width="100" height="100" class="img-circle"></a>
       <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-      <a href="/profile/{{ user.id }}">My Profile</a> |
-      <a href="/logout/">Logout</a>
+      <a href="/users/profile/{{ user.id }}">My Profile</a> |
+      <a href="/users/logout/">Logout</a>
     </center>
   </div>
   {% else %}
-  <a class="btn btn-block btn-success" href="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login | Sign Up</a><br/>
+  <a class="btn btn-block btn-success" href="/users/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login | Sign Up</a><br/>
   {% endif %}
 
 </div>
 </div>
 
 {% include "qa/footer.html" %}
+{% endblock %}

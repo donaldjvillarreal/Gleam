@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from qa.models import *
+from authenticate.models import *
 import datetime
 
 from django.core.mail import send_mail
@@ -103,7 +104,7 @@ def add(request):
     context = RequestContext(request)
 
     if request.user.is_anonymous():
-        return HttpResponseRedirect("/login/")
+        return HttpResponseRedirect("/users/login/")
 
     if request.method == 'POST':
         question_text = request.POST['question']
@@ -135,13 +136,13 @@ def add(request):
 
         #send_mail('QA: Your Question has been Posted.', 'Thank you for posting the question, '+question_text+'. We will notify you once someone posts an answer.', 'admin@test.com', [request.user.email], fail_silently=False)
 
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/qa/')
     return HttpResponse(template.render(context))
 
 def comment(request, answer_id):
 
     if request.user.is_anonymous():
-        return HttpResponseRedirect("/login/")
+        return HttpResponseRedirect("/users/login/")
 
     if request.method == 'POST':
         comment_text = request.POST['comment']
@@ -213,7 +214,7 @@ def detail(request, question_id):
 
 def answer(request, question_id):
     if request.user.is_anonymous():
-        return HttpResponseRedirect("/login/")
+        return HttpResponseRedirect("/users/login/")
 
     try:
         question = Question.objects.get(pk=question_id)

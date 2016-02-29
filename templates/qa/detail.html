@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <style>
 .closed {
   width:100%;
@@ -47,6 +48,8 @@ cool {
 }
 </style>
 
+{% block title %}{% endblock %}
+{% block body %}
 {% if question.closed %}
   <div class="closed"></div>
 {% else %}
@@ -162,3 +165,4 @@ cool {
 
 
 {% include "qa/footer.html" %}
+{% endblock %}

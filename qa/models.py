@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-from authenticate.models import UserProfile
+from authenticate.models import User, UserProfile
 
 class Tag(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
