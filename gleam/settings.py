@@ -122,7 +122,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-LOGIN_URL = 'gleam:authenticate:login'
+LOGIN_URL = 'authenticate:login'
 LOGIN_REDIRECT_URL = '/'
 
 
