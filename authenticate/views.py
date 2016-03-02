@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from authenticate.models import User, UserProfile
 
 
 def register(request):
@@ -90,3 +91,9 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
+
+
+def profile(request, user_id):
+    user_ob = User.objects.get(id=user_id)
+    user = UserProfile.objects.get(user=user_ob)
+    return render(request, 'authenticate/profile.html', {'user': user})

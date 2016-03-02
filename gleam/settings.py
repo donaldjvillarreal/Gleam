@@ -106,6 +106,13 @@ INSTALLED_APPS = [
     'spirit.comment.poll',
     'djconfig',
     'haystack',
+    #############################
+    #    Simple QA
+    #############################
+    'qa',
+    #'bootstrap3',
+    'django_markdown',
+    'rest_framework',
 ]
 
 # python manage.py createcachetable
@@ -226,6 +233,23 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
+######################################
+#       Simple QA
+######################################
+
+#EMAIL_HOST = 'smtp.sendgrid.net'
+#EMAIL_HOST_USER = 'username'
+#EMAIL_HOST_PASSWORD = 'your-password'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
