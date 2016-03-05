@@ -1,6 +1,9 @@
 # coding=utf-8
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 from diagnostic import models
+from diagnostic.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES
 
 from collections import OrderedDict
 
@@ -64,3 +67,10 @@ def bdi_survey_pagination(request):
     return render(request, 'diagnostic/bdi-pagination.html', {'qa_set': qa_set,
                                                                'current': question_number + 1,
                                                                'progress': int((question_number / 21.0) * 100)})
+
+
+@login_required()
+def case_index(request):
+    return render(request, 'diagnostic/case-index.html', {'welcome': False,
+                                                          'frequencyOptions': FREQUENCY_CHOICES,
+                                                          'severityOptions': SEVERITY_CHOICES})

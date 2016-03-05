@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+    {% if welcome %}
+    <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                <p class="modal-body">
+                 Now that you are an official Gleamer, let’s see what we are up against.
+                 We will first identify the areas of your life that depression has
+                 affected. Then we will guide you through picking out specific goals to
+                 address each of those problems. Each goal you achieve is a battle you win
+                 against depression.
+                </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <progress class="progress progress-striped" value="10" max="100">10%</progress>
+    <h5 class="alert alert-info">Select an aspect of your life that is being negatively impacted by depression or feel free to add your own.</h5>
+
+    <div class="row">
+    <div id="aspect-list">
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">Family</div>
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">Work</div>
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">Friendships</div>
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">Romantic Relationships</div>
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">Self-Esteem</div>
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">Recreational Activities</div>
+        <div class="col-md-3 card card-block btn btn-primary-outline aspects">School</div>
+        {% for aspect in aspects %}
+            <div class="col-md-3 card card-block btn btn-primary-outline aspects">{{ aspect.text }}</div>
+        {% endfor %}
+    </div>
+    <div class="col-md-3 card card-block btn btn-success-outline" id="addAspect">Add another</div>
+    </div>
+
+    <div class="row" id="frequencySeverityOptions">
+        <div class="col-md-12">
+            <form>
+                <fieldset class="form-group">
+                    <label for="frequencyInput" id="frequencyInputLabel">How frequently does depression affect your
+                        <span id="fProblem"></span>?</label>
+                    <select id="frequencyInput" class="c-select form-control">
+                        {% for option in frequencyOptions %}
+                            <option value="{{ option.0 }}">{{ option.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="severityInput" id="severityInputLabel">How significantly has depression affected your
+                    <span id="sProblem"></span>?</label>
+                    <select id="severityInput" class="c-select form-control">
+                      {% for option in severityOptions %}
+                            <option value="{{ option.0 }}">{{ option.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+            </form>
+        <a href="#" class="btn btn-primary" id="nextButton">Next</a>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-sm" id="addAspectModal" tabindex="-1" role="dialog" aria-labelledby="addAspectModal" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="card card-block">
+            <fieldset class="form-group">
+              <label for="addAspectInput">Describe an aspect</label>
+              <input type="text" id="addAspectInput" class="form-control" style="text-transform:capitalize;">
+            </fieldset>
+            <a href="#" class="btn btn-primary pull-xs-right" data-dismiss="modal" id="addAspectConfirm">Confirm</a>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+{% block js_scripts %}
+
+    <script type="application/javascript">
+        $(document).ready(function() {
+            {% if welcome %}
+                $('#welcomeModal').modal('show');
+            {% endif %}
+            var fsOptions = $('#frequencySeverityOptions');
+            fsOptions.hide();
+            $('body').on('click', '.aspects', function(){
+                var selectedAspect = $(this);
+                $('#aspect-list').find('>div').removeClass('active');
+                $(this).addClass('active');
+                $('#fProblem').html(selectedAspect.html().toLowerCase());
+                $('#sProblem').html(selectedAspect.html().toLowerCase());
+                fsOptions.show();
+
+                $('#nextButton').on('click', function () {
+                    var payload = {
+                        'skill': selectedAspect.html(),
+                        'frequency': $('#frequencyInput').val(),
+                        'severity': $('#severityInput').val()
+                    };
+                    console.log(payload);
+            });
+            });
+            $('#addAspect').on('click', function () {
+                //Remove active divs and hide the option menu
+                $('#aspect-list').find('>div').removeClass('active');
+                fsOptions.hide();
+
+                $('#addAspectInput').val('');
+                $('#addAspectModal').modal('show');
+            });
+            $('#addAspectConfirm').on('click', function () {
+                $('#aspect-list').append('<div class="col-md-3 card card-block btn btn-primary-outline aspects">' + $('#addAspectInput').val());
+            });
+
+        });
+    </script>
+{% endblock %}

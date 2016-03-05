@@ -16,14 +16,17 @@
                                     Please select the statement that you <strong>most</strong> identify with.
                      </div>
                     <div class="row">
-                        {% for answer in qa_set.1 %}
+                        <div>
+                            {% for answer in qa_set.1 %}
                         <input type="hidden" name="answer_pk" value="{{ answer_pk }}">
                         <div class="card card-block">
-                            <label for="{{ answer.pk }}">
-                                <input type="radio" name="answer" id="{{ answer.pk }}" value="{{ answer.value }}" required> {{ answer.response }}
+                            <label for="{{ answer.pk }}" class="c-input c-radio">
+                                <input type="radio" name="answer" id="{{ answer.pk }}" value="{{ answer.value }}" required>
+                                <span class="c-indicator"></span>{{ answer.response }}
                             </label>
                         </div>
                         {% endfor %}
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-1 col-md-offset-10">
