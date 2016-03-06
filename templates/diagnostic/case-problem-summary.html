@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/case.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <progress class="progress progress-striped" value="10" max="100">10%</progress>
+        <h5 class="alert alert-info">
+            It can be really overwhelming to try to address every problem area
+            in your life at once. <br>
+            Select <strong>up to 3 rows</strong> that you would most like to improve.
+        </h5>
+        <div class="alert alert-warning" id="rowLimitWarning">
+            Only 3 rows may be selected.
+        </div>
+        <table class="table " id="problems-table">
+            <thead>
+            <tr>
+                <th>Problem</th>
+                <th>Frequency</th>
+                <th>Severity</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for problem in problems %}
+                <tr>
+                <td>
+                    {{ problem.text }}
+                </td>
+                <td>
+                    {{ problem.frequency_verbose }}
+                </td>
+                <td>
+                    {{ problem.severity }}
+                </td>
+                </tr>
+            {% endfor %}{% for problem in problems %}
+                <tr>
+                <td>
+                    {{ problem.text }}
+                </td>
+                <td>
+                    {{ problem.frequency_verbose }}
+                </td>
+                <td>
+                    {{ problem.severity }}
+                </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block js_scripts %}
+    <script type="application/javascript">
+    $('#rowLimitWarning').hide();
+    $(document).ready(function () {
+        $('#problems-table tr').on('click', function () {
+            if ($(this).hasClass('selected')){
+                $(this).removeClass('selected');
+                $('#rowLimitWarning').hide();
+            }
+            else if($('.selected').length === 3){
+                $('#rowLimitWarning').show();
+            } else {
+                $('#rowLimitWarning').hide();
+                $(this).toggleClass('selected');
+            }
+        });
+    });
+    </script>
+{% endblock %}

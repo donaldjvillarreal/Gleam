@@ -69,11 +69,17 @@ class ProblemAspect(models.Model):
     """
     Negative aspects affected by depression
     """
-    user = models.ForeignKey(User, blank=True, null=True)  # Lets us set some pre-defined aspects
+    user = models.ForeignKey(User)  # Lets us set some pre-defined aspects
     text = models.CharField(max_length=50)
     frequency = models.SmallIntegerField(choices=FREQUENCY_CHOICES)
     severity = models.SmallIntegerField(choices=SEVERITY_CHOICES)
     improve = models.BooleanField(blank=True, default=False)
+
+    def __unicode__(self):
+        return self.text
+
+    def frequency_verbose(self):
+        return FREQUENCY_CHOICES[self.frequency][1]
 
 
 class ProblemAspectSituation(models.Model):
@@ -85,4 +91,8 @@ class ProblemAspectSituation(models.Model):
     situation = models.CharField(max_length=300)
     thought = models.CharField(max_length=300)
     feeling = models.CharField(max_length=300)
+    reaction = models.CharField(max_length=300)
     distress_level = models.SmallIntegerField(choices=DISTRESS_LEVEL_CHOICES)
+
+    def __unicode__(self):
+        return self.problem.text

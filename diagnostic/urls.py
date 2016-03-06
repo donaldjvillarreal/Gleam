@@ -9,4 +9,7 @@ urlpatterns = [
 
     # Case conceptualization
     url(r'^case/$', views.case_index, name='case_index'),
+    url(r'^case/problem/$', views.case_problem, name='case_problem'),
+    url(r'^case/problem/description/$', views.case_problem_description, name='case_problem_description'),
+    url(r'^case/problem/summary/$', views.case_problem_summary, name='case_problem_summary'),
 ]

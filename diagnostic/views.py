@@ -1,6 +1,9 @@
 # coding=utf-8
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from diagnostic import models
 from diagnostic.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES
@@ -65,12 +68,60 @@ def bdi_survey_pagination(request):
     question = models.Question.objects.filter(survey__short_name='BDI').get(order=question_number)
     qa_set = (question, models.Answer.objects.filter(question=question.pk).order_by('value'))
     return render(request, 'diagnostic/bdi-pagination.html', {'qa_set': qa_set,
-                                                               'current': question_number + 1,
-                                                               'progress': int((question_number / 21.0) * 100)})
+                                                              'current': question_number + 1,
+                                                              'progress': int((question_number / 21.0) * 100)})
 
 
 @login_required()
 def case_index(request):
-    return render(request, 'diagnostic/case-index.html', {'welcome': False,
-                                                          'frequencyOptions': FREQUENCY_CHOICES,
-                                                          'severityOptions': SEVERITY_CHOICES})
+    if models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id)).exists():
+        welcome = False
+    else:
+        welcome = True
+    return render(request, 'diagnostic/case-problem.html', {'welcome': welcome,
+                                                            'frequencyOptions': FREQUENCY_CHOICES,
+                                                            'severityOptions': SEVERITY_CHOICES})
+
+
+@login_required()
+def case_problem(request):
+    if request.method == 'POST':
+        problem, created = models.ProblemAspect.objects.get_or_create(user=User.objects.get(id=request.user.id),
+                                                                      text=request.POST['text'],
+                                                                      frequency=int(request.POST['frequency']),
+                                                                      severity=int(request.POST['severity']))
+        return render(request, 'diagnostic/case-problem-descriptions.html', {'problem': problem,
+                                                                             'distressLevels': range(0, 11)})
+    else:
+        return HttpResponseRedirect(reverse('diagnostic:case_index'))
+
+
+@login_required()
+def case_problem_description(request):
+    if request.method == 'POST':
+        problem_description, created = models.ProblemAspectSituation.objects.get_or_create(
+            problem=models.ProblemAspect.objects.get(id=request.POST['problem']),
+            situation=request.POST['situationInput1'],
+            thought=request.POST['thoughtInput1'],
+            feeling=request.POST['feelingInput1'],
+            reaction=request.POST['reactionInput1'],
+            distress_level=request.POST['distressInput1'])
+        problem_description_2, created_2 = models.ProblemAspectSituation.objects.get_or_create(
+            problem=models.ProblemAspect.objects.get(id=request.POST['problem']),
+            situation=request.POST['situationInput2'],
+            thought=request.POST['thoughtInput2'],
+            feeling=request.POST['feelingInput2'],
+            reaction=request.POST['reactionInput2'],
+            distress_level=request.POST['distressInput2'])
+        if request.GET.get('previous', None) is not None:
+            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+        else:
+            return HttpResponseRedirect(reverse('diagnostic:case_problem_summary'))
+    else:
+        return HttpResponseRedirect(reverse('diagnostic:case_index'))
+
+
+@login_required()
+def case_problem_summary(request):
+    problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+    return render(request, 'diagnostic/case-problem-summary.html', {'problems': problems})

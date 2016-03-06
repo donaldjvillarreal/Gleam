@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+    <progress class="progress progress-striped" value="10" max="100">10%</progress>
+    <div class="row">
+        <h5 class="alert alert-info">Let’s dig a little deeper. Can you think of two specific situations where
+            depression affected <strong>{{ problem.text|lower }}</strong>? <br>
+            What happened? What were you thinking when it happened? How did it make you feel? How did you react?</h5>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Situation</th>
+            <th>Thought</th>
+            <th>Feeling</th>
+            <th>Reaction</th>
+            <th>Distress Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <tr>
+            <td>
+                <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+            </td>
+            <td>
+                <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+            </td>
+            <td>
+                <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+            </td>
+            <td>
+                <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+            </td>
+            <td>
+                <select disabled class="form-control">
+                    <option>5</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="situationInput1" class="form-control" maxlength="300" required></textarea>
+            </td>
+            <td>
+                <textarea id="thoughtInput1" class="form-control" maxlength="300" required></textarea>
+            </td>
+            <td>
+                <textarea id="feelingInput1" class="form-control" maxlength="300" required></textarea>
+            </td>
+            <td>
+                <textarea id="reactionInput1" class="form-control" maxlength="300" required></textarea>
+            </td>
+            <td>
+                <select class="form-control" id="distressInput1">
+                    {% for i in distressLevels %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="situationInput2" class="form-control" maxlength="300"></textarea>
+            </td>
+            <td>
+                <textarea id="thoughtInput2" class="form-control" maxlength="300"></textarea>
+            </td>
+            <td>
+                <textarea id="feelingInput2" class="form-control" maxlength="300"></textarea>
+            </td>
+            <td>
+                <textarea id="reactionInput2" class="form-control" maxlength="300"></textarea>
+            </td>
+            <td>
+                <select class="form-control" id="distressInput2">
+                    {% for i in distressLevels %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% csrf_token %}
+
+    <div class="row">
+        <a href="#" class="btn btn-primary pull-left" id="anotherProblem"><i class="fa fa-arrow-left"></i> Identify another
+            problem area*</a>
+        <a href="#" class="btn btn-success pull-right" id="doneWithProblems"><i class="fa fa-check"></i> I'm done</a>
+    </div>
+    <div class="row">
+        <span class="text-muted pull-left">*Your changes will be saved.</span>
+    </div>
+    </div>
+
+    <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                <p class="modal-body">
+                 At least one row must be filled in (situation, thought, feeling, reaction, and distress level).
+                </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            var payload = function(){
+                return {
+                    'situationInput1': $('#situationInput1').val(),
+                    'thoughtInput1': $('#thoughtInput1').val(),
+                    'feelingInput1': $('#feelingInput1').val(),
+                    'reactionInput1': $('#reactionInput1').val(),
+                    'distressInput1': $('#distressInput1').val(),
+
+                    'situationInput2': $('#situationInput2').val(),
+                    'thoughtInput2': $('#thoughtInput2').val(),
+                    'feelingInput2': $('#feelingInput2').val(),
+                    'reactionInput2': $('#reactionInput2').val(),
+                    'distressInput2': $('#distressInput2').val(),
+                    'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    'problem': {{ problem.id }}
+                }
+            };
+            var checkInputs = function () {
+                var inputsToCheck = [$('#situationInput1').val().length,
+                                    $('#thoughtInput1').val().length,
+                                    $('#feelingInput1').val().length,
+                                    $('#reactionInput1').val().length];
+                for (var i = 0; i < inputsToCheck.length; i ++){
+                    if (inputsToCheck[i] < 5){
+                        return false;
+                    }
+                }
+                return true;
+            };
+            $('#anotherProblem').on('click', function () {
+                if (checkInputs()){
+                    $.redirect('{% url 'diagnostic:case_problem_description' %}?previous=True', payload());
+                } else {
+                    $('#warningModal').modal('show');
+                }
+            });
+            $('#doneWithProblems').on('click', function () {
+                if (checkInputs()){
+                    $.redirect('{% url 'diagnostic:case_problem_description' %}', payload());
+                } else {
+                    $('#warningModal').modal('show');
+                }
+            });
+        });
+    </script>
+{% endblock %}
