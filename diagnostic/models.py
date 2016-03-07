@@ -30,7 +30,7 @@ class Question(models.Model):
     def __unicode__(self):
         return "%s / %s" % (self.survey.short_name, self.text)
 
-    class Meta:
+    class Meta(object):
         unique_together = (("survey", "text"),)
 
 
@@ -46,7 +46,7 @@ class Answer(models.Model):
     def __unicode__(self):
         return "%s / %s / %s / %s" % (self.question.survey.short_name, self.question.text, self.response, self.value)
 
-    class Meta:
+    class Meta(object):
         unique_together = (("response", "question"),)
 
 
@@ -76,7 +76,7 @@ class ProblemAspect(models.Model):
     improve = models.BooleanField(blank=True, default=False)
 
     def __unicode__(self):
-        return self.text
+        return self.text[:40]
 
     def frequency_verbose(self):
         return FREQUENCY_CHOICES[self.frequency][1]
@@ -98,7 +98,7 @@ class ProblemAspectSituation(models.Model):
     distress_level = models.SmallIntegerField(choices=DISTRESS_LEVEL_CHOICES)
 
     def __unicode__(self):
-        return self.problem.text
+        return self.problem.__unicode__()
 
 
 class ProblemGoal(models.Model):
@@ -111,15 +111,24 @@ class ProblemGoal(models.Model):
     def frequency_verbose(self):
         return goal_frequencies[self.frequency - 1][0]
 
+    def __unicode__(self):
+        return self.action[:40]
+
 
 class ProblemGoalRanking(models.Model):
     user = models.ForeignKey(User)
 
     first = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_first')
-    second = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_second')
-    third = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_third')
+    second = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_second', null=True, blank=True)
+    third = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_third', null=True, blank=True)
 
-    current_goal = models.ForeignKey(ProblemGoal, null=True, blank=True)
+    current_goal = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_current', null=True, blank=True)
 
     class Meta(object):
         unique_together = (('user', 'first', 'second', 'third'),)
+
+    def __unicode__(self):
+        if self.current_goal is not None:
+            return '%s\'s current goal: %s' % (self.user.username, self.current_goal.__unicode__())
+        else:
+            return '%s\'s current goal: none' % self.user.username
