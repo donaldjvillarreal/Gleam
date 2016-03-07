@@ -90,7 +90,7 @@ def user_logout(request):
     logout(request)
 
     # Take the user back to the homepage.
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(request.GET.get('next', '/'))
 
 
 def profile(request, user_id):

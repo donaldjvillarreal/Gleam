@@ -17,6 +17,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
             </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item pull-xs-right">
+                    <a class="nav-link" href="{% url 'authenticate:logout' %}?next={{ request.path | urlencode }}">Logout</a>
+                </li>
+            {% else %}
+
+                <li class="nav-item pull-xs-right">
+                    <a class="nav-link" href="{% url 'authenticate:login' %}?next={{ request.path | urlencode }}">Login</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
