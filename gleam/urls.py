@@ -21,8 +21,10 @@ from diagnostic import urls as diagnostic_urls
 from authenticate import urls as auth_urls
 from spirit import urls as spirit_urls
 from qa import urls as qa_urls
+from core import urls as core_urls
 
 urlpatterns = [
+    url(r'^$', include(core_urls, namespace='core')),
     url(r'^users/', include(auth_urls, namespace='authenticate')),
     url(r'^survey/', include(diagnostic_urls, namespace='diagnostic')),
     url(r'^spirit/', include(spirit_urls, namespace='spirit')),
