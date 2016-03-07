@@ -6,12 +6,23 @@
     <title>Gleam - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block head %}{% endblock %}
+
+    <!-- HTML5 Shiv -->
+    <script src="{% static 'js/html5shiv.min.js' %}"></script>
 </head>
 <body>
-    {% block body %}
-    {% endblock %}
+    {% include 'base-header.html' %}
+    <br>
 
+    <div class="wrapper">
+        {% block body %}
+    {% endblock %}
+    <div class="push"></div>
+    </div>
+
+    {% include 'base-footer.html' %}
 
     <script type="application/javascript" src="{% static 'js/jquery-latest.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/bootstrap.js' %}"></script>
