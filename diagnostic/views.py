@@ -128,11 +128,20 @@ def case_problem_summary(request):
             problem = models.ProblemAspect.objects.get(id=int(problem_id))
             problem.improve = True
             problem.save()
-        return HttpResponseRedirect(reverse('diagnostic:case_goals'))
-
+        if len(request.POST.getlist('problems[]')) > 1:
+            return HttpResponseRedirect(reverse('diagnostic:case_goals'))
+        else:
+            # TODO: Route to calendar
+            return HttpResponseRedirect(reverse('diagnostic:case_index'))
     else:
         problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
-        return render(request, 'diagnostic/case-problem-summary.html', {'problems': problems})
+        if len(problems) > 1:
+            return render(request, 'diagnostic/case-problem-summary.html', {'problems': problems})
+        elif len(problems) == 1:
+            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+        else:
+            # TODO: Route to calendar
+            return HttpResponseRedirect(reverse('diagnostic:case_index'))
 
 
 @login_required()
@@ -146,7 +155,12 @@ def case_goals(request):
                 problem=models.ProblemAspect.objects.get(id=problem.id),
                 action=request.POST['%i-action' % problem.id],
                 frequency=int(request.POST['%i-frequency' % problem.id]))
-        return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+        if len(problems) > 1:
+            return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+        else:
+            # Only 1 problem area specified, skip to calendar
+            # TODO: Route to calendar
+            return HttpResponseRedirect(reverse('diagnostic:case_index'))
     else:
         return render(request, 'diagnostic/case-goals.html',
                       {'problems': models.ProblemAspect.objects.filter(improve=True)[:3],
@@ -156,13 +170,36 @@ def case_goals(request):
 @login_required()
 def case_goals_rank(request):
     if request.method == 'POST':
+        # Get list of goals
         goal_ids = request.POST.getlist('goals[]')
-        models.ProblemGoalRanking.objects.get_or_create(user=User.objects.get(id=request.user.id),
-                                                        first=models.ProblemGoal.objects.get(id=goal_ids[0]),
-                                                        second=models.ProblemGoal.objects.get(id=goal_ids[1]),
-                                                        third=models.ProblemGoal.objects.get(id=goal_ids[2]))
+        if len(goal_ids) < 3:
+            # lets us create the objects if less than 3 problems were given
+            if len(goal_ids) == 2:
+                goal_ids[2] = None
+            else:
+                goal_ids.append(None)
+                goal_ids.append(None)
+        ranking, created = models.ProblemGoalRanking.objects.get_or_create(user=User.objects.get(id=request.user.id),
+                                                                           first=models.ProblemGoal.objects.get(
+                                                                               id=goal_ids[0]),
+                                                                           second=models.ProblemGoal.objects.get(
+                                                                               id=goal_ids[1]),
+                                                                           third=models.ProblemGoal.objects.get(
+                                                                               id=goal_ids[2]))
         return render(request, 'diagnostic/case-goal-confirm.html',
-                      {'goals': models.ProblemGoalRanking.objects.get(user=User.objects.get(id=request.user.id))})
+                      {'ranking': ranking})
     else:
         return render(request, 'diagnostic/case-goals-rank.html',
                       {'goals': models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id))[:3]})
+
+
+@login_required()
+def case_goal_rank_confirm(request):
+    if request.method == 'POST':
+        ranking = models.ProblemGoalRanking.objects.get(id=int(request.POST['rankId']))
+        print ranking
+        ranking.current = models.ProblemGoal.objects.get(id=int(request.POST['goal']))
+        ranking.save()
+        return HttpResponseRedirect(reverse('diagnostic:case_index'))
+    else:
+        return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))

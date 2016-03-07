@@ -119,5 +119,7 @@ class ProblemGoalRanking(models.Model):
     second = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_second')
     third = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_third')
 
-    class Meta:
+    current_goal = models.ForeignKey(ProblemGoal, null=True, blank=True)
+
+    class Meta(object):
         unique_together = (('user', 'first', 'second', 'third'),)
