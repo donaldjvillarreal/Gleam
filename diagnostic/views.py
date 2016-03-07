@@ -181,11 +181,14 @@ def case_goals_rank(request):
     if request.method == 'POST':
         # Get list of goals
         goals = request.POST.getlist('goals[]')
-        goals[0] = models.ProblemGoal.objects.get(id=goals[0])
-        if len(goals) < 3:
+        goals[0] = models.ProblemGoal.objects.get(id=int(goals[0]))
+        if len(goals) <= 3:
             # lets us create the objects if less than 3 problems were given
-            if len(goals) == 2:
-                goals[1] = models.ProblemGoal.objects.get(id=goals[1])
+            if len(goals) == 3:
+                goals[1] = models.ProblemGoal.objects.get(id=int(goals[1]))
+                goals[2] = models.ProblemGoal.objects.get(id=int(goals[2]))
+            elif len(goals) == 2:
+                goals[1] = models.ProblemGoal.objects.get(id=int(goals[1]))
                 goals.append(None)
             else:
                 goals.append(None)
@@ -212,3 +215,7 @@ def case_goal_rank_confirm(request):
         return HttpResponseRedirect(reverse('diagnostic:case_index'))
     else:
         return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+
+
+def index(request):
+    return render(request, 'diagnostic/index.html', {})
