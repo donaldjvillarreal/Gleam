@@ -215,3 +215,7 @@ def case_goal_rank_confirm(request):
         return HttpResponseRedirect(reverse('diagnostic:case_index'))
     else:
         return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+
+
+def index(request):
+    return render(request, 'diagnostic/index.html', {})
