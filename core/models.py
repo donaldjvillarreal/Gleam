@@ -9,10 +9,9 @@ class ProgressIssue(models.Model):
     """
     user = models.ForeignKey(User)
 
-    work = models.BooleanField(default=False)
-    access_to_computer = models.BooleanField(default=False)
-    time_commitment = models.BooleanField(default=False)
-    motivation = models.BooleanField(default=False)
-    forgetfulness = models.BooleanField(default=False)
-    tired = models.BooleanField(default=False)
-
+    work = models.BooleanField(default=False, blank=True)
+    access_to_computer = models.BooleanField(default=False, blank=True)
+    time_commitment = models.BooleanField(default=False, blank=True)
+    motivation = models.BooleanField(default=False, blank=True)
+    forgetfulness = models.BooleanField(default=False, blank=True)
+    tired = models.BooleanField(default=False, blank=True)

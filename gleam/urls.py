@@ -24,7 +24,7 @@ from qa import urls as qa_urls
 from core import urls as core_urls
 
 urlpatterns = [
-    url(r'^$', include(core_urls, namespace='core')),
+    url(r'', include(core_urls, namespace='core')),
     url(r'^users/', include(auth_urls, namespace='authenticate')),
     url(r'^survey/', include(diagnostic_urls, namespace='diagnostic')),
     url(r'^spirit/', include(spirit_urls, namespace='spirit')),
