@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from diagnostic import models
-from diagnostic.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES
+from diagnostic.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies
 
 from collections import OrderedDict
 
@@ -123,5 +123,37 @@ def case_problem_description(request):
 
 @login_required()
 def case_problem_summary(request):
-    problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
-    return render(request, 'diagnostic/case-problem-summary.html', {'problems': problems})
+    if request.method == 'POST':
+        for problem_id in request.POST.getlist('problems[]'):
+            problem = models.ProblemAspect.objects.get(id=int(problem_id))
+            problem.improve = True
+            problem.save()
+        return HttpResponseRedirect(reverse('diagnostic:case_goals'))
+
+    else:
+        problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+        return render(request, 'diagnostic/case-problem-summary.html', {'problems': problems})
+
+
+@login_required()
+def case_goals(request):
+    if request.method == 'POST':
+        # Get the first three problems that have been marked as improve = True
+        problems = models.ProblemAspect.objects.filter(improve=True)[:3]
+        for problem in problems:
+            models.ProblemGoal.objects.get_or_create(
+                user=User.objects.get(id=request.user.id),
+                problem=models.ProblemAspect.objects.get(id=problem.id),
+                action=request.POST['%i-action' % problem.id],
+                frequency=int(request.POST['%i-frequency' % problem.id]))
+        return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+    else:
+        return render(request, 'diagnostic/case-goals.html',
+                      {'problems': models.ProblemAspect.objects.filter(improve=True)[:3],
+                       'frequencies': goal_frequencies})
+
+
+@login_required()
+def case_goals_rank(request):
+    return render(request, 'diagnostic/case-goals-rank.html',
+                  {'goals': models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id))[:3]})

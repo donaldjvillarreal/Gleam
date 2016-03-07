@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
-from diagnostic.case_options import SEVERITY_CHOICES, FREQUENCY_CHOICES
+from diagnostic.case_options import SEVERITY_CHOICES, FREQUENCY_CHOICES, goal_frequencies
 
 
 class Survey(models.Model):
@@ -81,6 +81,9 @@ class ProblemAspect(models.Model):
     def frequency_verbose(self):
         return FREQUENCY_CHOICES[self.frequency][1]
 
+    def severity_verbose(self):
+        return SEVERITY_CHOICES[self.severity][1]
+
 
 class ProblemAspectSituation(models.Model):
     """
@@ -96,3 +99,14 @@ class ProblemAspectSituation(models.Model):
 
     def __unicode__(self):
         return self.problem.text
+
+
+class ProblemGoal(models.Model):
+    user = models.ForeignKey(User, null=True)
+    problem = models.ForeignKey(ProblemAspect)
+
+    action = models.CharField(max_length=300, blank=True, null=True)
+    frequency = models.SmallIntegerField()
+
+    def frequency_verbose(self):
+        return goal_frequencies[self.frequency - 1]
