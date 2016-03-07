@@ -109,4 +109,15 @@ class ProblemGoal(models.Model):
     frequency = models.SmallIntegerField()
 
     def frequency_verbose(self):
-        return goal_frequencies[self.frequency - 1]
+        return goal_frequencies[self.frequency - 1][0]
+
+
+class ProblemGoalRanking(models.Model):
+    user = models.ForeignKey(User)
+
+    first = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_first')
+    second = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_second')
+    third = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_third')
+
+    class Meta:
+        unique_together = (('user', 'first', 'second', 'third'),)

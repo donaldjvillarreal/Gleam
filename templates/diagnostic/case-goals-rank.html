@@ -20,6 +20,7 @@
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2">
                         <div class="card card-block clickable">
+                            <input type="hidden" value="{{ goal.id }}" class="goals">
                             <h5 class="card-title">
                                 {{ goal.problem.text }}
                             </h5>
@@ -37,9 +38,10 @@
                 <h5 class="alert alert-danger">Hardest</h5>
             </div>
         </div>
-    <div class="row">
-        <a href="#" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-right"></i> </a>
-    </div>
+        <div class="row">
+            {% csrf_token %}
+            <a href="#" class="btn btn-primary pull-right" id="nextButton">Next <i class="fa fa-arrow-right"></i> </a>
+        </div>
     </div>
 {% endblock %}
 {% block js_scripts %}
@@ -58,6 +60,15 @@
             var el = document.getElementById('sortable');
             var sortable = Sortable.create(el);
 
+            $('#nextButton').on('click', function () {
+                var orderedGoals = [];
+                $('.goals').each(function () {
+                    orderedGoals.push($(this).val());
+                });
+                $.redirect('{% url 'diagnostic:case_goals_rank' %}',
+                        {'goals': orderedGoals,
+                            'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value});
+            });
         });
     </script>
 {% endblock %}

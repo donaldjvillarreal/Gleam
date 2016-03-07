@@ -155,5 +155,14 @@ def case_goals(request):
 
 @login_required()
 def case_goals_rank(request):
-    return render(request, 'diagnostic/case-goals-rank.html',
-                  {'goals': models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id))[:3]})
+    if request.method == 'POST':
+        goal_ids = request.POST.getlist('goals[]')
+        models.ProblemGoalRanking.objects.get_or_create(user=User.objects.get(id=request.user.id),
+                                                        first=models.ProblemGoal.objects.get(id=goal_ids[0]),
+                                                        second=models.ProblemGoal.objects.get(id=goal_ids[1]),
+                                                        third=models.ProblemGoal.objects.get(id=goal_ids[2]))
+        return render(request, 'diagnostic/case-goal-confirm.html',
+                      {'goals': models.ProblemGoalRanking.objects.get(user=User.objects.get(id=request.user.id))})
+    else:
+        return render(request, 'diagnostic/case-goals-rank.html',
+                      {'goals': models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id))[:3]})
