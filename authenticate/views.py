@@ -71,7 +71,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(request.GET.get('next', '/'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your Gleam account is disabled.")
@@ -90,7 +90,7 @@ def user_logout(request):
     logout(request)
 
     # Take the user back to the homepage.
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(request.GET.get('next', '/'))
 
 
 def profile(request, user_id):

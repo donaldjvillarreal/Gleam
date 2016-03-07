@@ -1,0 +1,637 @@
+<style style="text/css">
+table.calendar {
+    margin-bottom: 0;
+    height: 100px;
+    overflow: hidden;
+}
+
+table.calendar > tbody > tr {
+    overflow: scroll;
+}
+
+table.calendar > thead > tr > th {
+    text-align: center;
+}
+
+table.calendar > tbody > tr > td {
+    height: 20px;
+    border: 1px solid black;
+}
+
+table.calendar > tbody > tr > td.has-events {
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+}
+
+table.calendar > tbody > tr > td.has-events > div {
+    background-color: #08C;
+    border-left: 1px solid white;
+}
+
+table.calendar > tbody > tr > td.has-events > div:first-child {
+    border-left: 1;
+    margin-left: 1px;
+}
+
+table.calendar > tbody > tr > td.has-events > div.practice {
+    opacity: 0.5;
+}
+
+table.calendar > tbody > tr > td.has-events > div > span {
+    display: block;
+    text-align: center;
+}
+table.calendar > tbody > tr > td.has-events > div > span a {
+    color: white;
+}
+
+table.calendar > tbody > tr > td.has-events > div > span.title {
+    font-weight: bold;
+}
+
+table.calendar > tbody > tr > td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+</style>
+
+<script type="text/javascript">
+window.onload = function(){
+
+	$("input[name=WeekdayTime]").change(function(){
+	    var max= 3;
+	    if( $("input[name=WeekdayTime]:checked").length == max ){
+	        $("input[name=WeekdayTime]").attr('disabled', 'disabled');
+	        $("input[name=WeekdayTime]:checked").removeAttr('disabled');
+	    }else{
+	         $("input[name=WeekdayTime]").removeAttr('disabled');
+	    }
+	});
+    
+    document.getElementById("calDiv").scrollTop = 686;
+
+};
+
+</script>
+
+
+<table class="calendar table table-bordered">
+    <thead>
+        <tr>
+            <th width="10%"></th>
+            <th width="12%">Sunday</th>
+            <th width="12%">Monday</th>
+            <th width="12%">Tuesday</th>
+            <th width="12%">Wednesday</th>
+            <th width="12%">Thursday</th>
+            <th width="12%">Friday</th>
+            <th width="12%">Saturday</th>
+        </tr>
+    </thead>
+</table>
+<div style="height: 500px; overflow: scroll;" id="calDiv">
+<table class="calendar table table-bordered" id="calBody">
+    <tbody>
+        <tr>
+            <td width="10%">12:00 AM</td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="10000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="20000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="30000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="40000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="50000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="60000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="70000"></td>
+        </tr>
+
+        <tr>
+            <td>12:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70030"></td>
+        </tr>
+
+        <tr>
+            <td>01:00 AM</td>
+
+            <!--
+            <td id=" has-events" rowspan="2">
+
+                <div class="row-fluid practice" style="width: 100%; height: 100%;">
+
+                </div>
+            </td>
+            -->
+            <td><input type="checkbox" name="WeekdayTime" value="10100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70100"></td>
+        </tr>
+
+        <tr>
+            <td>01:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70130"></td>
+        </tr>
+
+        <tr>
+            <td>02:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70200"></td>
+        </tr>
+
+        <tr>
+            <td>02:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70230"></td>
+        </tr>
+
+        <tr>
+            <td>03:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70300"></td>
+        </tr>
+
+        <tr>
+            <td>03:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70330"></td>
+        </tr>
+
+        <tr>
+            <td>04:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70400"></td>
+        </tr>
+
+        <tr>
+            <td>04:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70430"></td>
+        </tr>
+
+        <tr>
+            <td>05:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70500"></td>
+        </tr>
+
+        <tr>
+            <td>05:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70530"></td>
+        </tr>
+
+        <tr>
+            <td>06:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70600"></td>
+        </tr>
+
+        <tr>
+            <td>06:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70630"></td>
+        </tr>
+
+        <tr>
+            <td>07:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70700"></td>
+        </tr>
+
+        <tr>
+            <td>07:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70730"></td>
+        </tr>
+
+        <tr>
+            <td>08:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70800"></td>
+        </tr>
+
+        <tr>
+            <td>08:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70830"></td>
+        </tr>
+
+        <tr>
+            <td>09:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70900"></td>
+        </tr>
+
+        <tr>
+            <td>09:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="10930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="20930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="30930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="40930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="50930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="60930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="70930"></td>
+        </tr>
+
+        <tr>
+            <td>10:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71000"></td>
+        </tr>
+
+        <tr>
+            <td>10:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71030"></td>
+        </tr>
+
+        <tr>
+            <td>11:00 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71100"></td>
+        </tr>
+
+        <tr>
+            <td>11:30 AM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71130"></td>
+        </tr>
+
+        <tr>
+            <td>12:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71200"></td>
+        </tr>
+
+        <tr>
+            <td>12:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71230"></td>
+        </tr>
+
+        <tr>
+            <td>01:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71300"></td>
+        </tr>
+
+        <tr>
+            <td>01:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71330"></td>
+        </tr>
+
+        <tr>
+            <td>02:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61400"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71400"></td>
+        </tr>
+
+        <tr>
+            <td>02:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61430"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71430"></td>
+        </tr>
+
+        <tr>
+            <td>03:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61500"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71500"></td>
+        </tr>
+
+        <tr>
+            <td>03:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61530"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71530"></td>
+        </tr>
+
+        <tr>
+            <td>04:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61600"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71600"></td>
+        </tr>
+
+        <tr>
+            <td>04:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61630"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71630"></td>
+        </tr>
+
+        <tr>
+            <td>05:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61700"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71700"></td>
+        </tr>
+
+        <tr>
+            <td>05:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61730"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71730"></td>
+        </tr>
+
+        <tr>
+            <td>06:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61800"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71800"></td>
+        </tr>
+
+        <tr>
+            <td>06:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61830"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71830"></td>
+        </tr>
+
+        <tr>
+            <td>07:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61900"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71900"></td>
+        </tr>
+
+        <tr>
+            <td>07:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="11930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="21930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="31930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="41930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="51930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="61930"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="71930"></td>
+        </tr>
+
+        <tr>
+            <td>08:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62000"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72000"></td>
+        </tr>
+
+        <tr>
+            <td>08:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62030"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72030"></td>
+        </tr>
+
+        <tr>
+            <td>09:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62100"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72100"></td>
+        </tr>
+
+        <tr>
+            <td>09:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62130"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72130"></td>
+        </tr>
+
+        <tr>
+            <td>10:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62200"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72200"></td>
+        </tr>
+
+        <tr>
+            <td>10:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62230"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72230"></td>
+        </tr>
+
+        <tr>
+            <td>11:00 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62300"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72300"></td>
+        </tr>
+
+        <tr>
+            <td>11:30 PM</td>
+            <td><input type="checkbox" name="WeekdayTime" value="12330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="22330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="32330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="42330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="52330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="62330"></td>
+            <td><input type="checkbox" name="WeekdayTime" value="72330"></td>
+        </tr>
+
+    </tbody>
+</table>
+</div>
