@@ -1,0 +1,8 @@
+.selected {
+    background-color: dodgerblue;
+    color: #FFF;
+}
+
+.dragging {
+    border-color: red;
+}
