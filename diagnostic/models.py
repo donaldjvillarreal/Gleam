@@ -56,7 +56,7 @@ class SurveySet(models.Model):
     """
     user = models.ForeignKey(User)
     survey = models.ForeignKey(Survey)
-    answer = models.ForeignKey(Answer, null=True, blank=True)
+    answer = models.ManyToManyField(Answer)
 
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
