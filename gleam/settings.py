@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'authenticate',
     'gleam',
     'diagnostic',
+    'caseconcept',
 
     # Spirit apps
     'spirit.core',

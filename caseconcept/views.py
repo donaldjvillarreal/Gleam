@@ -12,11 +12,7 @@ def cal(request):
 		if planner_form.is_valid():
 			planner = planner_form.save(commit=False)
 			planner.user = request.user
-			WeekdayTime = request.POST.getlist('WeekdayTime')
-			for slot in WeekdayTime:
-				planner.WeekdayTime = slot
-				print slot
-				planner.save()
+			planner.save()
 
 			return HttpResponseRedirect("/")
 

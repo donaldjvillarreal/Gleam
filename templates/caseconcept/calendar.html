@@ -7,6 +7,12 @@ table.calendar {
 
 table.calendar > tbody > tr {
     overflow: scroll;
+    background-color: #a6cee1;
+}
+
+table.calendar > tbody > tr:nth-child(even) {
+    overflow: scroll;
+    background-color: #c8dce5;
 }
 
 table.calendar > thead > tr > th {
@@ -15,7 +21,7 @@ table.calendar > thead > tr > th {
 
 table.calendar > tbody > tr > td {
     height: 20px;
-    border: 1px solid black;
+    border: 1px solid gray;
 }
 
 table.calendar > tbody > tr > td.has-events {
@@ -55,6 +61,10 @@ table.calendar > tbody > tr > td {
 	text-align: center;
 	vertical-align: middle;
 }
+/*
+table.calendar > tbody > tr > td > input {
+    opacity:0;
+}*/
 
 </style>
 
@@ -71,8 +81,8 @@ window.onload = function(){
 	    }
 	});
     
-    document.getElementById("calDiv").scrollTop = 686;
-
+    /*document.getElementById("calDiv").scrollTop = 686;*/
+    document.getElementById("calDiv").scrollTop = 392;
 };
 
 </script>
@@ -81,7 +91,7 @@ window.onload = function(){
 <table class="calendar table table-bordered">
     <thead>
         <tr>
-            <th width="10%"></th>
+            <th width="10%">&nbsp;</th>
             <th width="12%">Sunday</th>
             <th width="12%">Monday</th>
             <th width="12%">Tuesday</th>
@@ -92,12 +102,12 @@ window.onload = function(){
         </tr>
     </thead>
 </table>
-<div style="height: 500px; overflow: scroll;" id="calDiv">
+<div style="height: 491px; overflow: scroll;" id="calDiv">
 <table class="calendar table table-bordered" id="calBody">
     <tbody>
         <tr>
             <td width="10%">12:00 AM</td>
-            <td width="12%"><input type="checkbox" name="WeekdayTime" value="10000"></td>
+            <td width="12%"><input type="checkbox" name="WeekdayTime" value="10000">&nbsp;</td>
             <td width="12%"><input type="checkbox" name="WeekdayTime" value="20000"></td>
             <td width="12%"><input type="checkbox" name="WeekdayTime" value="30000"></td>
             <td width="12%"><input type="checkbox" name="WeekdayTime" value="40000"></td>
@@ -105,7 +115,7 @@ window.onload = function(){
             <td width="12%"><input type="checkbox" name="WeekdayTime" value="60000"></td>
             <td width="12%"><input type="checkbox" name="WeekdayTime" value="70000"></td>
         </tr>
-
+        <!--
         <tr>
             <td>12:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10030"></td>
@@ -116,18 +126,9 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60030"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70030"></td>
         </tr>
-
+        -->
         <tr>
             <td>01:00 AM</td>
-
-            <!--
-            <td id=" has-events" rowspan="2">
-
-                <div class="row-fluid practice" style="width: 100%; height: 100%;">
-
-                </div>
-            </td>
-            -->
             <td><input type="checkbox" name="WeekdayTime" value="10100"></td>
             <td><input type="checkbox" name="WeekdayTime" value="20100"></td>
             <td><input type="checkbox" name="WeekdayTime" value="30100"></td>
@@ -136,7 +137,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60100"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70100"></td>
         </tr>
-
+        <!--
         <tr>
             <td>01:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10130"></td>
@@ -147,7 +148,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60130"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70130"></td>
         </tr>
-
+        -->
         <tr>
             <td>02:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10200"></td>
@@ -158,7 +159,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60200"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70200"></td>
         </tr>
-
+        <!--
         <tr>
             <td>02:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10230"></td>
@@ -169,7 +170,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60230"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70230"></td>
         </tr>
-
+        -->
         <tr>
             <td>03:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10300"></td>
@@ -180,7 +181,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60300"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70300"></td>
         </tr>
-
+        <!--
         <tr>
             <td>03:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10330"></td>
@@ -191,7 +192,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60330"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70330"></td>
         </tr>
-
+        -->
         <tr>
             <td>04:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10400"></td>
@@ -202,7 +203,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60400"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70400"></td>
         </tr>
-
+        <!--
         <tr>
             <td>04:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10430"></td>
@@ -213,7 +214,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60430"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70430"></td>
         </tr>
-
+        -->
         <tr>
             <td>05:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10500"></td>
@@ -224,7 +225,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60500"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70500"></td>
         </tr>
-
+        <!--
         <tr>
             <td>05:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10530"></td>
@@ -235,7 +236,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60530"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70530"></td>
         </tr>
-
+        -->
         <tr>
             <td>06:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10600"></td>
@@ -246,7 +247,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60600"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70600"></td>
         </tr>
-
+        <!--
         <tr>
             <td>06:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10630"></td>
@@ -257,7 +258,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60630"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70630"></td>
         </tr>
-
+        -->
         <tr>
             <td>07:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10700"></td>
@@ -268,7 +269,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60700"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70700"></td>
         </tr>
-
+        <!--
         <tr>
             <td>07:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10730"></td>
@@ -279,7 +280,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60730"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70730"></td>
         </tr>
-
+        -->
         <tr>
             <td>08:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10800"></td>
@@ -290,7 +291,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60800"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70800"></td>
         </tr>
-
+        <!--
         <tr>
             <td>08:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10830"></td>
@@ -301,7 +302,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60830"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70830"></td>
         </tr>
-
+        -->
         <tr>
             <td>09:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10900"></td>
@@ -312,7 +313,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60900"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70900"></td>
         </tr>
-
+        <!--
         <tr>
             <td>09:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="10930"></td>
@@ -323,7 +324,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="60930"></td>
             <td><input type="checkbox" name="WeekdayTime" value="70930"></td>
         </tr>
-
+        -->
         <tr>
             <td>10:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11000"></td>
@@ -334,7 +335,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61000"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71000"></td>
         </tr>
-
+        <!--
         <tr>
             <td>10:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11030"></td>
@@ -345,7 +346,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61030"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71030"></td>
         </tr>
-
+        -->
         <tr>
             <td>11:00 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11100"></td>
@@ -356,7 +357,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61100"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71100"></td>
         </tr>
-
+        <!--
         <tr>
             <td>11:30 AM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11130"></td>
@@ -367,7 +368,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61130"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71130"></td>
         </tr>
-
+        -->
         <tr>
             <td>12:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11200"></td>
@@ -378,7 +379,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61200"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71200"></td>
         </tr>
-
+        <!--
         <tr>
             <td>12:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11230"></td>
@@ -389,7 +390,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61230"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71230"></td>
         </tr>
-
+        -->
         <tr>
             <td>01:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11300"></td>
@@ -400,7 +401,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61300"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71300"></td>
         </tr>
-
+        <!--
         <tr>
             <td>01:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11330"></td>
@@ -411,7 +412,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61330"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71330"></td>
         </tr>
-
+        -->
         <tr>
             <td>02:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11400"></td>
@@ -422,7 +423,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61400"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71400"></td>
         </tr>
-
+        <!--
         <tr>
             <td>02:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11430"></td>
@@ -433,7 +434,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61430"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71430"></td>
         </tr>
-
+        -->
         <tr>
             <td>03:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11500"></td>
@@ -444,7 +445,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61500"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71500"></td>
         </tr>
-
+        <!--
         <tr>
             <td>03:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11530"></td>
@@ -455,7 +456,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61530"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71530"></td>
         </tr>
-
+        -->
         <tr>
             <td>04:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11600"></td>
@@ -466,7 +467,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61600"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71600"></td>
         </tr>
-
+        <!--
         <tr>
             <td>04:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11630"></td>
@@ -477,7 +478,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61630"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71630"></td>
         </tr>
-
+        -->
         <tr>
             <td>05:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11700"></td>
@@ -488,7 +489,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61700"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71700"></td>
         </tr>
-
+        <!--
         <tr>
             <td>05:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11730"></td>
@@ -499,7 +500,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61730"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71730"></td>
         </tr>
-
+        -->
         <tr>
             <td>06:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11800"></td>
@@ -510,7 +511,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61800"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71800"></td>
         </tr>
-
+        <!--
         <tr>
             <td>06:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11830"></td>
@@ -521,7 +522,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61830"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71830"></td>
         </tr>
-
+        -->
         <tr>
             <td>07:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11900"></td>
@@ -532,7 +533,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61900"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71900"></td>
         </tr>
-
+        <!--
         <tr>
             <td>07:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="11930"></td>
@@ -543,7 +544,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="61930"></td>
             <td><input type="checkbox" name="WeekdayTime" value="71930"></td>
         </tr>
-
+        -->
         <tr>
             <td>08:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12000"></td>
@@ -554,7 +555,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62000"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72000"></td>
         </tr>
-
+        <!--
         <tr>
             <td>08:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12030"></td>
@@ -565,7 +566,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62030"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72030"></td>
         </tr>
-
+        -->
         <tr>
             <td>09:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12100"></td>
@@ -576,7 +577,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62100"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72100"></td>
         </tr>
-
+        <!--
         <tr>
             <td>09:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12130"></td>
@@ -587,7 +588,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62130"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72130"></td>
         </tr>
-
+        -->
         <tr>
             <td>10:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12200"></td>
@@ -598,7 +599,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62200"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72200"></td>
         </tr>
-
+        <!--
         <tr>
             <td>10:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12230"></td>
@@ -609,7 +610,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62230"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72230"></td>
         </tr>
-
+        -->
         <tr>
             <td>11:00 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12300"></td>
@@ -620,7 +621,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62300"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72300"></td>
         </tr>
-
+        <!--
         <tr>
             <td>11:30 PM</td>
             <td><input type="checkbox" name="WeekdayTime" value="12330"></td>
@@ -631,7 +632,7 @@ window.onload = function(){
             <td><input type="checkbox" name="WeekdayTime" value="62330"></td>
             <td><input type="checkbox" name="WeekdayTime" value="72330"></td>
         </tr>
-
+        -->
     </tbody>
 </table>
 </div>
