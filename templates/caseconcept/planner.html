@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Case Conceptualization{% endblock %}
+{% block body %}
+	<div class="container jumbotron">
+		<form role="form" method="post" action="">
+			{% csrf_token %}
+			<p>The most important aspect of CBT is practice. If you're not using these skills in your daily life, knowing the theory behind them won't help you. That's why it's a good idea to set aside specific times for your CBT training. We recommend using the course at least 2 to 3 times a week.</p>
+
+				{% include "caseconcept/calendar.html" %}
+
+			<br>
+			<p>Of course, this is just a guideline for you. If you find that your schedule isn't working, you can revisit it.</p>
+
+			<input type="submit" name="submit" value="Next" class="btn btn-primary"/>
+		</form>
+	</div>
+
+{% endblock %}

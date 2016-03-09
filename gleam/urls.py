@@ -21,6 +21,7 @@ from diagnostic import urls as diagnostic_urls
 from authenticate import urls as auth_urls
 from spirit import urls as spirit_urls
 from qa import urls as qa_urls
+from caseconcept import urls as cc_urls
 
 urlpatterns = [
     url(r'^users/', include(auth_urls, namespace='authenticate')),
@@ -28,4 +29,5 @@ urlpatterns = [
     url(r'^spirit/', include(spirit_urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^qa/', include(qa_urls, namespace='qa')),
+    url(r'^caseconcept/', include(cc_urls)),
 ]
