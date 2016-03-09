@@ -9,6 +9,9 @@ syntax: glob
 # Database
 db.sqlite3
 
+# Py
+*.py-tpl
+
 # Icon must end with two \r
 Icon
 

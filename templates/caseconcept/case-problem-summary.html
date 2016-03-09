@@ -89,7 +89,7 @@
                 $('.selected').each(function () {
                     selectedRows.push($(this).attr('data-id'));
                 });
-                $.redirect('{% url 'diagnostic:case_problem_summary' %}',
+                $.redirect('{% url 'case:case_problem_summary' %}',
                         {'problems': selectedRows,
                             'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value });
             }

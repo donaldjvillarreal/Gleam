@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'authenticate',
     'gleam',
     'diagnostic',
+    'core',
     'caseconcept',
 
     # Spirit apps
@@ -94,7 +95,7 @@ INSTALLED_APPS = [
     'spirit.topic.favorite',
     'spirit.topic.moderate',
     'spirit.topic.notification',
-    #'spirit.topic.poll',
+    'spirit.topic.poll',
     'spirit.topic.private',
     'spirit.topic.unread',
 
@@ -104,7 +105,7 @@ INSTALLED_APPS = [
     'spirit.comment.flag.admin',
     'spirit.comment.history',
     'spirit.comment.like',
-    #'spirit.comment.poll',
+    'spirit.comment.poll',
     'djconfig',
     'haystack',
     #############################

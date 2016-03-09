@@ -22,12 +22,14 @@ from authenticate import urls as auth_urls
 from spirit import urls as spirit_urls
 from qa import urls as qa_urls
 from caseconcept import urls as cc_urls
+from core import urls as core_urls
 
 urlpatterns = [
+    url(r'', include(core_urls, namespace='core')),
     url(r'^users/', include(auth_urls, namespace='authenticate')),
     url(r'^survey/', include(diagnostic_urls, namespace='diagnostic')),
     url(r'^spirit/', include(spirit_urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^qa/', include(qa_urls, namespace='qa')),
-    url(r'^caseconcept/', include(cc_urls)),
+    url(r'^case/', include(cc_urls, namespace='case')),
 ]

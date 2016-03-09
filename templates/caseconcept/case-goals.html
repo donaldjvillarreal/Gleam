@@ -40,7 +40,7 @@
                 </h5>
             </div>
         </div>
-        <form action="{% url 'diagnostic:case_goals' %}" method="post">
+        <form action="{% url 'case:case_goals' %}" method="post">
         {% csrf_token %}
         {% for problem in problems %}
             <div class="card card-block">
