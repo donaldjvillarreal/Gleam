@@ -52,10 +52,10 @@
                     <fieldset class="form-group">
                         <label for="addAspectInput">Provide a short problem description.</label>
                         <input type="text" id="addAspectInput" class="form-control" style="text-transform:capitalize;">
+                        <br>
+                        <a href="#" class="btn btn-primary pull-xs-right" data-dismiss="modal" id="addAspectConfirm">Confirm</a>
                     </fieldset>
-
                 </div>
-                <a href="#" class="btn btn-primary pull-xs-right" data-dismiss="modal" id="addAspectConfirm">Confirm</a>
             </div>
         </div>
 
@@ -88,18 +88,6 @@
         </div>
     </div>
 
-    {#    <div class="modal fade bd-example-modal-sm" id="addAspectModal" tabindex="-1" role="dialog" aria-labelledby="addAspectModal" aria-hidden="true">#}
-    {#      <div class="modal-dialog modal-sm">#}
-    {#        <div class="card card-block">#}
-    {#            <fieldset class="form-group">#}
-    {#              <label for="addAspectInput">Provide a problem description</label>#}
-    {#              <input type="text" id="addAspectInput" class="form-control" style="text-transform:capitalize;">#}
-    {#            </fieldset>#}
-    {#            #}
-    {#        </div>#}
-    </div>
-    </div>
-
 {% endblock %}
 {% block js_scripts %}
     <script type="application/javascript">
@@ -110,15 +98,21 @@
             $('#addAspectDiv').hide();
             var fsOptions = $('#frequencySeverityOptions');
             fsOptions.hide();
+            $('body').on('hide', '#frequencySeverityOptions', function () {
+                $('#aspect-list').find('>div').removeClass('active');
+            });
             $('body').on('click', '.aspects', function () {
                 // Hide the custom input
                 $('#addAspectDiv').hide();
                 var selectedAspect = $(this);
                 $('#aspect-list').find('>div').removeClass('active');
-                $(this).addClass('active');
+                $(this).toggleClass('active');
+                if (!fsOptions.is(':hidden')){
+                    $('#aspect-list').find('>div').removeClass('active');
+                }
                 $('#fProblem').html(selectedAspect.html().toLowerCase());
                 $('#sProblem').html(selectedAspect.html().toLowerCase());
-                fsOptions.show();
+                fsOptions.toggle();
 
                 $('#nextButton').on('click', function () {
                     var payload = {
@@ -135,12 +129,19 @@
                 $('#aspect-list').find('>div').removeClass('active');
                 fsOptions.hide();
                 $('#addAspectInput').val('');
-                $('#addAspectDiv').show();
+                $('#addAspectDiv').toggle();
+                if ($('#addAspectDiv').is(':visible')){
+                    $('#addAspect').addClass('active');
+                } else {
+                    $('#addAspect').removeClass('active');
+                }
             });
             $('#addAspectConfirm').on('click', function () {
-                $('#aspect-list').append('<div class="col-md-3 card card-block btn btn-primary-outline aspects">' + $('#addAspectInput').val());
+                $('#aspect-list').find('>div').removeClass('justAdded');
+                $('#aspect-list').append('<div class="col-md-3 card card-block btn btn-primary-outline aspects justAdded">' + $('#addAspectInput').val());
+                $('.justAdded').first().click();
+                $('#addAspectDiv').toggle();
             });
-            $('#addAspectDiv').hide();
         });
     </script>
 {% endblock %}
