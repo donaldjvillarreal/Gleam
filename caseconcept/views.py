@@ -66,11 +66,10 @@ def case_problem_summary(request):
             problem = models.ProblemAspect.objects.get(id=int(problem_id))
             problem.improve = True
             problem.save()
-        if len(request.POST.getlist('problems[]')) >= 1:
-            return HttpResponseRedirect(reverse('case:goals'))
-        else:
-            # TODO: Route to calendar
-            return HttpResponseRedirect(reverse('case:index'))
+        # if len(request.POST.getlist('problems[]')) >= 1:
+        return HttpResponseRedirect(reverse('case:goals'))
+        # else:
+        #     return HttpResponseRedirect(reverse('case:calendar'))
     else:
         problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
         if len(problems) > 1:
@@ -78,8 +77,7 @@ def case_problem_summary(request):
         elif len(problems) == 1:
             return HttpResponseRedirect(reverse('case:goals'))
         else:
-            # TODO: Route to calendar
-            return HttpResponseRedirect(reverse('case:index'))
+            return HttpResponseRedirect(reverse('case:calendar'))
 
 
 @login_required()
@@ -105,9 +103,13 @@ def case_goals(request):
         if len(problems) >= 2:
             return HttpResponseRedirect(reverse('case:goals_rank'))
         else:
-            # Only 1 problem area specified, skip to calendar
-            # TODO: Route to calendar
-            return HttpResponseRedirect(reverse('case:index'))
+            first_goal = models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id)).first()
+            models.ProblemGoalRanking.objects.get_or_create(user=User.objects.get(id=request.user.id),
+                                                            first=first_goal,
+                                                            second=None,
+                                                            third=None,
+                                                            current_goal=first_goal)
+            return HttpResponseRedirect(reverse('case:calendar'))
     else:
         return render(request, 'caseconcept/case-goals.html',
                       {'problems': models.ProblemAspect.objects.filter(improve=True)[:3],
@@ -149,35 +151,29 @@ def case_goal_rank_confirm(request):
         ranking = models.ProblemGoalRanking.objects.get(id=int(request.POST['rankId']))
         ranking.current_goal = models.ProblemGoal.objects.get(id=int(request.POST['goal']))
         ranking.save()
-        # TODO: route to calendar
-        return HttpResponseRedirect(reverse('case:index'))
+        return HttpResponseRedirect(reverse('case:calendar'))
     else:
         return HttpResponseRedirect(reverse('case:goals_rank'))
 
 
-def index(request):
-    return render(request, 'diagnostic/index.html', {})
-
-
 @login_required
-def cal(request):
+def calendar(request):
+    goal = models.ProblemGoalRanking.objects.get(user=User.objects.get(id=request.user.id))
     if request.method == 'POST':
-
-        for slot in request.POST.getlist('WeekdayTime'):
-            planner_form = PlannerForm({'WeekdayTime': slot})
-
+        for slot in request.POST.getlist('weekday_time'):
+            planner_form = PlannerForm({'weekday_time': slot})
             if planner_form.is_valid():
-
                 planner = planner_form.save(commit=False)
                 planner.user = request.user
+                planner.goal = goal
                 planner.save()
-
             else:
                 print planner_form.errors
-
+        # TODO: goto last page
         return HttpResponseRedirect("/")
 
     else:
         planner_form = PlannerForm()
 
-    return render(request, 'caseconcept/planner.html', {'planner_form': planner_form})
+    return render(request, 'caseconcept/planner.html', {'planner_form': planner_form,
+                                                        'goal': goal})

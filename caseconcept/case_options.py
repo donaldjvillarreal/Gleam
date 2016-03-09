@@ -12,4 +12,4 @@ SEVERITY_CHOICES = ((0, 'Very Minor'),
                     (4, 'Very Serious'),
                     )
 
-goal_frequencies = [('%i times a week' % i, i) for i in range(1, 8)]
+goal_frequencies = [('%i times a week' % i, i) for i in range(1, 5)]

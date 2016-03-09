@@ -1,0 +1,66 @@
+table.calendar {
+    margin-bottom: 0;
+    height: 100px;
+    overflow: hidden;
+}
+
+table.calendar > tbody > tr {
+    overflow: scroll;
+    background-color: #a6cee1;
+}
+
+table.calendar > tbody > tr:nth-child(even) {
+    overflow: scroll;
+    background-color: #c8dce5;
+}
+
+table.calendar > thead > tr > th {
+    text-align: center;
+}
+
+table.calendar > tbody > tr > td {
+    height: 20px;
+    border: 1px solid gray;
+}
+
+table.calendar > tbody > tr > td.has-events {
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+}
+
+table.calendar > tbody > tr > td.has-events > div {
+    background-color: #08C;
+    border-left: 1px solid white;
+}
+
+table.calendar > tbody > tr > td.has-events > div:first-child {
+    border-left: 1px;
+    margin-left: 1px;
+}
+
+table.calendar > tbody > tr > td.has-events > div.practice {
+    opacity: 0.5;
+}
+
+table.calendar > tbody > tr > td.has-events > div > span {
+    display: block;
+    text-align: center;
+}
+table.calendar > tbody > tr > td.has-events > div > span a {
+    color: white;
+}
+
+table.calendar > tbody > tr > td.has-events > div > span.title {
+    font-weight: bold;
+}
+
+table.calendar > tbody > tr > td {
+	text-align: center;
+	vertical-align: middle;
+}
+/*
+table.calendar > tbody > tr > td > input {
+    opacity:0;
+}*/

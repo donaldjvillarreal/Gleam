@@ -65,3 +65,7 @@ def bdi_survey_pagination(request):
     return render(request, 'diagnostic/bdi-pagination.html', {'qa_set': qa_set,
                                                               'current': question_number + 1,
                                                               'progress': int((question_number / 21.0) * 100)})
+
+
+def index(request):
+    return render(request, 'diagnostic/index.html', {})

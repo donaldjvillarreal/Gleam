@@ -75,10 +75,12 @@ class ProblemGoalRanking(models.Model):
             return '%s\'s current goal: none' % self.user.username
 
 
-class PracticeCal(models.Model):
+class PracticeCalendar(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.ForeignKey(User)
-    WeekdayTime = models.CharField(max_length=5)
+    goal = models.ForeignKey(ProblemGoal)
+
+    weekday_time = models.CharField(max_length=5)
 
     def __unicode__(self):
-        return self.user.username
+        return '%s, %s' % (self.user.username, self.weekday_time)
