@@ -15,3 +15,8 @@ class ProgressIssue(models.Model):
     motivation = models.BooleanField(default=False, blank=True)
     forgetfulness = models.BooleanField(default=False, blank=True)
     tired = models.BooleanField(default=False, blank=True)
+
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta(object):
+        unique_together = ('user', 'created_on',)
