@@ -7,17 +7,20 @@ from caseconcept.forms import PlannerForm
 @login_required
 def cal(request):
 	if request.method == 'POST':
-		planner_form = PlannerForm(request.POST)
 
-		if planner_form.is_valid():
-			planner = planner_form.save(commit=False)
-			planner.user = request.user
-			planner.save()
+		for slot in request.POST.getlist('WeekdayTime'):
+			planner_form = PlannerForm(request.POST)
 
-			return HttpResponseRedirect("/")
+			if planner_form.is_valid():
 
-		else:
-			print planner_form.errors
+				planner = planner_form.save(commit=False)
+				planner.user = request.user
+				planner.save()
+
+			else:
+				print planner_form.errors
+
+		return HttpResponseRedirect("/")
 
 	else:
 		planner_form = PlannerForm()
