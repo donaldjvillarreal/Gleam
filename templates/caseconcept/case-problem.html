@@ -127,7 +127,7 @@
                         'severity': $('#severityInput').val(),
                         'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
                     };
-                    $.redirect('{% url 'case:case_problem' %}', payload);
+                    $.redirect('{% url 'case:problem' %}', payload);
                 });
             });
             $('#addAspect').on('click', function () {

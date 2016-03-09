@@ -65,7 +65,7 @@
                 $('.goals').each(function () {
                     orderedGoals.push($(this).val());
                 });
-                $.redirect('{% url 'case:case_goals_rank' %}',
+                $.redirect('{% url 'case:goals_rank' %}',
                         {'goals': orderedGoals,
                             'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value});
             });

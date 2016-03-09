@@ -17,8 +17,8 @@ def case_index(request):
     else:
         welcome = True
     return render(request, 'caseconcept/case-problem.html', {'welcome': welcome,
-                                                            'frequencyOptions': FREQUENCY_CHOICES,
-                                                            'severityOptions': SEVERITY_CHOICES})
+                                                             'frequencyOptions': FREQUENCY_CHOICES,
+                                                             'severityOptions': SEVERITY_CHOICES})
 
 
 @login_required()
@@ -29,9 +29,9 @@ def case_problem(request):
                                                                       frequency=int(request.POST['frequency']),
                                                                       severity=int(request.POST['severity']))
         return render(request, 'caseconcept/case-problem-descriptions.html', {'problem': problem,
-                                                                             'distressLevels': range(0, 11)})
+                                                                              'distressLevels': range(0, 11)})
     else:
-        return HttpResponseRedirect(reverse('diagnostic:case_index'))
+        return HttpResponseRedirect(reverse('case:index'))
 
 
 @login_required()
@@ -52,11 +52,11 @@ def case_problem_description(request):
             reaction=request.POST['reactionInput2'],
             distress_level=request.POST['distressInput2'])
         if request.GET.get('previous', None) is not None:
-            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+            return HttpResponseRedirect(reverse('case:index'))
         else:
-            return HttpResponseRedirect(reverse('diagnostic:case_problem_summary'))
+            return HttpResponseRedirect(reverse('case:problem_summary'))
     else:
-        return HttpResponseRedirect(reverse('diagnostic:case_index'))
+        return HttpResponseRedirect(reverse('case:index'))
 
 
 @login_required()
@@ -67,19 +67,19 @@ def case_problem_summary(request):
             problem.improve = True
             problem.save()
         if len(request.POST.getlist('problems[]')) >= 1:
-            return HttpResponseRedirect(reverse('diagnostic:case_goals'))
+            return HttpResponseRedirect(reverse('case:goals'))
         else:
             # TODO: Route to calendar
-            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+            return HttpResponseRedirect(reverse('case:index'))
     else:
         problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
         if len(problems) > 1:
             return render(request, 'caseconcept/case-problem-summary.html', {'problems': problems})
         elif len(problems) == 1:
-            return HttpResponseRedirect(reverse('diagnostic:case_goals'))
+            return HttpResponseRedirect(reverse('case:goals'))
         else:
             # TODO: Route to calendar
-            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+            return HttpResponseRedirect(reverse('case:index'))
 
 
 @login_required()
@@ -92,7 +92,7 @@ def case_goals(request):
             problem.improve = True
             problem.save()
         else:
-            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+            return HttpResponseRedirect(reverse('case:index'))
     if request.method == 'POST':
         # Get the first three problems that have been marked as improve = True
         problems = models.ProblemAspect.objects.filter(improve=True)[:3]
@@ -103,11 +103,11 @@ def case_goals(request):
                 action=request.POST['%i-action' % problem.id],
                 frequency=int(request.POST['%i-frequency' % problem.id]))
         if len(problems) >= 2:
-            return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+            return HttpResponseRedirect(reverse('case:goals_rank'))
         else:
             # Only 1 problem area specified, skip to calendar
             # TODO: Route to calendar
-            return HttpResponseRedirect(reverse('diagnostic:case_index'))
+            return HttpResponseRedirect(reverse('case:index'))
     else:
         return render(request, 'caseconcept/case-goals.html',
                       {'problems': models.ProblemAspect.objects.filter(improve=True)[:3],
@@ -150,9 +150,9 @@ def case_goal_rank_confirm(request):
         ranking.current_goal = models.ProblemGoal.objects.get(id=int(request.POST['goal']))
         ranking.save()
         # TODO: route to calendar
-        return HttpResponseRedirect(reverse('diagnostic:case_index'))
+        return HttpResponseRedirect(reverse('case:index'))
     else:
-        return HttpResponseRedirect(reverse('diagnostic:case_goals_rank'))
+        return HttpResponseRedirect(reverse('case:goals_rank'))
 
 
 def index(request):

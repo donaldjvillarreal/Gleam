@@ -148,14 +148,14 @@
             }
             $('#anotherProblem').on('click', function () {
                 if (checkInputs() == true) {
-                    $.redirect('{% url 'case:case_problem_description' %}?previous=True', payload());
+                    $.redirect('{% url 'case:problem_description' %}?previous=True', payload());
                 } else {
                     $('#warningModal').modal('show');
                 }
             });
             $('#doneWithProblems').on('click', function () {
                 if (checkInputs()) {
-                    $.redirect('{% url 'case:case_problem_description' %}', payload());
+                    $.redirect('{% url 'case:problem_description' %}', payload());
                 } else {
                     $('#warningModal').modal('show');
                 }
