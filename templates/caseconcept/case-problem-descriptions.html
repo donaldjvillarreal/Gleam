@@ -8,6 +8,25 @@
                 What happened? What were you thinking when it happened? How did it make you feel? How did you react?
             </h5>
         </div>
+
+        {% if errors_1 %}
+            <div class="row">
+                <div class="alert alert-warning">
+                    Following errors occurred: <br>
+                    {{ errors_1 }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if errors_2 %}
+            <div class="row">
+                <div class="alert alert-warning">
+                    Following errors occurred: <br>
+                    {{ errors_2 }}
+                </div>
+            </div>
+        {% endif %}
+
         <table class="table table-striped">
             <thead>
             <tr>
@@ -41,7 +60,8 @@
             </tr>
             <tr>
                 <td>
-                    <textarea id="situationInput1" class="form-control check-filled" maxlength="300" required></textarea>
+                    <textarea id="situationInput1" class="form-control check-filled" maxlength="300"
+                              required></textarea>
                 </td>
                 <td>
                     <textarea id="thoughtInput1" class="form-control check-filled" maxlength="300" required></textarea>
@@ -137,15 +157,17 @@
                     'problem': {{ problem.id }}
                 }
             };
+
             function checkInputs() {
                 var checker = true;
                 $('.check-filled').each(function () {
-                    if ($(this).val().length < 5){
-                        checker =  false;
+                    if ($(this).val().length < 5) {
+                        checker = false;
                     }
                 });
                 return checker;
             }
+
             $('#anotherProblem').on('click', function () {
                 if (checkInputs() == true) {
                     $.redirect('{% url 'case:problem_description' %}?previous=True', payload());

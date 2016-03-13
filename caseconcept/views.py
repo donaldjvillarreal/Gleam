@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
-from caseconcept.forms import PlannerForm
+from caseconcept import forms
 
 from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies
 from caseconcept import models
@@ -18,18 +18,24 @@ def case_index(request):
         welcome = True
     return render(request, 'caseconcept/case-problem.html', {'welcome': welcome,
                                                              'frequencyOptions': FREQUENCY_CHOICES,
-                                                             'severityOptions': SEVERITY_CHOICES})
+                                                             'severityOptions': SEVERITY_CHOICES,
+                                                             'error': request.GET.get('formIssue', False)})
 
 
 @login_required()
 def case_problem(request):
     if request.method == 'POST':
-        problem, created = models.ProblemAspect.objects.get_or_create(user=User.objects.get(id=request.user.id),
-                                                                      text=request.POST['text'],
-                                                                      frequency=int(request.POST['frequency']),
-                                                                      severity=int(request.POST['severity']))
-        return render(request, 'caseconcept/case-problem-descriptions.html', {'problem': problem,
-                                                                              'distressLevels': range(0, 11)})
+        problem_form = forms.ProblemAspectForm({'text': request.POST['text'],
+                                                'frequency': int(request.POST['frequency']),
+                                                'severity': int(request.POST['severity'])})
+        if problem_form.is_valid():
+            problem = problem_form.save(commit=False)
+            problem.user = User.objects.get(id=request.user.id)
+            problem.save()
+            return render(request, 'caseconcept/case-problem-descriptions.html', {'problem': problem,
+                                                                                  'distressLevels': range(0, 11)})
+        else:
+            return HttpResponseRedirect('%s?formIssue=True' % reverse('case:index'))
     else:
         return HttpResponseRedirect(reverse('case:index'))
 
@@ -37,24 +43,52 @@ def case_problem(request):
 @login_required()
 def case_problem_description(request):
     if request.method == 'POST':
-        problem_description, created = models.ProblemAspectSituation.objects.get_or_create(
-            problem=models.ProblemAspect.objects.get(id=request.POST['problem']),
-            situation=request.POST['situationInput1'],
-            thought=request.POST['thoughtInput1'],
-            feeling=request.POST['feelingInput1'],
-            reaction=request.POST['reactionInput1'],
-            distress_level=request.POST['distressInput1'])
-        problem_description_2, created_2 = models.ProblemAspectSituation.objects.get_or_create(
-            problem=models.ProblemAspect.objects.get(id=request.POST['problem']),
-            situation=request.POST['situationInput2'],
-            thought=request.POST['thoughtInput2'],
-            feeling=request.POST['feelingInput2'],
-            reaction=request.POST['reactionInput2'],
-            distress_level=request.POST['distressInput2'])
-        if request.GET.get('previous', None) is not None:
+        errors_1, errors_2 = None, None
+        problem_aspect = models.ProblemAspect.objects.get(id=request.POST['problem'])
+        print problem_aspect
+        problem_description_form = forms.ProblemAspectSituationForm({
+            'situation': request.POST['situationInput1'],
+            'thought': request.POST['thoughtInput1'],
+            'feeling': request.POST['feelingInput1'],
+            'reaction': request.POST['reactionInput1'],
+            'distress_level': request.POST['distressInput1']})
+        if problem_description_form.is_valid():
+            problem_description = problem_description_form.save(commit=False)
+            problem_description.problem = problem_aspect
+            problem_description.save()
+        else:
+            errors_1 = problem_description_form.errors
+
+        if request.POST['situationInput2']:
+            problem_description_form_2 = forms.ProblemAspectSituationForm({
+                'problem': problem_aspect,
+                'situation': request.POST['situationInput2'],
+                'thought': request.POST['thoughtInput2'],
+                'feeling': request.POST['feelingInput2'],
+                'reaction': request.POST['reactionInput2'],
+                'distress_level': request.POST['distressInput2']})
+            if problem_description_form_2.is_valid():
+                problem_description = problem_description_form_2.save(commit=False)
+                problem_description.problem = problem_aspect
+                problem_description.save()
+            else:
+                errors_2 = problem_description_form_2.errors
+
+        if errors_1 is not None or errors_2 is not None:
+            # Some form errors, display them
+            return render(request, 'caseconcept/case-problem-descriptions.html',
+                          {'problem': request.POST['problem'],
+                           'distressLevels': range(0, 11),
+                           'errors_1': errors_1,
+                           'errors_2': errors_2})
+
+        elif request.GET.get('previous', None) is not None:
+            # No errors, go to index if needed
             return HttpResponseRedirect(reverse('case:index'))
         else:
+            # Done with problems, go to problem description
             return HttpResponseRedirect(reverse('case:problem_summary'))
+
     else:
         return HttpResponseRedirect(reverse('case:index'))
 
@@ -161,7 +195,7 @@ def calendar(request):
     goal = models.ProblemGoalRanking.objects.get(user=User.objects.get(id=request.user.id))
     if request.method == 'POST':
         for slot in request.POST.getlist('weekday_time'):
-            planner_form = PlannerForm({'weekday_time': slot})
+            planner_form = forms.PlannerForm({'weekday_time': slot})
             if planner_form.is_valid():
                 planner = planner_form.save(commit=False)
                 planner.user = request.user
@@ -172,7 +206,7 @@ def calendar(request):
         return HttpResponseRedirect(u'%s?courses=True' % reverse('core:progress_check'))
 
     else:
-        planner_form = PlannerForm()
+        planner_form = forms.PlannerForm()
 
     return render(request, 'caseconcept/planner.html', {'planner_form': planner_form,
                                                         'goal': goal})

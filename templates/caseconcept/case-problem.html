@@ -29,6 +29,13 @@
         <progress class="progress progress-striped" value="10" max="100">10%</progress>
         <h5 class="alert alert-info">Select an aspect of your life that is being negatively impacted by depression or
             feel free to add your own.</h5>
+        {% if errors %}
+            <div class="row">
+                <div class="alert alert-warning">
+                    An error occured, please try again.
+                </div>
+            </div>
+        {% endif %}
 
         <div class="row">
             <div id="aspect-list">
@@ -107,7 +114,7 @@
                 var selectedAspect = $(this);
                 $('#aspect-list').find('>div').removeClass('active');
                 $(this).toggleClass('active');
-                if (!fsOptions.is(':hidden')){
+                if (!fsOptions.is(':hidden')) {
                     $('#aspect-list').find('>div').removeClass('active');
                 }
                 $('#fProblem').html(selectedAspect.html().toLowerCase());
@@ -130,7 +137,7 @@
                 fsOptions.hide();
                 $('#addAspectInput').val('');
                 $('#addAspectDiv').toggle();
-                if ($('#addAspectDiv').is(':visible')){
+                if ($('#addAspectDiv').is(':visible')) {
                     $('#addAspect').addClass('active');
                 } else {
                     $('#addAspect').removeClass('active');
