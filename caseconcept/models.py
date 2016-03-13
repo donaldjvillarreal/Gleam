@@ -84,3 +84,6 @@ class PracticeCalendar(models.Model):
 
     def __unicode__(self):
         return '%s, %s' % (self.user.username, self.weekday_time)
+
+    class Meta(object):
+        unique_together = (('goal', 'weekday_time'),)

@@ -165,15 +165,20 @@ def calendar(request):
             if planner_form.is_valid():
                 planner = planner_form.save(commit=False)
                 planner.user = request.user
-                planner.goal = goal
+                planner.goal = goal.current_goal
                 planner.save()
             else:
                 print planner_form.errors
-        # TODO: goto last page
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect(u'%s?courses=True' % reverse('core:progress_check'))
 
     else:
         planner_form = PlannerForm()
 
     return render(request, 'caseconcept/planner.html', {'planner_form': planner_form,
                                                         'goal': goal})
+
+
+@login_required()
+def start_course(request):
+    return render(request, 'caseconcept/start-course.html',
+                  {'slots': models.PracticeCalendar.objects.filter(user=User.objects.get(id=request.user.id))})

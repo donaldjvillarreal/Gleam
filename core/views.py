@@ -20,8 +20,11 @@ def progress_delay(request):
             progress_issue = progress_issue.save(commit=False)
             progress_issue.user = User.objects.get(id=request.user.id)
             progress_issue.save()
-            # return HttpResponseRedirect(reverse('core:index'))
-            return HttpResponseRedirect('/')
+            if request.GET.get('courses', None) is not None:
+                return HttpResponseRedirect(reverse('case:start_course'))
+            else:
+                print request.GET
+                return HttpResponseRedirect('/')
         else:
             return render(request, 'core/progress-delay.html', {'errors': progress_issue.errors})
     else:

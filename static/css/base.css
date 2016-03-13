@@ -4,6 +4,8 @@
 html {
     position: relative;
     min-height: 100%;
+    /*clickjacking prevention*/
+    display : none;
 }
 
 body {
@@ -32,8 +34,3 @@ body {
 .push {
     height: 80px;
 }
-
-
-/*.aspects {*/
-    /*margin-left: 10px;*/
-/*}*/
