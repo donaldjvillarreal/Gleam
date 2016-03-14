@@ -192,7 +192,7 @@ def case_goal_rank_confirm(request):
 
 @login_required
 def calendar(request):
-    goal = models.ProblemGoalRanking.objects.get(user=User.objects.get(id=request.user.id))
+    goal = models.ProblemGoalRanking.objects.filter(user=User.objects.get(id=request.user.id)).latest('current_goal')
     if request.method == 'POST':
         for slot in request.POST.getlist('weekday_time'):
             planner_form = forms.PlannerForm({'weekday_time': slot})

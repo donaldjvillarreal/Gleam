@@ -26,6 +26,14 @@
                 Remember, you’ll have the chance to target all of your goals.
                 Are you sure you want to start with the hardest one?
             </h5>
+            {% if errors %}
+                <div class="row">
+                    <div class="alert alert-danger">
+                        Following errors occurred: <br>
+                        {{ errors }}
+                    </div>
+                </div>
+            {% endif %}
             <form action="{% url 'case:goal_rank_confirm' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" value="{{ ranking.id }}" name="rankId">
@@ -34,16 +42,17 @@
                     Sounds good! I want to start with {{ ranking.first.action }}
                 </label>
                 {% if ranking.second.id %}
-                <label for="secondGoal" class="form-control">
-                    <input type="radio" id="secondGoal" value="{{ ranking.second.id }}" name="goal"> I would rather
-                    want to start with {{ ranking.second.action }}
-                </label>
+                    <label for="secondGoal" class="form-control">
+                        <input type="radio" id="secondGoal" value="{{ ranking.second.id }}" name="goal"> I would rather
+                        want to start with {{ ranking.second.action }}
+                    </label>
                 {% endif %}
                 {% if ranking.third.id %}
-                <label for="thirdGoal" class="form-control">
-                    <input type="radio" id="thirdGoal" value="{{ ranking.third.id }}" name="goal"> I would rather want
-                    to start with {{ ranking.third.action }}
-                </label>
+                    <label for="thirdGoal" class="form-control">
+                        <input type="radio" id="thirdGoal" value="{{ ranking.third.id }}" name="goal"> I would rather
+                        want
+                        to start with {{ ranking.third.action }}
+                    </label>
                 {% endif %}
                 <input type="submit" value="Submit" class="btn btn-success pull-right">
 

@@ -70,13 +70,14 @@
             <div class="col-md-12">
                 <form>
                     <fieldset class="form-group">
-                        <label for="frequencyInput" id="frequencyInputLabel">How frequently does depression affect your
-                            <span id="fProblem"></span>?</label>
-                        <select id="frequencyInput" class="c-select form-control">
-                            {% for option in frequencyOptions %}
-                                <option value="{{ option.0 }}">{{ option.1 }}</option>
-                            {% endfor %}
-                        </select>
+                        <span>How frequently does depression affect your
+                            <span id="fProblem"></span>?</span>
+                        <br>
+                        {% for option in frequencyOptions %}
+                            <label>
+                                <input type="radio" value="{{ option.0 }}" name="frequency"/> {{ option.1 }}
+                            </label>
+                        {% endfor %}
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="severityInput" id="severityInputLabel">How significantly has depression affected
@@ -147,7 +148,7 @@
                 $('#aspect-list').find('>div').removeClass('justAdded');
                 $('#aspect-list').append('<div class="col-md-3 card card-block btn btn-primary-outline aspects justAdded">' + $('#addAspectInput').val());
                 $('.justAdded').first().click();
-                $('#addAspectDiv').toggle();
+                $('#addAspectDiv').hide();
             });
         });
     </script>
