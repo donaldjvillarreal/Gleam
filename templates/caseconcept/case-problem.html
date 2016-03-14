@@ -80,12 +80,11 @@
                         {% endfor %}
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="severityInput" id="severityInputLabel">How significantly has depression affected
-                            your
-                            <span id="sProblem"></span>?</label>
-                        <select id="severityInput" class="c-select form-control">
+                        <span>How significantly has depression affected your <span id="sProblem"></span>?</span>
+                        <select id="severityInput" class="form-control">
                             {% for option in severityOptions %}
-                                <option value="{{ option.0 }}">{{ option.1 }}</option>
+                                <option value="{{ option.0 }}" name="severity" id="{{ option.1 }}"> {{ option.1 }}
+                                {#                                <label for="{{ option.1 }}">{{ option.1 }}</label>#}
                             {% endfor %}
                         </select>
                     </fieldset>
@@ -104,23 +103,30 @@
                 $('#welcomeModal').modal('show');
             {% endif %}
             $('#addAspectDiv').hide();
+
             var fsOptions = $('#frequencySeverityOptions');
             fsOptions.hide();
+
             $('body').on('hide', '#frequencySeverityOptions', function () {
                 $('#aspect-list').find('>div').removeClass('active');
             });
+
             $('body').on('click', '.aspects', function () {
                 // Hide the custom input
                 $('#addAspectDiv').hide();
                 var selectedAspect = $(this);
-                $('#aspect-list').find('>div').removeClass('active');
-                $(this).toggleClass('active');
-                if (!fsOptions.is(':hidden')) {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                    fsOptions.hide();
+                }
+                else {
                     $('#aspect-list').find('>div').removeClass('active');
+                    $(this).addClass('active');
+                    $('#addAspect').removeClass('active');
+                    fsOptions.show();
                 }
                 $('#fProblem').html(selectedAspect.html().toLowerCase());
                 $('#sProblem').html(selectedAspect.html().toLowerCase());
-                fsOptions.toggle();
 
                 $('#nextButton').on('click', function () {
                     var payload = {
@@ -129,9 +135,14 @@
                         'severity': $('#severityInput').val(),
                         'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
                     };
-                    $.redirect('{% url 'case:problem' %}', payload);
+                    if (payload.frequency == undefined) {
+                        alert('Please select a frequency.');
+                    } else {
+                        $.redirect('{% url 'case:problem' %}', payload);
+                    }
                 });
             });
+
             $('#addAspect').on('click', function () {
                 //Remove active divs and hide the option menu
                 $('#aspect-list').find('>div').removeClass('active');
