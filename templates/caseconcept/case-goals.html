@@ -17,10 +17,17 @@
                     <div class="card card-block">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="card-title">Problem</h4>
+                                <h4 class="card-title"><span class="label label-info">Problem Description</span> Problem
+                                </h4>
                                 <div class="card-text">
-                                    <label for="exampleProblem"></label>
+                                    <label for="exampleProblem"><span class="label label-info">Goal</span> </label>
                                     <input type="text" class="form-control" id="exampleProblem" disabled value="action">
+                                    <label>
+                                        <span class="label label-info">Frequency</span>
+                                        <select disabled class="form-control">
+                                            <option>2 times a week</option>
+                                        </select>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -29,7 +36,7 @@
             </div>
         </div>
         <hr>
-            <div class="row">
+        <div class="row">
             <div class="col-sm-12">
                 <h5 class="alert alert-info">
                     For each problem that you selected, create a goal that will help you overcome it. It might be
@@ -41,26 +48,30 @@
             </div>
         </div>
         <form action="{% url 'case:goals' %}" method="post">
-        {% csrf_token %}
-        {% for problem in problems %}
-            <div class="card card-block">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4 class="card-title">{{ problem.text }}</h4>
-                        <div class="card-text">
-                            <label for="{{ problem.id }}"></label>
-                            <input type="text" class="form-control" id="{{ problem.id }}" name="{{ problem.id }}-action" required>
-                            <br>
-                            <select class="form-control pull-left" name="{{ problem.id }}-frequency">
-                                {% for freq in frequencies %}
-                                    <option value="{{ freq.1 }}" name="{{ problem.id }}-frequency">{{ freq.0 }}</option>
-                                {% endfor %}
-                            </select>
+            {% csrf_token %}
+            {% for problem in problems %}
+                <div class="card card-block">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="card-title"><span
+                                    class="label label-info">Problem Description</span> {{ problem.text }}</h4>
+                            <div class="card-text">
+                                <label for="{{ problem.id }}"></label><span class="label label-info">Goal</span>
+                                <input type="text" class="form-control" id="{{ problem.id }}"
+                                       name="{{ problem.id }}-action" required>
+                                <label><span class="label label-info">Frequency</span>
+                                    <select class="form-control pull-left" name="{{ problem.id }}-frequency">
+                                        {% for freq in frequencies %}
+                                            <option value="{{ freq.1 }}"
+                                                    name="{{ problem.id }}-frequency">{{ freq.0 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
             <input type="submit" class="btn btn-primary pull-right" value="Next">
         </form>
 
