@@ -42,7 +42,7 @@ class PollVoteManyForm(forms.Form):
             c.pk
             for c in self.poll_choices
             if c.vote
-        ]
+            ]
 
         if not selected_choices:
             return
@@ -50,7 +50,7 @@ class PollVoteManyForm(forms.Form):
         if not self.poll.is_multiple_choice:
             selected_choices = selected_choices[0]
 
-        self.initial = {'choices': selected_choices, }
+        self.initial = {'choices': selected_choices,}
 
     def clean_choices(self):
         choices = self.cleaned_data['choices']
@@ -86,8 +86,8 @@ class PollVoteManyForm(forms.Form):
         if not self.poll.is_multiple_choice:
             choices = [choices, ]
 
-        CommentPollVote.objects\
-            .filter(voter=self.user, choice__poll=self.poll)\
+        CommentPollVote.objects \
+            .filter(voter=self.user, choice__poll=self.poll) \
             .update(is_removed=True)
 
         for choice_id in choices:

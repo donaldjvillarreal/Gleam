@@ -9,7 +9,6 @@ from django.utils import timezone
 
 
 class TopicPoll(models.Model):
-
     topic = models.OneToOneField('spirit_topic.Topic', verbose_name=_("topic"), primary_key=True, related_name='poll')
 
     date = models.DateTimeField(default=timezone.now)
@@ -29,20 +28,18 @@ class TopicPoll(models.Model):
 
 
 class TopicPollChoice(models.Model):
-
     poll = models.ForeignKey(TopicPoll, verbose_name=_("poll"), related_name='choices')
 
     description = models.CharField(_("choice description"), max_length=255)
     vote_count = models.PositiveIntegerField(_("vote count"), default=0)
 
     class Meta:
-        #unique_together = ('poll', 'description')
+        # unique_together = ('poll', 'description')
         verbose_name = _("poll choice")
         verbose_name_plural = _("poll choices")
 
 
 class TopicPollVote(models.Model):
-
     choice = models.ForeignKey(TopicPollChoice, verbose_name=_("poll choice"), related_name='votes')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_votes')
 

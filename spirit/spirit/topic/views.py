@@ -39,7 +39,7 @@ def publish(request, category_id=None):
             comment_posted(comment=comment, mentions=cform.mentions)
             return redirect(topic.get_absolute_url())
     else:
-        form = TopicForm(user=request.user, initial={'category': category_id, })
+        form = TopicForm(user=request.user, initial={'category': category_id,})
         cform = CommentForm()
 
     context = {
@@ -68,7 +68,7 @@ def update(request, pk):
     else:
         form = TopicForm(user=request.user, instance=topic)
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/topic/update.html', context)
 
@@ -81,10 +81,10 @@ def detail(request, pk, slug):
 
     utils.topic_viewed(request=request, topic=topic)
 
-    comments = Comment.objects\
-        .for_topic(topic=topic)\
-        .with_likes(user=request.user)\
-        .with_polls(user=request.user)\
+    comments = Comment.objects \
+        .for_topic(topic=topic) \
+        .with_likes(user=request.user) \
+        .with_polls(user=request.user) \
         .order_by('date')
 
     comments = paginate(
@@ -102,15 +102,15 @@ def detail(request, pk, slug):
 
 
 def index_active(request):
-    categories = Category.objects\
-        .visible()\
+    categories = Category.objects \
+        .visible() \
         .parents()
 
-    topics = Topic.objects\
-        .visible()\
-        .global_()\
-        .with_bookmarks(user=request.user)\
-        .order_by('-is_globally_pinned', '-last_active')\
+    topics = Topic.objects \
+        .visible() \
+        .global_() \
+        .with_bookmarks(user=request.user) \
+        .order_by('-is_globally_pinned', '-last_active') \
         .select_related('category')
 
     topics = yt_paginate(

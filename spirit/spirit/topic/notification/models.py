@@ -10,7 +10,6 @@ from django.db import IntegrityError, transaction
 
 from .managers import TopicNotificationQuerySet
 
-
 UNDEFINED, MENTION, COMMENT = range(3)
 
 ACTION_CHOICES = (
@@ -21,7 +20,6 @@ ACTION_CHOICES = (
 
 
 class TopicNotification(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_topic_notifications')
     topic = models.ForeignKey('spirit_topic.Topic')
     comment = models.ForeignKey('spirit_comment.Comment')
@@ -59,8 +57,8 @@ class TopicNotification(models.Model):
         if not user.is_authenticated():
             return
 
-        cls.objects\
-            .filter(user=user, topic=topic)\
+        cls.objects \
+            .filter(user=user, topic=topic) \
             .update(is_read=True)
 
     @classmethod
@@ -79,9 +77,9 @@ class TopicNotification(models.Model):
 
     @classmethod
     def notify_new_comment(cls, comment):
-        cls.objects\
-            .filter(topic=comment.topic, is_active=True, is_read=True)\
-            .exclude(user=comment.user)\
+        cls.objects \
+            .filter(topic=comment.topic, is_active=True, is_read=True) \
+            .exclude(user=comment.user) \
             .update(comment=comment, is_read=False, action=COMMENT, date=timezone.now())
 
     @classmethod
@@ -103,17 +101,17 @@ class TopicNotification(models.Model):
             except IntegrityError:
                 pass
 
-        cls.objects\
-            .filter(user__in=mentions.values(), topic=comment.topic, is_read=True)\
+        cls.objects \
+            .filter(user__in=mentions.values(), topic=comment.topic, is_read=True) \
             .update(comment=comment, is_read=False, action=MENTION, date=timezone.now())
 
     @classmethod
     def bulk_create(cls, users, comment):
         return cls.objects.bulk_create([
-            cls(user=user,
-                topic=comment.topic,
-                comment=comment,
-                action=COMMENT,
-                is_active=True)
-            for user in users
-        ])
+                                           cls(user=user,
+                                               topic=comment.topic,
+                                               comment=comment,
+                                               action=COMMENT,
+                                               is_active=True)
+                                           for user in users
+                                           ])

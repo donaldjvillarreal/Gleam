@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block body %}
+    <div class="container">
+        {% if welcome %}
+            <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModal"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br>
+                                <p class="modal-body">
+                                    Now that you are an official Gleamer, let’s see what we are up against.
+                                    We will first identify the areas of your life that depression has
+                                    affected. Then we will guide you through picking out specific goals to
+                                    address each of those problems. Each goal you achieve is a battle you win
+                                    against depression.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Let's Go</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <progress class="progress progress-striped" value="10" max="100">10%</progress>
+        <h5 class="alert alert-info">Select an aspect of your life that is being negatively impacted by depression or
+            feel free to add your own.</h5>
+        {% if errors %}
+            <div class="row">
+                <div class="alert alert-warning">
+                    An error occured, please try again.
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div id="aspect-list">
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">Family</div>
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">Work</div>
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">Friendships</div>
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">Romantic Relationships</div>
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">Self-Esteem</div>
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">Recreational Activities</div>
+                <div class="col-md-3 card card-block btn btn-primary-outline aspects">School</div>
+                {% for aspect in aspects %}
+                    <div class="col-md-3 card card-block btn btn-primary-outline aspects">{{ aspect.text }}</div>
+                {% endfor %}
+            </div>
+            <div class="col-md-3 card card-block btn btn-success-outline" id="addAspect">Add another</div>
+        </div>
+
+        <div class="row" id="addAspectDiv">
+            <div class="col-sm-12">
+                <div class="card card-block">
+                    <fieldset class="form-group">
+                        <label for="addAspectInput">Provide a short problem description.</label>
+                        <input type="text" id="addAspectInput" class="form-control" style="text-transform:capitalize;">
+                        <br>
+                        <a href="#" class="btn btn-primary pull-xs-right" data-dismiss="modal" id="addAspectConfirm">Confirm</a>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="frequencySeverityOptions">
+            <div class="col-md-12">
+                <form>
+                    <fieldset class="form-group">
+                        <span>How frequently does depression affect your
+                            <span id="fProblem"></span>?</span>
+                        <br>
+                        {% for option in frequencyOptions %}
+                            <label>
+                                <input type="radio" value="{{ option.0 }}" name="frequency"/> {{ option.1 }}
+                            </label>
+                        {% endfor %}
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <span>How significantly has depression affected your <span id="sProblem"></span>?</span>
+                        <select id="severityInput" class="form-control">
+                            {% for option in severityOptions %}
+                                <option value="{{ option.0 }}" name="severity" id="{{ option.1 }}"> {{ option.1 }}
+                                {#                                <label for="{{ option.1 }}">{{ option.1 }}</label>#}
+                            {% endfor %}
+                        </select>
+                    </fieldset>
+                    {% csrf_token %}
+                </form>
+                <a href="#" class="btn btn-primary" id="nextButton">Next</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js_scripts %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            {% if welcome %}
+                $('#welcomeModal').modal('show');
+            {% endif %}
+            $('#addAspectDiv').hide();
+
+            var fsOptions = $('#frequencySeverityOptions');
+            fsOptions.hide();
+
+            $('body').on('hide', '#frequencySeverityOptions', function () {
+                $('#aspect-list').find('>div').removeClass('active');
+            });
+
+            $('body').on('click', '.aspects', function () {
+                // Hide the custom input
+                $('#addAspectDiv').hide();
+                var selectedAspect = $(this);
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                    fsOptions.hide();
+                }
+                else {
+                    $('#aspect-list').find('>div').removeClass('active');
+                    $(this).addClass('active');
+                    $('#addAspect').removeClass('active');
+                    fsOptions.show();
+                }
+                $('#fProblem').html(selectedAspect.html().toLowerCase());
+                $('#sProblem').html(selectedAspect.html().toLowerCase());
+
+                $('#nextButton').on('click', function () {
+                    var payload = {
+                        'text': selectedAspect.html(),
+                        'frequency': $('input[name=frequency]:checked').val(),
+                        'severity': $('#severityInput').val(),
+                        'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+                    };
+                    if (payload.frequency == undefined) {
+                        alert('Please select a frequency.');
+                    } else {
+                        $.redirect('{% url 'case:problem' %}', payload);
+                    }
+                });
+            });
+
+            $('#addAspect').on('click', function () {
+                //Remove active divs and hide the option menu
+                $('#aspect-list').find('>div').removeClass('active');
+                fsOptions.hide();
+                $('#addAspectInput').val('');
+                $('#addAspectDiv').toggle();
+                if ($('#addAspectDiv').is(':visible')) {
+                    $('#addAspect').addClass('active');
+                } else {
+                    $('#addAspect').removeClass('active');
+                }
+            });
+            $('#addAspectConfirm').on('click', function () {
+                $('#aspect-list').find('>div').removeClass('justAdded');
+                $('#aspect-list').append('<div class="col-md-3 card card-block btn btn-primary-outline aspects justAdded">' + $('#addAspectInput').val());
+                $('.justAdded').first().click();
+                $('#addAspectDiv').hide();
+            });
+        });
+    </script>
+{% endblock %}

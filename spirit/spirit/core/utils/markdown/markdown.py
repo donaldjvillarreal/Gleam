@@ -10,7 +10,6 @@ from .renderer import Renderer
 
 
 class Markdown(mistune.Markdown):
-
     def __init__(self, no_follow=True):
         renderer = Renderer(
             escape=True,

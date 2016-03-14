@@ -25,7 +25,6 @@ User = get_user_model()
 
 
 class AdminViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -64,12 +63,12 @@ class AdminViewTest(TestCase):
         utils.login(self)
         form_data = {"username": "fooedit", "email": "foo@bar.com", "location": "Bs As",
                      "timezone": "UTC", "is_administrator": True, "is_moderator": True, "is_active": True}
-        response = self.client.post(reverse('spirit:admin:user:edit', kwargs={'user_id': self.user.pk, }),
+        response = self.client.post(reverse('spirit:admin:user:edit', kwargs={'user_id': self.user.pk,}),
                                     form_data)
-        expected_url = reverse('spirit:admin:user:edit', kwargs={'user_id': self.user.pk, })
+        expected_url = reverse('spirit:admin:user:edit', kwargs={'user_id': self.user.pk,})
         self.assertRedirects(response, expected_url, status_code=302)
 
-        response = self.client.get(reverse('spirit:admin:user:edit', kwargs={'user_id': self.user.pk, }))
+        response = self.client.get(reverse('spirit:admin:user:edit', kwargs={'user_id': self.user.pk,}))
         self.assertEqual(response.status_code, 200)
 
     def test_user_list(self):
@@ -312,13 +311,13 @@ class AdminViewTest(TestCase):
         Flag.objects.create(comment=comment2, user=self.user, reason=0)
 
         utils.login(self)
-        form_data = {"is_closed": True, }
-        response = self.client.post(reverse('spirit:admin:flag:detail', kwargs={'pk': comment_flag.pk, }),
+        form_data = {"is_closed": True,}
+        response = self.client.post(reverse('spirit:admin:flag:detail', kwargs={'pk': comment_flag.pk,}),
                                     form_data)
         expected_url = reverse('spirit:admin:flag:index')
         self.assertRedirects(response, expected_url, status_code=302)
 
-        response = self.client.get(reverse('spirit:admin:flag:detail', kwargs={'pk': comment_flag.pk, }))
+        response = self.client.get(reverse('spirit:admin:flag:detail', kwargs={'pk': comment_flag.pk,}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['flag'], comment_flag)
         self.assertEqual(list(response.context['flags']), [flag_, ])
@@ -335,13 +334,12 @@ class AdminViewTest(TestCase):
         flag_ = Flag.objects.create(comment=comment, user=self.user, reason=0)
 
         utils.login(self)
-        response = self.client.get(reverse('spirit:admin:flag:detail', kwargs={'pk': comment_flag.pk, }))
+        response = self.client.get(reverse('spirit:admin:flag:detail', kwargs={'pk': comment_flag.pk,}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['flags']), [flag_, ])
 
 
 class AdminFormTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -392,7 +390,7 @@ class AdminFormTest(TestCase):
         comment = utils.create_comment(topic=self.topic)
         comment_flag = CommentFlag.objects.create(comment=comment)
 
-        form_data = {"is_closed": True, }
+        form_data = {"is_closed": True,}
         form = CommentFlagForm(user=self.user, data=form_data, instance=comment_flag)
         self.assertEqual(form.is_valid(), True)
         self.assertEqual(form.save().moderator, self.user)

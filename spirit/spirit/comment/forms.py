@@ -16,7 +16,6 @@ from .models import Comment
 
 
 class CommentForm(forms.ModelForm):
-
     class Meta:
         model = Comment
         fields = ['comment', ]
@@ -62,7 +61,6 @@ class CommentForm(forms.ModelForm):
 
 
 class CommentMoveForm(forms.Form):
-
     topic = forms.ModelChoiceField(queryset=Topic.objects.all(), widget=forms.TextInput)
 
     def __init__(self, topic, *args, **kwargs):
@@ -86,7 +84,6 @@ class CommentMoveForm(forms.Form):
 
 
 class CommentImageForm(forms.Form):
-
     image = forms.ImageField()
 
     def __init__(self, user=None, *args, **kwargs):

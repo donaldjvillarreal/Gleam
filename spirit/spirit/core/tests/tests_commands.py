@@ -14,7 +14,6 @@ from ..management.commands import spiritupgrade
 
 
 class CommandsTests(TestCase):
-
     def test_command_spiritcompilemessages(self):
         """
         Should compile all locales under the spirit root folder
@@ -45,6 +44,7 @@ class CommandsTests(TestCase):
         """
         Should run the tx command
         """
+
         def call_mock(command):
             self._command = command
 

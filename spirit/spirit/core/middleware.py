@@ -8,14 +8,12 @@ from django.core.urlresolvers import resolve
 
 
 class XForwardedForMiddleware(object):
-
     def process_request(self, request):
         if not settings.DEBUG:
             request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR'].split(",")[-1].strip()
 
 
 class PrivateForumMiddleware(object):
-
     def process_request(self, request):
         if not settings.ST_PRIVATE_FORUM:
             return

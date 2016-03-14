@@ -59,7 +59,7 @@ def password_change(request):
     else:
         form = PasswordChangeForm(user=request.user)
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/user/profile_password_change.html', context)
 
@@ -76,7 +76,7 @@ def email_change(request):
     else:
         form = EmailChangeForm()
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/user/profile_email_change.html', context)
 
@@ -88,7 +88,7 @@ def email_change_confirm(request, token):
 
     if user_email_change.is_valid(user, token):
         email = user_email_change.get_email()
-        form = EmailCheckForm(data={'email': email, })
+        form = EmailCheckForm(data={'email': email,})
 
         if form.is_valid():
             user.email = form.get_email()
@@ -123,11 +123,11 @@ def _activity(request, pk, slug, queryset, template, reverse_to, context_name, p
 
 
 def topics(request, pk, slug):
-    user_topics = Topic.objects\
-        .visible()\
-        .with_bookmarks(user=request.user)\
-        .filter(user_id=pk)\
-        .order_by('-date', '-pk')\
+    user_topics = Topic.objects \
+        .visible() \
+        .with_bookmarks(user=request.user) \
+        .filter(user_id=pk) \
+        .order_by('-date', '-pk') \
         .select_related('user__st')
 
     return _activity(
@@ -142,9 +142,9 @@ def topics(request, pk, slug):
 
 def comments(request, pk, slug):
     # todo: test with_polls!
-    user_comments = Comment.objects\
-        .filter(user_id=pk)\
-        .visible()\
+    user_comments = Comment.objects \
+        .filter(user_id=pk) \
+        .visible() \
         .with_polls(user=request.user)
 
     return _activity(
@@ -159,10 +159,10 @@ def comments(request, pk, slug):
 
 def likes(request, pk, slug):
     # todo: test with_polls!
-    user_comments = Comment.objects\
-        .filter(comment_likes__user_id=pk)\
-        .visible()\
-        .with_polls(user=request.user)\
+    user_comments = Comment.objects \
+        .filter(comment_likes__user_id=pk) \
+        .visible() \
+        .with_polls(user=request.user) \
         .order_by('-comment_likes__date', '-pk')
 
     return _activity(

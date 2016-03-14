@@ -9,7 +9,6 @@ from django.utils import timezone
 
 
 class TopicUnread(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_topics_unread')
     topic = models.ForeignKey('spirit_topic.Topic')
 
@@ -33,12 +32,12 @@ class TopicUnread(models.Model):
         return cls.objects.update_or_create(
             user=user,
             topic=topic,
-            defaults={'is_read': True, }
+            defaults={'is_read': True,}
         )
 
     @classmethod
     def unread_new_comment(cls, comment):
-        cls.objects\
-            .filter(topic=comment.topic)\
-            .exclude(user=comment.user)\
+        cls.objects \
+            .filter(topic=comment.topic) \
+            .exclude(user=comment.user) \
             .update(is_read=False, date=timezone.now())

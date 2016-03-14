@@ -23,9 +23,9 @@ def _evaluate(polls_by_name):
 
 
 def _render_polls(comment):
-    polls = CommentPoll.objects\
-        .for_comment(comment)\
-        .unremoved()\
+    polls = CommentPoll.objects \
+        .for_comment(comment) \
+        .unremoved() \
         .with_choices()
 
     if not polls:

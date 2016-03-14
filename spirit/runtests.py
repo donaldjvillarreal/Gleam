@@ -10,7 +10,6 @@ import logging
 import django
 from django.test.runner import DiscoverRunner
 
-
 EXAMPLE = 'example' in sys.argv
 
 if EXAMPLE:
@@ -29,7 +28,7 @@ def log_warnings():
 
 def run_tests():
     sys.stdout.write("\nRunning spirit test suite, using settings %(settings)r\n\n"
-                     % {"settings": os.environ['DJANGO_SETTINGS_MODULE'], })
+                     % {"settings": os.environ['DJANGO_SETTINGS_MODULE'],})
     test_runner = DiscoverRunner()
     failures = test_runner.run_tests([])
     sys.exit(failures)

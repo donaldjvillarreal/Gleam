@@ -22,7 +22,7 @@ gulp.task('_sass', function () {
 });
 
 
-gulp.task('_css-minify', ['_sass'], function() {
+gulp.task('_css-minify', ['_sass'], function () {
     var path = cssPath + 'vendors/';
     return gulp.src([
             path + '*.min.css',
@@ -37,7 +37,7 @@ gulp.task('_css-minify', ['_sass'], function() {
 gulp.task('css', ['_sass', '_css-minify']);
 
 
-gulp.task('coffee', function() {
+gulp.task('coffee', function () {
     var pathVendors = jsPath + 'vendors/';
     var pathCoffee = jsPath + 'src/';
     var pathJs = jsPath + 'js/';
@@ -53,20 +53,20 @@ gulp.task('coffee', function() {
             pathCoffee + '*.coffee'
         ])
         .pipe(sourcemaps.init())
-            .pipe(gulpif(/\.coffee$/, rename({suffix: ".no-min"})))
-            .pipe(gulpif(/\.coffee$/, coffee({bare: false}).on('error', gutil.log)))
-            .pipe(gulpif(/\.no-min\.js$/, gulp.dest(pathJs)))  // JS Preview
-            .pipe(gulpif(/\.no-min\.js$/, uglify({mangle: false})))
-            .pipe(concat('all.min.js'))
+        .pipe(gulpif(/\.coffee$/, rename({suffix: ".no-min"})))
+        .pipe(gulpif(/\.coffee$/, coffee({bare: false}).on('error', gutil.log)))
+        .pipe(gulpif(/\.no-min\.js$/, gulp.dest(pathJs)))  // JS Preview
+        .pipe(gulpif(/\.no-min\.js$/, uglify({mangle: false})))
+        .pipe(concat('all.min.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(jsPath))
 });
 
 
-gulp.task('_coffee-test', function() {
+gulp.task('_coffee-test', function () {
     return gulp.src(jsPath + 'test/suites/*.coffee')
         .pipe(sourcemaps.init())
-            .pipe(coffee({bare: false}).on('error', gutil.log))
+        .pipe(coffee({bare: false}).on('error', gutil.log))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(jsPath + 'test/suites/'))
 });

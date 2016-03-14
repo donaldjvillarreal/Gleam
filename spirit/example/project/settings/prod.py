@@ -10,11 +10,10 @@ from __future__ import unicode_literals
 
 from .base import *
 
-
 DEBUG = False
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = (('John', 'john@example.com'), )
+ADMINS = (('John', 'john@example.com'),)
 
 # Secret key generator: https://djskgen.herokuapp.com/
 # You should set your key as an environ variable

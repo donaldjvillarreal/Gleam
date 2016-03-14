@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils import timezone
 
-
 REASON_CHOICES = (
     (0, _("Spam")),
     (1, _("Other")),
@@ -15,7 +14,6 @@ REASON_CHOICES = (
 
 
 class CommentFlag(models.Model):
-
     moderator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_comment_flags',
                                   null=True, blank=True)
     comment = models.OneToOneField('spirit_comment.Comment')
@@ -28,12 +26,11 @@ class CommentFlag(models.Model):
         verbose_name = _("comment flag")
         verbose_name_plural = _("comments flags")
 
-    # def get_absolute_url(self):
+        # def get_absolute_url(self):
         # pass
 
 
 class Flag(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_flags')
     comment = models.ForeignKey('spirit_comment.Comment')
 

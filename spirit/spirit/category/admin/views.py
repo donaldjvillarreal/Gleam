@@ -18,7 +18,7 @@ User = get_user_model()
 @administrator_required
 def index(request):
     categories = Category.objects.filter(parent=None, is_private=False)
-    context = {'categories': categories, }
+    context = {'categories': categories,}
     return render(request, 'spirit/category/admin/index.html', context)
 
 
@@ -33,7 +33,7 @@ def create(request):
     else:
         form = CategoryForm()
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/category/admin/create.html', context)
 
@@ -52,6 +52,6 @@ def update(request, category_id):
     else:
         form = CategoryForm(instance=category)
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/category/admin/update.html', context)

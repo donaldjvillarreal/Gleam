@@ -11,11 +11,10 @@ from .poll.models import CommentPoll, CommentPollChoice, CommentPollVote
 
 
 class CommentQuerySet(models.QuerySet):
-
     def filter(self, *args, **kwargs):
         # TODO: find a better way
-        return super(CommentQuerySet, self)\
-            .filter(*args, **kwargs)\
+        return super(CommentQuerySet, self) \
+            .filter(*args, **kwargs) \
             .select_related('user__st')
 
     def unremoved(self):
@@ -60,8 +59,8 @@ class CommentQuerySet(models.QuerySet):
             return self.prefetch_related(prefetch_polls, prefetch_choices)
 
         # Votes are attached to choices
-        visible_votes = CommentPollVote.objects\
-            .unremoved()\
+        visible_votes = CommentPollVote.objects \
+            .unremoved() \
             .for_voter(user)
         prefetch_votes = Prefetch("polls__choices__choice_votes", queryset=visible_votes, to_attr='votes')
 

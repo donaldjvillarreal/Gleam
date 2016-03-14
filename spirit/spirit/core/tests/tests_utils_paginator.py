@@ -19,7 +19,6 @@ from ..tags import paginator as ttag_paginator
 
 
 class UtilsPaginatorTest(TestCase):
-
     def setUp(self):
         cache.clear()
 
@@ -50,7 +49,6 @@ class UtilsPaginatorTest(TestCase):
 
 
 class UtilsInfinitePaginatorTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -94,7 +92,6 @@ class UtilsInfinitePaginatorTest(TestCase):
 
 
 class UtilsYTPaginatorTests(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -166,7 +163,6 @@ class UtilsYTPaginatorTests(TestCase):
 
 
 class UtilsYTPaginatorTemplateTagsTests(TestCase):
-
     def setUp(self):
         cache.clear()
 
@@ -194,7 +190,7 @@ class UtilsYTPaginatorTemplateTagsTests(TestCase):
             return template, context
 
         req = RequestFactory().get('/')
-        context = {'request': req, }
+        context = {'request': req,}
         items = list(range(0, 20))
         page = YTPaginator(items, per_page=10).page(1)
 
@@ -214,7 +210,7 @@ class UtilsYTPaginatorTemplateTagsTests(TestCase):
             return template, context
 
         req = RequestFactory().get('/?foo_page=1&extra=foo')
-        context = {'request': req, }
+        context = {'request': req,}
         items = list(range(0, 20))
         page = YTPaginator(items, per_page=10).page(1)
 
@@ -231,7 +227,6 @@ class UtilsYTPaginatorTemplateTagsTests(TestCase):
 
 
 class UtilsPaginatorTemplateTagsTests(TestCase):
-
     def setUp(self):
         cache.clear()
 
@@ -264,14 +259,14 @@ class UtilsPaginatorTemplateTagsTests(TestCase):
         Template(
             "{% load spirit_tags %}"
             "{% render_paginator page %}"
-        ).render(Context({'request': req, 'page': page, }))
+        ).render(Context({'request': req, 'page': page,}))
 
     def tests_render_paginator(self):
         def mock_render(template, context):
             return template, context
 
         req = RequestFactory().get('/')
-        context = {'request': req, }
+        context = {'request': req,}
         items = list(range(0, 20))
         page = Paginator(items, per_page=10).page(1)
 
@@ -291,7 +286,7 @@ class UtilsPaginatorTemplateTagsTests(TestCase):
             return template, context
 
         req = RequestFactory().get('/?foo_page=1&extra=foo')
-        context = {'request': req, }
+        context = {'request': req,}
         items = list(range(0, 20))
         page = Paginator(items, per_page=10).page(1)
 

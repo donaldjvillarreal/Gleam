@@ -10,7 +10,6 @@ from ..topic.models import Topic
 
 
 class TopicIndex(indexes.SearchIndex, indexes.Indexable):
-
     text = indexes.CharField(document=True, use_template=True)
     title = indexes.CharField(model_attr='title')
     category_id = indexes.IntegerField(model_attr='category_id')

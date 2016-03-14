@@ -1,19 +1,18 @@
 
-
 .side-menu {
   z-index: 9000;
   position: fixed;
-  width: 0;  /* hidden (for animation) */
+  width: 0; /* hidden (for animation) */
   max-width: 320px;
   height: 100%;
   overflow: hidden;
   overflow-y: auto;
   background: #333333;
-  
+
   -webkit-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
   -moz-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
   box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
-  
+
   -webkit-transition: width 0.5s ease;
   -moz-transition: width 0.5s ease;
   -o-transition: width 0.5s ease;
@@ -25,7 +24,7 @@
   width: 70%;
 }
 
-.side-menu li a{
+.side-menu li a {
   display: block;
   line-height: 42px;
   white-space: nowrap;

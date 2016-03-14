@@ -4,6 +4,8 @@
 html {
     position: relative;
     min-height: 100%;
+    /*clickjacking prevention*/
+    display : none;
 }
 
 body {
@@ -12,6 +14,7 @@ body {
 }
 
 .footer {
+    margin-top: 20px;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -26,4 +29,8 @@ body {
 
 * {
     font-family: 'Roboto', sans-serif;
+}
+
+.push {
+    height: 80px;
 }

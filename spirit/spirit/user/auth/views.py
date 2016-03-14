@@ -78,7 +78,7 @@ def register(request, registration_form=RegistrationForm):
     else:
         form = registration_form()
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/user/auth/register.html', context)
 
@@ -116,6 +116,6 @@ def resend_activation_email(request):
     else:
         form = ResendActivationForm()
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/user/auth/activation_resend.html', context)

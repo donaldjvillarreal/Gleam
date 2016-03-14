@@ -9,7 +9,6 @@ from .models import TopicNotification
 
 
 class NotificationForm(forms.ModelForm):
-
     is_active = forms.BooleanField(widget=forms.HiddenInput(), initial=True, required=False)
 
     class Meta:
@@ -18,7 +17,6 @@ class NotificationForm(forms.ModelForm):
 
 
 class NotificationCreationForm(NotificationForm):
-
     def __init__(self, user=None, topic=None, *args, **kwargs):
         super(NotificationCreationForm, self).__init__(*args, **kwargs)
         self.user = user

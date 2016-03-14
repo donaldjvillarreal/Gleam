@@ -6,7 +6,6 @@ from django.utils.http import urlencode
 
 from .registry import register
 
-
 FACEBOOK_URL = "http://www.facebook.com/sharer.php?%s"
 TWITTER_URL = "https://twitter.com/share?%s"
 GPLUS_URL = "https://plus.google.com/share?%s"

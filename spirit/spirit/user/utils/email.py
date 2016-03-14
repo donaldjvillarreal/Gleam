@@ -58,15 +58,15 @@ def send_email_change_email(request, user, new_email):
     subject = _("Email change")
     template_name = 'spirit/user/email_change_email.html'
     token = UserEmailChangeTokenGenerator().generate(user, new_email)
-    context = {'token': token, }
+    context = {'token': token,}
     sender(request, subject, template_name, context, [user.email, ])
 
 
 def send_notification_email(request, topic_notifications, comment):
     # TODO: test, implement
-    subject = _("New notification: %(topic_name)s" % {'topic_name': comment.topic.title, })
+    subject = _("New notification: %(topic_name)s" % {'topic_name': comment.topic.title,})
     template_name = 'spirit/user/notification_email.html'
-    context = {'comment': comment, }
+    context = {'comment': comment,}
     to = [tn.user.email
           for tn in topic_notifications
           if tn.user.is_subscribed]

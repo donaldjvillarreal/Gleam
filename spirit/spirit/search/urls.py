@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from .forms import AdvancedSearchForm
 from . import views
 
-
 urlpatterns = [
     url(r'^$', login_required(views.SearchView(
         template='spirit/search/search.html',

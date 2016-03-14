@@ -45,7 +45,7 @@
     </div>
 {% endblock %}
 {% block js_scripts %}
-    <script type="application/javascript" src="{% static 'js/Sortable.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/sortable.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
             $('.clickable').on('mousedown', function () {
@@ -65,7 +65,7 @@
                 $('.goals').each(function () {
                     orderedGoals.push($(this).val());
                 });
-                $.redirect('{% url 'diagnostic:case_goals_rank' %}',
+                $.redirect('{% url 'case:goals_rank' %}',
                         {'goals': orderedGoals,
                             'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value});
             });

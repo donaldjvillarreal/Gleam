@@ -50,13 +50,9 @@
       &:last-child {
         margin-#{$direction}: 0;
       }
-    }
-
-    @else if contains-display-value($query) and $table == false {
+    } @else if contains-display-value($query) and $table == false {
       margin-#{$direction}: 0;
-    }
-
-    @else {
+    } @else {
       @include nth-child($query, $direction);
     }
   } @else if length($query) == 2 {

@@ -17,7 +17,6 @@ User = get_user_model()
 
 
 class AdminViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -67,17 +66,16 @@ class AdminViewTest(TestCase):
         utils.login(self)
         form_data = {"parent": "", "title": "foo", "description": "",
                      "is_closed": False, "is_removed": False, "is_global": True}
-        response = self.client.post(reverse('spirit:admin:category:update', kwargs={"category_id": self.category.pk, }),
+        response = self.client.post(reverse('spirit:admin:category:update', kwargs={"category_id": self.category.pk,}),
                                     form_data)
         expected_url = reverse("spirit:admin:category:index")
         self.assertRedirects(response, expected_url, status_code=302)
 
-        response = self.client.get(reverse('spirit:admin:category:update', kwargs={"category_id": self.category.pk, }))
+        response = self.client.get(reverse('spirit:admin:category:update', kwargs={"category_id": self.category.pk,}))
         self.assertEqual(response.status_code, 200)
 
 
 class AdminFormTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -105,29 +103,28 @@ class AdminFormTest(TestCase):
         """
         # parent can not be a subcategory, only one level subcat is allowed
         subcategory = utils.create_category(parent=self.category)
-        form_data = {"parent": subcategory.pk, }
+        form_data = {"parent": subcategory.pk,}
         form = CategoryForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
         self.assertNotIn('parent', form.cleaned_data)
 
         # parent can not be set to a category with childrens
         category_ = utils.create_category()
-        form_data = {"parent": category_.pk, }
+        form_data = {"parent": category_.pk,}
         form = CategoryForm(data=form_data, instance=self.category)
         self.assertEqual(form.is_valid(), False)
         self.assertNotIn('parent', form.cleaned_data)
 
         # parent can not be removed
         category_ = utils.create_category(is_removed=True)
-        form_data = {"parent": category_.pk, }
+        form_data = {"parent": category_.pk,}
         form = CategoryForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
         self.assertNotIn('parent', form.cleaned_data)
 
         # parent can not be private
         category_ = utils.create_category(is_private=True)
-        form_data = {"parent": category_.pk, }
+        form_data = {"parent": category_.pk,}
         form = CategoryForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
         self.assertNotIn('parent', form.cleaned_data)
-

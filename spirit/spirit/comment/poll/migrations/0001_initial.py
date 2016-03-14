@@ -7,7 +7,6 @@ from django.conf import settings
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('spirit_comment', '0002_auto_20150828_2003'),

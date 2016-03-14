@@ -11,7 +11,6 @@ from django.utils import timezone
 
 from .managers import CommentQuerySet
 
-
 COMMENT_MAX_LEN = 3000  # changing this needs migration
 
 COMMENT, MOVED, CLOSED, UNCLOSED, PINNED, UNPINNED = range(6)
@@ -27,7 +26,6 @@ ACTION = (
 
 
 class Comment(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_comments')
     topic = models.ForeignKey('spirit_topic.Topic')
 
@@ -50,7 +48,7 @@ class Comment(models.Model):
         verbose_name_plural = _("comments")
 
     def get_absolute_url(self):
-        return reverse('spirit:comment:find', kwargs={'pk': str(self.id), })
+        return reverse('spirit:comment:find', kwargs={'pk': str(self.id),})
 
     @property
     def like(self):
@@ -62,18 +60,18 @@ class Comment(models.Model):
             return
 
     def increase_modified_count(self):
-        Comment.objects\
-            .filter(pk=self.pk)\
+        Comment.objects \
+            .filter(pk=self.pk) \
             .update(modified_count=F('modified_count') + 1)
 
     def increase_likes_count(self):
-        Comment.objects\
-            .filter(pk=self.pk)\
+        Comment.objects \
+            .filter(pk=self.pk) \
             .update(likes_count=F('likes_count') + 1)
 
     def decrease_likes_count(self):
-        Comment.objects\
-            .filter(pk=self.pk, likes_count__gt=0)\
+        Comment.objects \
+            .filter(pk=self.pk, likes_count__gt=0) \
             .update(likes_count=F('likes_count') - 1)
 
     @classmethod

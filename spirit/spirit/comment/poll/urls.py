@@ -6,7 +6,6 @@ from django.conf.urls import url
 
 from . import views
 
-
 urlpatterns = [
     url(r'^close/(?P<pk>\d+)/$', views.close_or_open, name='close'),
     url(r'^open/(?P<pk>\d+)/$', views.close_or_open, kwargs={'close': False}, name='open'),

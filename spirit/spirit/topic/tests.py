@@ -23,7 +23,6 @@ from .unread.models import TopicUnread
 
 
 class TopicViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -74,14 +73,14 @@ class TopicViewTest(TestCase):
         utils.login(self)
         category = utils.create_category()
         form_data = {'comment': 'foo', 'title': 'foobar', 'category': category.pk}
-        response = self.client.post(reverse('spirit:topic:publish', kwargs={'category_id': category.pk, }),
+        response = self.client.post(reverse('spirit:topic:publish', kwargs={'category_id': category.pk,}),
                                     form_data)
         topic = Topic.objects.last()
         expected_url = topic.get_absolute_url()
         self.assertRedirects(response, expected_url, status_code=302)
 
         # ratelimit
-        response = self.client.post(reverse('spirit:topic:publish', kwargs={'category_id': category.pk, }),
+        response = self.client.post(reverse('spirit:topic:publish', kwargs={'category_id': category.pk,}),
                                     form_data)
         self.assertEqual(response.status_code, 200)
 
@@ -93,7 +92,7 @@ class TopicViewTest(TestCase):
         category = utils.create_category()
         subcategory = utils.create_subcategory(category)
         form_data = {'comment': 'foo', 'title': 'foobar', 'category': subcategory.pk}
-        response = self.client.post(reverse('spirit:topic:publish', kwargs={'category_id': subcategory.pk, }),
+        response = self.client.post(reverse('spirit:topic:publish', kwargs={'category_id': subcategory.pk,}),
                                     form_data)
         topic = Topic.objects.last()
         expected_url = topic.get_absolute_url()
@@ -104,7 +103,7 @@ class TopicViewTest(TestCase):
         invalid topic category
         """
         utils.login(self)
-        response = self.client.get(reverse('spirit:topic:publish', kwargs={'category_id': str(99), }))
+        response = self.client.get(reverse('spirit:topic:publish', kwargs={'category_id': str(99),}))
         self.assertEqual(response.status_code, 404)
 
     def test_topic_update(self):
@@ -114,8 +113,8 @@ class TopicViewTest(TestCase):
         utils.login(self)
         category = utils.create_category()
         topic = utils.create_topic(category=category, user=self.user)
-        form_data = {'title': 'foobar', }
-        response = self.client.post(reverse('spirit:topic:update', kwargs={'pk': topic.pk, }),
+        form_data = {'title': 'foobar',}
+        response = self.client.post(reverse('spirit:topic:update', kwargs={'pk': topic.pk,}),
                                     form_data)
         self.assertRedirects(response, topic.get_absolute_url(), status_code=302)
 
@@ -131,7 +130,7 @@ class TopicViewTest(TestCase):
         topic = utils.create_topic(category=category, user=self.user)
         category2 = utils.create_category()
         form_data = {'title': 'foobar', 'category': category2.pk}
-        self.client.post(reverse('spirit:topic:update', kwargs={'pk': topic.pk, }),
+        self.client.post(reverse('spirit:topic:update', kwargs={'pk': topic.pk,}),
                          form_data)
         self.assertEqual(len(Comment.objects.filter(user=self.user, topic_id=topic.pk, action=MOVED)), 1)
 
@@ -142,8 +141,8 @@ class TopicViewTest(TestCase):
         utils.login(self)
         category = utils.create_category()
         topic = utils.create_topic(category=category)
-        form_data = {'title': 'foobar', }
-        response = self.client.post(reverse('spirit:topic:update', kwargs={'pk': topic.pk, }),
+        form_data = {'title': 'foobar',}
+        response = self.client.post(reverse('spirit:topic:update', kwargs={'pk': topic.pk,}),
                                     form_data)
         self.assertEqual(response.status_code, 404)
 
@@ -188,6 +187,7 @@ class TopicViewTest(TestCase):
         """
         Calls utils.topic_viewed
         """
+
         def mocked_topic_viewed(request, topic):
             self._user = request.user
             self._topic = topic
@@ -321,7 +321,6 @@ class TopicViewTest(TestCase):
 
 
 class TopicFormTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -367,13 +366,12 @@ class TopicFormTest(TestCase):
         """
         category = utils.create_category()
         topic = utils.create_topic(category)
-        form_data = {'title': 'foobar', }
+        form_data = {'title': 'foobar',}
         form = TopicForm(self.user, data=form_data, instance=topic)
         self.assertEqual(form.is_valid(), True)
 
 
 class TopicUtilsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -401,7 +399,6 @@ class TopicUtilsTest(TestCase):
 
 
 class TopicModelsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()

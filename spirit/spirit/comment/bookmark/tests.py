@@ -15,7 +15,6 @@ from .forms import BookmarkForm
 
 
 class CommentBookmarkViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -28,15 +27,14 @@ class CommentBookmarkViewTest(TestCase):
         create comment
         """
         utils.login(self)
-        form_data = {'comment_number': 999, }
-        response = self.client.post(reverse('spirit:comment:bookmark:create', kwargs={'topic_id': self.topic.pk, }),
+        form_data = {'comment_number': 999,}
+        response = self.client.post(reverse('spirit:comment:bookmark:create', kwargs={'topic_id': self.topic.pk,}),
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest',
                                     data=form_data)
         self.assertEqual(response.status_code, 200)
 
 
 class CommentBookmarkModelsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -81,15 +79,13 @@ class CommentBookmarkModelsTest(TestCase):
 
 
 class CommentBookmarkFormTest(TestCase):
-
     def test_form(self):
-        form_data = {'comment_number': 999, }
+        form_data = {'comment_number': 999,}
         form = BookmarkForm(data=form_data)
         self.assertEqual(form.is_valid(), True)
 
 
 class CommentBookmarkTemplateTagsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()

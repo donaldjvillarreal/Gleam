@@ -10,7 +10,6 @@ from .models import UserProfile
 
 
 class TimezoneMiddleware(object):
-
     def process_request(self, request):
         if request.user.is_authenticated():
             timezone.activate(request.user.st.timezone)
@@ -19,7 +18,6 @@ class TimezoneMiddleware(object):
 
 
 class LastIPMiddleware(object):
-
     def process_request(self, request):
         if not request.user.is_authenticated():
             return
@@ -29,13 +27,12 @@ class LastIPMiddleware(object):
         if request.user.st.last_ip == last_ip:
             return
 
-        UserProfile.objects\
-            .filter(user__pk=request.user.pk)\
+        UserProfile.objects \
+            .filter(user__pk=request.user.pk) \
             .update(last_ip=last_ip)
 
 
 class LastSeenMiddleware(object):
-
     def process_request(self, request):
         if not request.user.is_authenticated():
             return
@@ -46,13 +43,12 @@ class LastSeenMiddleware(object):
         if delta.seconds < threshold:
             return
 
-        UserProfile.objects\
-            .filter(user__pk=request.user.pk)\
+        UserProfile.objects \
+            .filter(user__pk=request.user.pk) \
             .update(last_seen=timezone.now())
 
 
 class ActiveUserMiddleware(object):
-
     def process_request(self, request):
         if not request.user.is_authenticated():
             return

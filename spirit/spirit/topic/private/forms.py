@@ -16,10 +16,9 @@ User = get_user_model()
 
 
 class TopicForPrivateForm(forms.ModelForm):
-
     class Meta:
         model = Topic
-        fields = ('title', )
+        fields = ('title',)
 
     def __init__(self, user=None, *args, **kwargs):
         super(TopicForPrivateForm, self).__init__(*args, **kwargs)
@@ -34,11 +33,10 @@ class TopicForPrivateForm(forms.ModelForm):
 
 
 class TopicPrivateManyForm(forms.Form):
-
     # Only good for create
     users = forms.ModelMultipleChoiceField(queryset=User.objects.all(),
                                            to_field_name=User.USERNAME_FIELD,
-                                           widget=MultipleInput(attrs={'placeholder': _("user1, user2, ..."), }))
+                                           widget=MultipleInput(attrs={'placeholder': _("user1, user2, ..."),}))
 
     def __init__(self, user=None, topic=None, *args, **kwargs):
         super(TopicPrivateManyForm, self).__init__(*args, **kwargs)
@@ -66,11 +64,10 @@ class TopicPrivateManyForm(forms.Form):
 
 
 class TopicPrivateInviteForm(forms.ModelForm):
-
     # Only good for create
     user = forms.ModelChoiceField(queryset=User.objects.all(),
                                   to_field_name=User.USERNAME_FIELD,
-                                  widget=forms.TextInput(attrs={'placeholder': _("username"), }),
+                                  widget=forms.TextInput(attrs={'placeholder': _("username"),}),
                                   label=_("Invite user"))
 
     def __init__(self, topic=None, *args, **kwargs):
@@ -79,7 +76,7 @@ class TopicPrivateInviteForm(forms.ModelForm):
 
     class Meta:
         model = TopicPrivate
-        fields = ("user", )
+        fields = ("user",)
 
     def clean_user(self):
         user = self.cleaned_data['user']
@@ -90,7 +87,7 @@ class TopicPrivateInviteForm(forms.ModelForm):
         if private.exists():
             # Do this since some of the unique_together fields are excluded.
             raise forms.ValidationError(_("%(username)s is already a participant") %
-                                        {'username': getattr(user, user.USERNAME_FIELD), })
+                                        {'username': getattr(user, user.USERNAME_FIELD),})
 
         return user
 
@@ -105,7 +102,6 @@ class TopicPrivateInviteForm(forms.ModelForm):
 
 
 class TopicPrivateJoinForm(forms.ModelForm):
-
     def __init__(self, topic=None, user=None, *args, **kwargs):
         super(TopicPrivateJoinForm, self).__init__(*args, **kwargs)
         self.topic = topic
@@ -124,7 +120,7 @@ class TopicPrivateJoinForm(forms.ModelForm):
         if private.exists():
             # Do this since some of the unique_together fields are excluded.
             raise forms.ValidationError(_("%(username)s is already a participant") %
-                                        {'username': getattr(self.user, self.user.USERNAME_FIELD), })
+                                        {'username': getattr(self.user, self.user.USERNAME_FIELD),})
 
         return cleaned_data
 

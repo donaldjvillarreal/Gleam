@@ -61,7 +61,7 @@
 
   $display-table: is-display-table($container-display-table, $display);
 
-  @if $display-table  {
+  @if $display-table {
     display: table-cell;
     width: percentage($columns / $container-columns);
   } @else {

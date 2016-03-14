@@ -20,7 +20,6 @@ def migrate_profiles(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('spirit_user', '0003_auto_20150728_0448'),
     ]

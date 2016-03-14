@@ -12,7 +12,6 @@ from ...comment.bookmark.models import CommentBookmark
 
 
 class TopicUnreadViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -32,7 +31,7 @@ class TopicUnreadViewTest(TestCase):
         """
         topic unread list
         """
-        TopicUnread.objects.filter(pk__in=[self.topic_unread.pk, self.topic_unread2.pk])\
+        TopicUnread.objects.filter(pk__in=[self.topic_unread.pk, self.topic_unread2.pk]) \
             .update(is_read=False)
 
         utils.login(self)
@@ -111,8 +110,8 @@ class TopicUnreadViewTest(TestCase):
         """
         topic unread list with bookmarks
         """
-        TopicUnread.objects\
-            .filter(pk__in=[self.topic_unread.pk, self.topic_unread2.pk])\
+        TopicUnread.objects \
+            .filter(pk__in=[self.topic_unread.pk, self.topic_unread2.pk]) \
             .update(is_read=False)
         bookmark = CommentBookmark.objects.create(topic=self.topic2, user=self.user)
 
@@ -123,7 +122,6 @@ class TopicUnreadViewTest(TestCase):
 
 
 class TopicUnreadModelsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()

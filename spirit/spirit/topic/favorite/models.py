@@ -9,7 +9,6 @@ from django.utils import timezone
 
 
 class TopicFavorite(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_topic_favorites')
     topic = models.ForeignKey('spirit_topic.Topic')
 

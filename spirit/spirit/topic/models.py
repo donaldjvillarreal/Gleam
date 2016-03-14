@@ -14,7 +14,6 @@ from ..core.utils.models import AutoSlugField
 
 
 class Topic(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_topics')
     category = models.ForeignKey('spirit_category.Category', verbose_name=_("category"))
 
@@ -86,17 +85,17 @@ class Topic(models.Model):
         return bool(self.bookmark)
 
     def increase_view_count(self):
-        Topic.objects\
-            .filter(pk=self.pk)\
+        Topic.objects \
+            .filter(pk=self.pk) \
             .update(view_count=F('view_count') + 1)
 
     def increase_comment_count(self):
-        Topic.objects\
-            .filter(pk=self.pk)\
+        Topic.objects \
+            .filter(pk=self.pk) \
             .update(comment_count=F('comment_count') + 1, last_active=timezone.now())
 
     def decrease_comment_count(self):
         # todo: update last_active to last() comment
-        Topic.objects\
-            .filter(pk=self.pk)\
+        Topic.objects \
+            .filter(pk=self.pk) \
             .update(comment_count=F('comment_count') - 1)

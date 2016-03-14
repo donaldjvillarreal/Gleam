@@ -20,7 +20,6 @@ User = get_user_model()
 
 
 class PollViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -37,7 +36,7 @@ class PollViewTest(TestCase):
         """
         User must be logged in
         """
-        response = self.client.post(reverse('spirit:comment:poll:close', kwargs={'pk': self.poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:close', kwargs={'pk': self.poll.pk,}),
                                     {})
         self.assertEqual(response.status_code, 302)
 
@@ -46,7 +45,7 @@ class PollViewTest(TestCase):
         Try to close another user poll should return 404
         """
         utils.login(self)
-        response = self.client.post(reverse('spirit:comment:poll:close', kwargs={'pk': self.poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:close', kwargs={'pk': self.poll.pk,}),
                                     {})
         self.assertEqual(response.status_code, 404)
 
@@ -55,7 +54,7 @@ class PollViewTest(TestCase):
         GET, poll_close
         """
         utils.login(self)
-        response = self.client.get(reverse('spirit:comment:poll:close', kwargs={'pk': self.poll.pk, }))
+        response = self.client.get(reverse('spirit:comment:poll:close', kwargs={'pk': self.poll.pk,}))
         self.assertEqual(response.status_code, 405)
 
     def test_poll_close_post(self):
@@ -64,7 +63,7 @@ class PollViewTest(TestCase):
         """
         utils.login(self)
         poll = CommentPoll.objects.create(comment=self.user_comment, name='foo')
-        response = self.client.post(reverse('spirit:comment:poll:close', kwargs={'pk': poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:close', kwargs={'pk': poll.pk,}),
                                     {})
         expected_url = poll.get_absolute_url()
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=302)
@@ -77,7 +76,7 @@ class PollViewTest(TestCase):
         utils.login(self)
         poll = CommentPoll.objects.create(comment=self.user_comment, name='foo', close_at=timezone.now())
         self.assertTrue(poll.is_closed)
-        response = self.client.post(reverse('spirit:comment:poll:open', kwargs={'pk': poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:open', kwargs={'pk': poll.pk,}),
                                     {})
         expected_url = poll.get_absolute_url()
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=302)
@@ -87,7 +86,7 @@ class PollViewTest(TestCase):
         """
         User must be logged in
         """
-        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk,}),
                                     {})
         expected_url = reverse('spirit:user:auth:login') + "?next=" + self.poll.get_absolute_url()
         self.assertRedirects(response, expected_url, status_code=302)
@@ -98,7 +97,7 @@ class PollViewTest(TestCase):
         Post is required
         """
         utils.login(self)
-        response = self.client.get(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk, }))
+        response = self.client.get(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk,}))
         self.assertEqual(response.status_code, 405)
 
     def test_poll_vote_post(self):
@@ -107,8 +106,8 @@ class PollViewTest(TestCase):
         """
         utils.login(self)
         choice = CommentPollChoice.objects.create(poll=self.poll, number=1, description="op1")
-        form_data = {'choices': choice.pk, }
-        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk, }),
+        form_data = {'choices': choice.pk,}
+        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk,}),
                                     form_data)
         expected_url = self.poll.get_absolute_url()
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=302)
@@ -119,7 +118,7 @@ class PollViewTest(TestCase):
         POST, poll_vote
         """
         utils.login(self)
-        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk,}),
                                     {}, follow=True)
         self.assertEqual(len(response.context['messages']), 1)  # error message
 
@@ -128,7 +127,7 @@ class PollViewTest(TestCase):
         POST, poll_vote
         """
         utils.login(self)
-        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll.pk,}),
                                     {})
         expected_url = self.poll.get_absolute_url()
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=302)
@@ -143,7 +142,7 @@ class PollViewTest(TestCase):
         CommentPollChoice.objects.create(poll=self.poll_multi, number=3, description="op c")
 
         form_data = {'choices': [choice_a.pk, choice_b.pk]}
-        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll_multi.pk, }),
+        response = self.client.post(reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll_multi.pk,}),
                                     form_data)
         expected_url = self.poll.get_absolute_url()
 
@@ -163,7 +162,7 @@ class PollViewTest(TestCase):
 
         form_data = {'choices': [choice_a.pk, choice_b.pk]}
         response = self.client.post(
-            reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll_multi.pk, }), form_data
+            reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll_multi.pk,}), form_data
         )
         expected_url = self.poll.get_absolute_url()
 
@@ -174,7 +173,7 @@ class PollViewTest(TestCase):
 
         form_data = {'choices': [choice_a.pk]}
         response = self.client.post(
-            reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll_multi.pk, }), form_data
+            reverse('spirit:comment:poll:vote', kwargs={'pk': self.poll_multi.pk,}), form_data
         )
         expected_url = self.poll.get_absolute_url()
 
@@ -188,7 +187,7 @@ class PollViewTest(TestCase):
         User must be logged in
         """
         poll_choice = CommentPollChoice.objects.create(poll=self.poll, number=1, description="op1")
-        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk, }))
+        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk,}))
         self.assertEqual(response.status_code, 302)
 
     def test_poll_voters(self):
@@ -201,7 +200,7 @@ class PollViewTest(TestCase):
         CommentPollVote.objects.create(voter=self.user2, choice=poll_choice2)
 
         utils.login(self)
-        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk, }))
+        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk,}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['choice'], poll_choice)
         self.assertEqual(list(response.context['votes']), [vote])
@@ -214,7 +213,7 @@ class PollViewTest(TestCase):
         poll_choice = CommentPollChoice.objects.create(poll=poll, number=1, description="op1")
 
         utils.login(self)
-        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk, }))
+        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk,}))
         self.assertEqual(response.status_code, 403)
 
     def test_poll_voters_secret_closed(self):
@@ -227,12 +226,11 @@ class PollViewTest(TestCase):
         poll_choice = CommentPollChoice.objects.create(poll=poll, number=1, description="op1")
 
         utils.login(self)
-        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk, }))
+        response = self.client.get(reverse('spirit:comment:poll:voters', kwargs={'pk': poll_choice.pk,}))
         self.assertEqual(response.status_code, 200)
 
 
 class PollFormTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -277,7 +275,7 @@ class PollFormTest(TestCase):
         """
         form = PollVoteManyForm(user=self.user, poll=self.poll)
         form.load_initial()
-        self.assertEqual(form.initial, {'choices': self.poll_choice.pk, })
+        self.assertEqual(form.initial, {'choices': self.poll_choice.pk,})
 
     def test_vote_load_initial_multi(self):
         """
@@ -285,7 +283,7 @@ class PollFormTest(TestCase):
         """
         form = PollVoteManyForm(user=self.user, poll=self.poll_multi)
         form.load_initial()
-        self.assertDictEqual(form.initial, {'choices': [self.poll_multi_choice.pk, self.poll_multi_choice2.pk], })
+        self.assertDictEqual(form.initial, {'choices': [self.poll_multi_choice.pk, self.poll_multi_choice2.pk],})
 
     def test_vote_load_initial_empty(self):
         """
@@ -307,14 +305,14 @@ class PollFormTest(TestCase):
 
         form = PollVoteManyForm(user=self.user, poll=self.poll_multi)
         form.load_initial()
-        self.assertDictEqual(form.initial, {'choices': self.poll_multi_choice.pk, })
+        self.assertDictEqual(form.initial, {'choices': self.poll_multi_choice.pk,})
 
         # single to multi
         self.poll.choice_max = 2
 
         form = PollVoteManyForm(user=self.user, poll=self.poll)
         form.load_initial()
-        self.assertDictEqual(form.initial, {'choices': [self.poll_choice.pk, ], })
+        self.assertDictEqual(form.initial, {'choices': [self.poll_choice.pk, ],})
 
     def test_vote_poll_closed(self):
         """
@@ -323,7 +321,7 @@ class PollFormTest(TestCase):
         self.poll.close_at = timezone.now()
         self.poll.save()
 
-        form_data = {'choices': self.poll_choice.pk, }
+        form_data = {'choices': self.poll_choice.pk,}
         form = PollVoteManyForm(user=self.user, poll=self.poll, data=form_data)
         self.assertFalse(form.is_valid())
 
@@ -333,7 +331,7 @@ class PollFormTest(TestCase):
         """
         CommentPollVote.objects.all().delete()
 
-        form_data = {'choices': self.poll_choice.pk, }
+        form_data = {'choices': self.poll_choice.pk,}
         form = PollVoteManyForm(user=self.user, poll=self.poll, data=form_data)
         self.assertTrue(form.is_valid())
         form.save_m2m()
@@ -348,7 +346,7 @@ class PollFormTest(TestCase):
         self.poll_multi_choice.votes = []
         self.poll_multi_choice2.votes = []
 
-        form_data = {'choices': [self.poll_multi_choice.pk, self.poll_multi_choice2.pk], }
+        form_data = {'choices': [self.poll_multi_choice.pk, self.poll_multi_choice2.pk],}
         form = PollVoteManyForm(user=self.user, poll=self.poll_multi, data=form_data)
         self.assertTrue(form.is_valid())
 
@@ -362,7 +360,7 @@ class PollFormTest(TestCase):
 
         form_data = {'choices': [self.poll_multi_choice.pk,
                                  self.poll_multi_choice2.pk,
-                                 self.poll_multi_choice3.pk], }
+                                 self.poll_multi_choice3.pk],}
         form = PollVoteManyForm(user=self.user, poll=self.poll_multi, data=form_data)
         self.assertFalse(form.is_valid())
 
@@ -373,7 +371,7 @@ class PollFormTest(TestCase):
         self.assertEqual(len(CommentPollVote.objects.filter(choice=self.poll_choice2, is_removed=False)), 0)
         self.assertEqual(len(CommentPollVote.objects.filter(choice=self.poll_choice, is_removed=False)), 2)
 
-        form_data = {'choices': self.poll_choice2.pk, }
+        form_data = {'choices': self.poll_choice2.pk,}
         form = PollVoteManyForm(user=self.user, poll=self.poll, data=form_data)
         self.assertTrue(form.is_valid())
         form.save_m2m()
@@ -382,7 +380,6 @@ class PollFormTest(TestCase):
 
 
 class CommentPollTemplateTagsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -390,9 +387,9 @@ class CommentPollTemplateTagsTest(TestCase):
         self.topic = utils.create_topic(category=self.category)
         self.user_comment = utils.create_comment(topic=self.topic, user=self.user, comment_html="<poll name=foo>")
         self.user_poll = CommentPoll.objects.create(comment=self.user_comment, name='foo')
-        self.user_comment_with_polls = self.user_comment.__class__.objects\
-            .filter(pk=self.user_comment.pk)\
-            .with_polls(self.user)\
+        self.user_comment_with_polls = self.user_comment.__class__.objects \
+            .filter(pk=self.user_comment.pk) \
+            .with_polls(self.user) \
             .first()
 
         self.request = RequestFactory().get('/')
@@ -498,9 +495,9 @@ class CommentPollTemplateTagsTest(TestCase):
         """
         comment = utils.create_comment(topic=self.topic, comment_html="<poll name=bar>")
         CommentPoll.objects.create(comment=comment, name='bar', mode=PollMode.SECRET)
-        user_comment_with_polls = comment.__class__.objects\
-            .filter(pk=comment.pk)\
-            .with_polls(self.user)\
+        user_comment_with_polls = comment.__class__.objects \
+            .filter(pk=comment.pk) \
+            .with_polls(self.user) \
             .first()
 
         out = Template(
@@ -518,9 +515,9 @@ class CommentPollTemplateTagsTest(TestCase):
         comment = utils.create_comment(topic=self.topic, comment_html="<poll name=bar>")
         yesterday = timezone.now() - timezone.timedelta(days=1)
         CommentPoll.objects.create(comment=comment, name='bar', mode=PollMode.SECRET, close_at=yesterday)
-        user_comment_with_polls = comment.__class__.objects\
-            .filter(pk=comment.pk)\
-            .with_polls(self.user)\
+        user_comment_with_polls = comment.__class__.objects \
+            .filter(pk=comment.pk) \
+            .with_polls(self.user) \
             .first()
 
         out = Template(
@@ -534,7 +531,6 @@ class CommentPollTemplateTagsTest(TestCase):
 
 
 class PollModelsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -773,7 +769,6 @@ class PollModelsTest(TestCase):
 
 
 class PollUtilsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -796,7 +791,7 @@ class PollUtilsTest(TestCase):
             l.strip()
             for l in strip_tags(comment_html).splitlines()
             if l.strip()
-        ]
+            ]
         self.assertEqual(comment_parts, [
             'my poll',
             '#1 choice 1',

@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals
 
-
 emojis = {
     "+1", "-1", "100", "1234", "8ball", "a", "ab", "abc", "abcd", "accept", "aerial_tramway", "airplane",
     "alarm_clock", "alien", "ambulance", "anchor", "angel", "anger", "angry", "anguished", "ant", "apple",

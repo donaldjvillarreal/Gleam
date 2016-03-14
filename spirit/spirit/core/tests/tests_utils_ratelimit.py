@@ -24,7 +24,6 @@ def setup_request_factory_messages(req):
 
 
 class UtilsRateLimitTests(TestCase):
-
     def setUp(self):
         cache.clear()
 
@@ -75,7 +74,7 @@ class UtilsRateLimitTests(TestCase):
         self.assertFalse(limit_post(get))
 
     def test_rate_limit_field(self):
-        req = RequestFactory().post('/', {'username': 'esteban', })
+        req = RequestFactory().post('/', {'username': 'esteban',})
         req.user = AnonymousUser()
         setup_request_factory_messages(req)
 
@@ -92,7 +91,7 @@ class UtilsRateLimitTests(TestCase):
         self.assertTrue(username(req))
 
     def test_rate_limit_field_empty(self):
-        empty = RequestFactory().post('/', {'username': '', })
+        empty = RequestFactory().post('/', {'username': '',})
         empty.user = AnonymousUser()
 
         @ratelimit(field='username', rate='1/m')

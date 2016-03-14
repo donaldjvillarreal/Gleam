@@ -12,7 +12,6 @@ from ..core.utils.models import AutoSlugField
 
 
 class Category(models.Model):
-
     parent = models.ForeignKey('self', verbose_name=_("category parent"), null=True, blank=True)
 
     title = models.CharField(_("title"), max_length=75)
@@ -46,7 +45,6 @@ class Category(models.Model):
             return True
         else:
             return False
-
 
 # def topic_posted_handler(sender, topic, **kwargs):
 #    if topic.category.is_subcategory:

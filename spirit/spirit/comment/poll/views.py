@@ -33,8 +33,8 @@ def close_or_open(request, pk, close=True):
     else:
         close_at = None
 
-    CommentPoll.objects\
-        .filter(pk=poll.pk)\
+    CommentPoll.objects \
+        .filter(pk=poll.pk) \
         .update(close_at=close_at)
 
     return redirect(request.GET.get('next', poll.get_absolute_url()))
@@ -76,9 +76,9 @@ def voters(request, pk):
     if not choice.poll.can_show_results:
         raise PermissionDenied
 
-    choice_votes = CommentPollVote.objects\
-        .unremoved()\
-        .for_choice(choice=choice)\
+    choice_votes = CommentPollVote.objects \
+        .unremoved() \
+        .for_choice(choice=choice) \
         .select_related('voter__st')
 
     choice_votes = yt_paginate(

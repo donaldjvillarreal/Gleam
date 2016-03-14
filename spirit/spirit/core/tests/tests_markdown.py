@@ -11,12 +11,10 @@ from django.utils import timezone
 from ..tests import utils as test_utils
 from ..utils.markdown import Markdown, quotify
 
-
 now_fixed = timezone.now()
 
 
 class UtilsMarkdownTests(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = test_utils.create_user(username="nitely")
@@ -62,7 +60,7 @@ class UtilsMarkdownTests(TestCase):
             '&lt;em&gt;*foo*&lt;/em&gt;<br>\n'
             '&lt;em&gt;<a class="comment-mention" rel="nofollow" href="%s">@nitely</a>&lt;/em&gt;<br>\n'
             '<em>&lt;em&gt;foobar&lt;/em&gt;</em></p>'
-        ) % (self.user.st.get_absolute_url(), ))
+        ) % (self.user.st.get_absolute_url(),))
 
     def test_markdown_mentions(self):
         """
@@ -74,9 +72,9 @@ class UtilsMarkdownTests(TestCase):
                                      '<a class="comment-mention" rel="nofollow" href="%s">@esteban</a>,'
                                      '<a class="comment-mention" rel="nofollow" href="%s">@áéíóú</a>, '
                                      '@fakeone</p>' %
-                                     (self.user.st.get_absolute_url(),
-                                      self.user2.st.get_absolute_url(),
-                                      self.user3.st.get_absolute_url()))
+                         (self.user.st.get_absolute_url(),
+                          self.user2.st.get_absolute_url(),
+                          self.user3.st.get_absolute_url()))
 
     @override_settings(ST_MENTIONS_PER_COMMENT=2)
     def test_markdown_mentions_limit(self):
@@ -116,7 +114,8 @@ class UtilsMarkdownTests(TestCase):
         """
         comment = "text\nnew line"
         quote = quotify(comment, self.user)
-        self.assertListEqual(quote.splitlines(), ("> @%s said:\n> text\n> new line\n\n" % self.user.username).splitlines())
+        self.assertListEqual(quote.splitlines(),
+                             ("> @%s said:\n> text\n> new line\n\n" % self.user.username).splitlines())
 
     @override_settings(LANGUAGE_CODE='en')
     def test_markdown_quote_header_language(self):
@@ -146,7 +145,8 @@ class UtilsMarkdownTests(TestCase):
                   "2. opt 2\n" \
                   "[/poll]"
         quote = quotify(comment, self.user)
-        self.assertListEqual(quote.splitlines(), ("> @%s said:\n> foo\n> \n> bar\n\n" % self.user.username).splitlines())
+        self.assertListEqual(quote.splitlines(),
+                             ("> @%s said:\n> foo\n> \n> bar\n\n" % self.user.username).splitlines())
 
     def test_markdown_image(self):
         """
@@ -312,7 +312,7 @@ class UtilsMarkdownTests(TestCase):
         self.assertEqual(comment_md, '<poll name=foo_1>')
         self.assertEqual(md.get_polls(), {
             'polls': [
-                {'name': 'foo_1', }
+                {'name': 'foo_1',}
             ],
             'choices': [
                 {'number': 1, 'description': 'opt 1', 'poll_name': 'foo_1'},
@@ -325,6 +325,7 @@ class UtilsMarkdownTests(TestCase):
         """
         Should accept min, max, close, and title
         """
+
         def mock_now():
             return now_fixed
 
@@ -659,6 +660,7 @@ class UtilsMarkdownTests(TestCase):
         """
         Should truncates the close days
         """
+
         def mock_now():
             return now_fixed
 

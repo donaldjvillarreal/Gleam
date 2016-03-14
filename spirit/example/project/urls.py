@@ -11,8 +11,8 @@ import spirit.urls
 
 # Override admin login for security purposes
 from django.contrib.auth.decorators import login_required
-admin.site.login = login_required(admin.site.login)
 
+admin.site.login = login_required(admin.site.login)
 
 urlpatterns = [
     # Examples:

@@ -8,7 +8,6 @@ from django.db.models import Prefetch
 
 
 class CommentPollQuerySet(models.QuerySet):
-
     def unremoved(self):
         return self.filter(is_removed=False)
 
@@ -24,7 +23,6 @@ class CommentPollQuerySet(models.QuerySet):
 
 
 class CommentPollChoiceQuerySet(models.QuerySet):
-
     def unremoved(self):
         return self.filter(is_removed=False)
 
@@ -48,7 +46,6 @@ class CommentPollChoiceQuerySet(models.QuerySet):
 
 
 class CommentPollVoteQuerySet(models.QuerySet):
-
     def unremoved(self):
         return self.filter(is_removed=False)
 

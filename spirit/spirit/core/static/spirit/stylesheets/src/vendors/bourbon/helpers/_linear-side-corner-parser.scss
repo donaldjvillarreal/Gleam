@@ -16,16 +16,16 @@
   // Use old spec for webkit
   @if $val-1 == "to" {
     @return (
-      webkit-image: -webkit- + $prefix + $pos + $suffix,
-      spec-image: $image
+            webkit-image: -webkit- + $prefix + $pos + $suffix,
+            spec-image: $image
     );
   }
 
-  // Bring the code up to spec
+    // Bring the code up to spec
   @else {
     @return (
-      webkit-image: -webkit- + $image,
-      spec-image: $prefix + "to " + $pos + $suffix
+            webkit-image: -webkit- + $image,
+            spec-image: $prefix + "to " + $pos + $suffix
     );
   }
 }

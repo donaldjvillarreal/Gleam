@@ -3,8 +3,8 @@
 {% else %}
     <form action="{% url "spirit:comment:like:create" comment_id %}" method="post">
 {% endif %}
-    {% csrf_token %}
-    {% include "spirit/_form.html" %}
+{% csrf_token %}
+{% include "spirit/_form.html" %}
 
-    {# javascript submission #}
+{# javascript submission #}
 </form>

@@ -9,7 +9,6 @@ from ..core.utils.paginator import yt_paginate
 
 
 class SearchView(BaseSearchView):
-
     def build_page(self):
         paginator = None
         page = yt_paginate(
