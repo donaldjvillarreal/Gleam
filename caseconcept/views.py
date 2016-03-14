@@ -6,20 +6,27 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from caseconcept import forms
 
-from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies
+from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies, DEFAULT_PROBLEMS
 from caseconcept import models
 
 
 @login_required()
 def case_index(request):
-    if models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id)).exists():
+    problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+    if problems.exists():
         welcome = False
+        texts = [problem.text for problem in problems]
     else:
         welcome = True
-    return render(request, 'caseconcept/case-problem.html', {'welcome': welcome,
-                                                             'frequencyOptions': FREQUENCY_CHOICES,
-                                                             'severityOptions': SEVERITY_CHOICES,
-                                                             'error': request.GET.get('formIssue', False)})
+        texts = None
+    return render(request, 'caseconcept/case-problem.html',
+                  {'welcome': welcome,
+                   'frequencyOptions': FREQUENCY_CHOICES,
+                   'severityOptions': SEVERITY_CHOICES,
+                   'error': request.GET.get('formIssue', False),
+                   'texts': texts,
+                   'default_problems': DEFAULT_PROBLEMS,
+                   'custom_problems': [problem.text for problem in problems if problem.text not in DEFAULT_PROBLEMS]})
 
 
 @login_required()

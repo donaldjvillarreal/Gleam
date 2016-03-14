@@ -13,3 +13,13 @@ SEVERITY_CHOICES = ((0, 'Very Minor'),
                     )
 
 goal_frequencies = [('%i times a week' % i, i) for i in range(1, 5)]
+
+DEFAULT_PROBLEMS = [
+    'Family',
+    'Work',
+    'Friendships',
+    'Romantic Relationships',
+    'Self-Esteem',
+    'Recreational Activites',
+    'School'
+]
