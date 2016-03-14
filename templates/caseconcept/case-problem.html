@@ -125,7 +125,7 @@
                 $('#nextButton').on('click', function () {
                     var payload = {
                         'text': selectedAspect.html(),
-                        'frequency': $('#frequencyInput').val(),
+                        'frequency': $('input[name=frequency]:checked').val(),
                         'severity': $('#severityInput').val(),
                         'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
                     };
