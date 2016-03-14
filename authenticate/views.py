@@ -39,8 +39,12 @@ def register(request):
             # Now we save the UserProfile model instance.
             profile.save()
 
-            # Update our variable to tell the template registration was successful.
-            return HttpResponseRedirect(reverse('login'))
+            username = request.POST['username']
+            password = request.POST['password']
+            userlogin = authenticate(username=username, password=password)
+            login(request, userlogin)
+
+            return HttpResponseRedirect(request.GET.get('next', '/'))
 
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
