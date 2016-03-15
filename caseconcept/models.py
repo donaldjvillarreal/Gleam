@@ -60,6 +60,7 @@ class ProblemGoal(models.Model):
     frequency = models.SmallIntegerField()
 
     created = models.DateTimeField(auto_now_add=True)
+    stale = models.BooleanField(default=True)
 
     def frequency_verbose(self):
         return goal_frequencies[self.frequency - 1][0]
@@ -69,6 +70,7 @@ class ProblemGoal(models.Model):
 
     class Meta(object):
         get_latest_by = 'created'
+        unique_together = (('user', 'problem', 'frequency'),)
 
 
 class ProblemGoalRanking(models.Model):

@@ -102,10 +102,14 @@ def case_problem_description(request):
 @login_required()
 def case_problem_summary(request):
     if request.method == 'POST':
+        for problem in models.ProblemAspect.objects.filter(improve=True):
+            problem.improve = False
+            problem.save()
         for problem_id in request.POST.getlist('problems[]'):
             problem = models.ProblemAspect.objects.get(id=int(problem_id))
             problem.improve = True
             problem.save()
+        print request.POST.getlist('problems[]')
         # if len(request.POST.getlist('problems[]')) >= 1:
         return HttpResponseRedirect(reverse('case:goals'))
         # else:
@@ -142,7 +146,8 @@ def case_goals(request):
                 user=User.objects.get(id=request.user.id),
                 problem=models.ProblemAspect.objects.get(id=problem.id),
                 action=request.POST['%i-action' % problem.id],
-                frequency=int(request.POST['%i-frequency' % problem.id]))
+                frequency=int(request.POST['%i-frequency' % problem.id]),
+                stale=False)
         if len(problems) >= 2:
             return HttpResponseRedirect(reverse('case:goals_rank'))
         else:
@@ -161,6 +166,8 @@ def case_goals(request):
 
 @login_required()
 def case_goals_rank(request):
+    if not models.ProblemAspect.objects.all().exists():
+        return HttpResponseRedirect(reverse('case:index'))
     if request.method == 'POST':
         # Get list of goals
         goals = request.POST.getlist('goals[]')
@@ -184,7 +191,8 @@ def case_goals_rank(request):
         return render(request, 'caseconcept/case-goal-confirm.html',
                       {'ranking': ranking})
     else:
-        goals = models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id)).order_by('-created')[:3]
+        goals = models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id), stale=False).order_by(
+            '-created')[:3]
         return render(request, 'caseconcept/case-goals-rank.html',
                       {'goals': goals})
 
