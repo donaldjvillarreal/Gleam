@@ -28,7 +28,8 @@
                 <tr data-id="{{ problem.id }}">
                     <td>
                         <label>
-                            <input type="checkbox" class="" id="{{ problem.id }}">
+                            <input type="checkbox" id="{{ problem.id }}">
+                            <span class="c-indicator"></span>
                         </label>
                     </td>
                     <td>
@@ -84,12 +85,12 @@
                 } else {
                     $('#rowLimitWarning').hide();
                     $(this).toggleClass('selected');
-                    if ($(this).hasClass('selected')) {
-                        $('#' + $(this).attr('data-id')).prop('checked', true);
-                    } else {
-                        $('#' + $(this).attr('data-id')).prop('checked', false);
-
-                    }
+                }
+                var checkBoxToUncheckId = $(this).attr('data-id');
+                if ($(this).hasClass('selected')) {
+                    $('#' + checkBoxToUncheckId).prop('checked', true);
+                } else {
+                    $('#' + checkBoxToUncheckId).prop('checked', false);
                 }
             });
 
