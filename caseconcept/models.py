@@ -11,7 +11,7 @@ class ProblemAspect(models.Model):
     Negative aspects affected by depression
     """
     user = models.ForeignKey(User)  # Lets us set some pre-defined aspects
-    text = models.CharField(max_length=50)
+    text = models.CharField(max_length=50, unique=True)
     frequency = models.SmallIntegerField(choices=FREQUENCY_CHOICES)
     severity = models.SmallIntegerField(choices=SEVERITY_CHOICES)
     improve = models.BooleanField(blank=True, default=False)

@@ -68,13 +68,11 @@
                     {% else %}
                         <div class="col-md-3 card card-block btn btn-primary-outline aspects">{{ problem_text }}</div>
                     {% endif %}
+
                 {% endfor %}
-                {#                {% for aspect in aspects %}#}
                 {% for custom_problem_text in custom_problems %}
                     <div class="col-md-3 card card-block btn btn-secondary-outline disabled">{{ custom_problem_text }}</div>
                 {% endfor %}
-                {#                    <div class="col-md-3 card card-block btn btn-primary-outline aspects">{{ aspect.text }}</div>#}
-                {#                {% endfor %}#}
             </div>
             <div class="col-md-3 card card-block btn btn-success-outline" id="addAspect">Add another</div>
         </div>
@@ -138,7 +136,9 @@
             $('#addAspectDiv').hide();
 
             var fsOptions = $('#frequencySeverityOptions');
+            $('#radios').radiosToSlider();
             fsOptions.hide();
+
 
             $('body').on('hide', '#frequencySeverityOptions', function () {
                 $('#aspect-list').find('>div').removeClass('active');
@@ -158,10 +158,10 @@
                     $(this).addClass('active');
                     $('#addAspect').removeClass('active');
                     fsOptions.show();
-                    $('#radios').radiosToSlider();
                 }
-                $('#fProblem').html(selectedAspect.html());
-                $('#sProblem').html(selectedAspect.html());
+                var textToDisplay = '<span class="label label-info">' + selectedAspect.html().toLowerCase() + '</span>';
+                $('#fProblem').html(textToDisplay);
+                $('#sProblem').html(textToDisplay);
 
                 $('#nextButton').on('click', function () {
                     var payload = {
