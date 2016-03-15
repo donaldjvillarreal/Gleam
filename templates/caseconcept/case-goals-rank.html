@@ -94,12 +94,11 @@
                 $('.goals').each(function () {
                     orderedGoals.push($(this).val());
                 });
-                console.log(orderedGoals);
-                {#                $.redirect('{% url 'case:goals_rank' %}',#}
-                {#                        {#}
-                {#                            'goals': orderedGoals,#}
-                {#                            'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value#}
-                {#                        });#}
+                $.redirect('{% url 'case:goals_rank' %}',
+                        {
+                            'goals': orderedGoals,
+                            'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+                        });
             });
         });
     </script>
