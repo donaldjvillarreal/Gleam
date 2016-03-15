@@ -16,14 +16,19 @@ class ProblemAspect(models.Model):
     severity = models.SmallIntegerField(choices=SEVERITY_CHOICES)
     improve = models.BooleanField(blank=True, default=False)
 
+    created = models.DateTimeField(auto_now_add=True)
+
     def __unicode__(self):
-        return self.text[:40]
+        return self.text
 
     def frequency_verbose(self):
         return FREQUENCY_CHOICES[self.frequency][1]
 
     def severity_verbose(self):
         return SEVERITY_CHOICES[self.severity][1]
+
+    class Meta(object):
+        get_latest_by = 'created'
 
 
 class ProblemAspectSituation(models.Model):
@@ -38,8 +43,13 @@ class ProblemAspectSituation(models.Model):
     reaction = models.CharField(max_length=300)
     distress_level = models.SmallIntegerField(choices=DISTRESS_LEVEL_CHOICES)
 
+    created = models.DateTimeField(auto_now_add=True)
+
     def __unicode__(self):
         return self.problem.__unicode__()
+
+    class Meta(object):
+        get_latest_by = 'created'
 
 
 class ProblemGoal(models.Model):
@@ -49,11 +59,16 @@ class ProblemGoal(models.Model):
     action = models.CharField(max_length=300, blank=True, null=True)
     frequency = models.SmallIntegerField()
 
+    created = models.DateTimeField(auto_now_add=True)
+
     def frequency_verbose(self):
         return goal_frequencies[self.frequency - 1][0]
 
     def __unicode__(self):
         return self.action[:40]
+
+    class Meta(object):
+        get_latest_by = 'created'
 
 
 class ProblemGoalRanking(models.Model):
@@ -65,8 +80,11 @@ class ProblemGoalRanking(models.Model):
 
     current_goal = models.ForeignKey(ProblemGoal, related_name='problemgoalranking_current', null=True, blank=True)
 
+    created = models.DateTimeField(auto_now_add=True)
+
     class Meta(object):
         unique_together = (('user', 'first', 'second', 'third'),)
+        get_latest_by = 'created'
 
     def __unicode__(self):
         if self.current_goal is not None:
@@ -82,8 +100,11 @@ class PracticeCalendar(models.Model):
 
     weekday_time = models.CharField(max_length=5)
 
+    created = models.DateTimeField(auto_now_add=True)
+
     def __unicode__(self):
         return '%s, %s' % (self.user.username, self.weekday_time)
 
     class Meta(object):
         unique_together = (('goal', 'weekday_time'),)
+        get_latest_by = 'created'

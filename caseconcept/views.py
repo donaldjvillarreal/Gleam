@@ -52,7 +52,6 @@ def case_problem_description(request):
     if request.method == 'POST':
         errors_1, errors_2 = None, None
         problem_aspect = models.ProblemAspect.objects.get(id=request.POST['problem'])
-        print problem_aspect
         problem_description_form = forms.ProblemAspectSituationForm({
             'situation': request.POST['situationInput1'],
             'thought': request.POST['thoughtInput1'],
@@ -132,9 +131,12 @@ def case_goals(request):
             problem.save()
         else:
             return HttpResponseRedirect(reverse('case:index'))
-    if request.method == 'POST':
+    else:
         # Get the first three problems that have been marked as improve = True
-        problems = models.ProblemAspect.objects.filter(improve=True)[:3]
+        problems = models.ProblemAspect.objects.filter(improve=True)
+        if len(problems) > 1:
+            problems = problems.order_by('-created')[:3]
+    if request.method == 'POST':
         for problem in problems:
             models.ProblemGoal.objects.get_or_create(
                 user=User.objects.get(id=request.user.id),
@@ -153,7 +155,7 @@ def case_goals(request):
             return HttpResponseRedirect(reverse('case:calendar'))
     else:
         return render(request, 'caseconcept/case-goals.html',
-                      {'problems': models.ProblemAspect.objects.filter(improve=True)[:3],
+                      {'problems': problems,
                        'frequencies': goal_frequencies})
 
 
@@ -182,8 +184,9 @@ def case_goals_rank(request):
         return render(request, 'caseconcept/case-goal-confirm.html',
                       {'ranking': ranking})
     else:
+        goals = models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id)).order_by('-created')[:3]
         return render(request, 'caseconcept/case-goals-rank.html',
-                      {'goals': models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id))[:3]})
+                      {'goals': goals})
 
 
 @login_required()
@@ -199,7 +202,7 @@ def case_goal_rank_confirm(request):
 
 @login_required
 def calendar(request):
-    goal = models.ProblemGoalRanking.objects.filter(user=User.objects.get(id=request.user.id)).latest('current_goal')
+    goal = models.ProblemGoalRanking.objects.filter(user=User.objects.get(id=request.user.id)).order_by('-created')[0]
     if request.method == 'POST':
         for slot in request.POST.getlist('weekday_time'):
             planner_form = forms.PlannerForm({'weekday_time': slot})
