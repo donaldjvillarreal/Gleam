@@ -5,10 +5,9 @@
         <div>
             <form method="post" action="">
                 {% csrf_token %}
-                <input type="hidden" name="current" value="{{ current }}">
                     <h3><strong>{{ qa_set.0.text }}</strong> {% if qa_set.0.label %} {{ qa_set.0.label }} {% endif %}</h3>
                     <div class="row">
-                        <span class="label label-info pull-xs-right">{{ current|add:"-1" }}/21</span>
+                        <span class="label label-info pull-xs-right">{{ qa_set.0.order }}/21</span>
                         <progress class="progress progress-striped progress-info" value="{{ progress }}" max="100">{{ progress }}%</progress>
                     </div>
                     <fieldset class="form-control jumbotron">
@@ -18,10 +17,9 @@
                     <div class="row">
                         <div>
                             {% for answer in qa_set.1 %}
-                        <input type="hidden" name="answer_pk" value="{{ answer_pk }}">
                         <div class="card card-block">
                             <label for="{{ answer.pk }}" class="c-input c-radio">
-                                <input type="radio" name="answer" id="{{ answer.pk }}" value="{{ answer.value }}" required>
+                                <input type="radio" name="answer" id="{{ answer.id }}" value="{{ answer.id }}" required>
                                 <span class="c-indicator"></span>{{ answer.response }}
                             </label>
                         </div>
@@ -30,7 +28,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-1 col-md-offset-10">
-                            {% if current|add:"-1" == 21 %}
+                            {% if qa_set.0.order == 21 %}
                             <input type="submit" value="submit" class="btn btn-primary">
                             {% else %}
                                 <input type="submit" value="next" class="btn btn-primary pull-right">

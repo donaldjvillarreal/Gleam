@@ -54,9 +54,15 @@ class SurveySet(models.Model):
     """
     user = models.ForeignKey(User)
     survey = models.ForeignKey(Survey)
-    answer = models.ManyToManyField(Answer)
+
+    answers = models.ManyToManyField(Answer, through='QuestionAnswerSet')
 
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     completed_on = models.DateTimeField(blank=True, null=True)
+
+
+class QuestionAnswerSet(models.Model):
+    survey_set = models.ForeignKey(SurveySet)
+    answer = models.ForeignKey(Answer)

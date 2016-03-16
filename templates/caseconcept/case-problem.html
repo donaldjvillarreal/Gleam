@@ -130,10 +130,12 @@
     <script type="application/javascript" src="{% static 'js/jquery.radios-to-slider.min.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
+
+            var addAspectDiv = $('#addAspectDiv');
             {% if welcome %}
                 $('#welcomeModal').modal('show');
             {% endif %}
-            $('#addAspectDiv').hide();
+            addAspectDiv.hide();
 
             var fsOptions = $('#frequencySeverityOptions');
             $('#radios').radiosToSlider();
@@ -147,8 +149,10 @@
 
             $('body').on('click', '.aspects', function () {
                 // Hide the custom input
-                $('#addAspectDiv').hide();
-                var selectedAspect = $(this);
+                var selectedAspect;
+                var textToDisplay;
+                addAspectDiv.hide();
+                selectedAspect = $(this);
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
                     fsOptions.hide();
@@ -159,7 +163,7 @@
                     $('#addAspect').removeClass('active');
                     fsOptions.show();
                 }
-                var textToDisplay = '<span class="label label-info">' + selectedAspect.html().toLowerCase() + '</span>';
+                textToDisplay = '<span class="label label-info">' + selectedAspect.html().toLowerCase() + '</span>';
                 $('#fProblem').html(textToDisplay);
                 $('#sProblem').html(textToDisplay);
 
@@ -177,14 +181,13 @@
                     }
                 });
             });
-
             $('#addAspect').on('click', function () {
                 //Remove active divs and hide the option menu
                 $('#aspect-list').find('>div').removeClass('active');
                 fsOptions.hide();
                 $('#addAspectInput').val('');
-                $('#addAspectDiv').toggle();
-                if ($('#addAspectDiv').is(':visible')) {
+                addAspectDiv.toggle();
+                if (addAspectDiv.is(':visible')) {
                     $('#addAspect').addClass('active');
                 } else {
                     $('#addAspect').removeClass('active');
@@ -194,7 +197,7 @@
                 $('#aspect-list').find('>div').removeClass('justAdded');
                 $('#aspect-list').append('<div class="col-md-3 card card-block btn btn-primary-outline aspects justAdded">' + $('#addAspectInput').val());
                 $('.justAdded').first().click();
-                $('#addAspectDiv').hide();
+                addAspectDiv.hide();
             });
         });
     </script>
