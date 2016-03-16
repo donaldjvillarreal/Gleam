@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from django.db import models
 
 
@@ -52,7 +53,8 @@ class SurveySet(models.Model):
     """
     Model to store user responses to surveys
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=True)
+    session = models.ForeignKey(Session, on_delete=models.SET_NULL, null=True, blank=True)
     survey = models.ForeignKey(Survey)
 
     answers = models.ManyToManyField(Answer, through='QuestionAnswerSet')

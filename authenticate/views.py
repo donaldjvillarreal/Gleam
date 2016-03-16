@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from authenticate.models import User, UserProfile
+from diagnostic.models import SurveySet
 
 
 def register(request):
@@ -19,6 +20,12 @@ def register(request):
         if user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
+
+            # Check if surveySet exists under their session id
+            if request.session.exists(request.session.session_key):
+                survey_set = SurveySet.objects.filter(session=request.session.session_key)
+                if survey_set.exists():
+                    survey_set.first().user = user
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.

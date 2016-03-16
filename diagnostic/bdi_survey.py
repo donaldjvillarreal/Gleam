@@ -11,15 +11,16 @@ BDI scale:
 
 from diagnostic import models
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from django.utils import timezone
 
 BDI_QUESTIONS = len(models.Question.objects.filter(survey__short_name='BDI'))
 bdi_survey = models.Survey.objects.get(short_name='BDI')
 
 
-def get_qa_set(user_id):
-    user = User.objects.get(id=user_id)
-    survey_set = models.SurveySet.objects.filter(user=user)
+def get_qa_set(session_key):
+    session = Session.objects.get(session_key=session_key)
+    survey_set = models.SurveySet.objects.filter(session=session)
     if survey_set.exists():
         survey_set = survey_set.order_by('-last_modified').first()
         question_set = []
@@ -35,15 +36,15 @@ def get_qa_set(user_id):
                 if question not in question_set:
                     return question, models.Answer.objects.filter(question=question)
     else:
-        models.SurveySet.objects.create(user=user, survey=bdi_survey)
+        models.SurveySet.objects.create(session=session, survey=bdi_survey)
         question = models.Question.objects.get(survey=bdi_survey, order=1)
         return question, models.Answer.objects.filter(question=question)
 
 
-def store_bdi_response(user_id, answer_id):
-    user = User.objects.get(id=user_id)
+def store_bdi_response(session_key, answer_id):
+    session = Session.objects.get(session_key=session_key)
     answer = models.Answer.objects.get(id=int(answer_id))
-    survey_set = models.SurveySet.objects.filter(user=user).order_by('-last_modified').first()
+    survey_set = models.SurveySet.objects.filter(session=session).order_by('-last_modified').first()
     models.QuestionAnswerSet.objects.create(survey_set=survey_set, answer=answer)
     if len(survey_set.answers.all()) == BDI_QUESTIONS:
         survey_set.completed_on = timezone.localtime(timezone.now())
@@ -54,9 +55,9 @@ def store_bdi_response(user_id, answer_id):
         return question, models.Answer.objects.filter(question=question)
 
 
-def calculate_bdi_score(user_id):
-    user = User.objects.get(id=user_id)
-    answers = models.SurveySet.objects.filter(user=user).order_by('-last_modified').first().answers.all()
+def calculate_bdi_score(session_key):
+    session = Session.objects.get(session_key=session_key)
+    answers = models.SurveySet.objects.filter(session=session).order_by('-last_modified').first().answers.all()
     score = 0
     for answer in answers:
         score += answer.value
