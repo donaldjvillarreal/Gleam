@@ -25,7 +25,9 @@ def register(request):
             if request.session.exists(request.session.session_key):
                 survey_set = SurveySet.objects.filter(session=request.session.session_key)
                 if survey_set.exists():
-                    survey_set.first().user = user
+                    survey_set = survey_set.first()
+                    survey_set.user = user
+                    survey_set.save()
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
@@ -47,7 +49,7 @@ def register(request):
             profile.save()
 
             # Update our variable to tell the template registration was successful.
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('authenticate:login'))
 
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.

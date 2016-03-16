@@ -37,7 +37,7 @@ def bdi_survey_pagination(request):
 
 def bdi_score(request):
     if not request.session.exists(request.session.session_key):
-        request.session.create()
+        return HttpResponseRedirect(reverse('diagnostic:bdi_survey'))
     session_key = request.session.session_key
     return render(request, 'diagnostic/bdi_score.html',
                   {'score': calculate_bdi_score(session_key)})
