@@ -6,7 +6,6 @@ from django.conf import settings
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
@@ -30,6 +29,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='QuestionAnswerSet',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('answer', models.ForeignKey(to='diagnostic.Answer')),
+            ],
+        ),
+        migrations.CreateModel(
             name='Survey',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -44,10 +50,15 @@ class Migration(migrations.Migration):
                 ('created_on', models.DateTimeField(auto_now_add=True)),
                 ('last_modified', models.DateTimeField(auto_now=True)),
                 ('completed_on', models.DateTimeField(null=True, blank=True)),
-                ('answer', models.ForeignKey(blank=True, to='diagnostic.Answer', null=True)),
+                ('answers', models.ManyToManyField(to='diagnostic.Answer', through='diagnostic.QuestionAnswerSet')),
                 ('survey', models.ForeignKey(to='diagnostic.Survey')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
+        ),
+        migrations.AddField(
+            model_name='questionanswerset',
+            name='survey_set',
+            field=models.ForeignKey(to='diagnostic.SurveySet'),
         ),
         migrations.AddField(
             model_name='question',

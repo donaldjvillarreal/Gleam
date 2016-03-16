@@ -5,14 +5,13 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('diagnostic', '0006_problemaspect_default'),
+        ('caseconcept', '0004_auto_20160315_1335'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='problemaspect',
-            name='default',
+        migrations.AlterUniqueTogether(
+            name='problemgoal',
+            unique_together=set([('user', 'problem', 'frequency')]),
         ),
     ]

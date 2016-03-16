@@ -2,18 +2,18 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
-                <div class="card card-block">
-                    <h3 class="card-title">Take the quiz</h3>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="{% url 'diagnostic:bdi_survey' %}" class="btn btn-primary">Go</a>
-                </div>
+            <div class="jumbotron">
+                <h5>{% lorem %}</h5>
             </div>
-            <div class="col-sm-6">
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
                 <div class="card card-block">
-                    <h3 class="card-title">Start course</h3>
+                    <h3 class="card-title">Take the assessment</h3>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="{% url 'diagnostic:case_index' %}" class="btn btn-primary">Go</a>
+                    <a href="{% url 'diagnostic:bdi_survey' %}" class="btn btn-primary col-md-12">
+                        Go <i class="fa fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>

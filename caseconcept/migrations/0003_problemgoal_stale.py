@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('diagnostic', '0015_auto_20160306_1954'),
+        ('caseconcept', '0002_auto_20160314_2256'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='problemgoalranking',
-            name='current_goal',
-            field=models.ForeignKey(blank=True, to='diagnostic.ProblemGoal', null=True),
+            model_name='problemgoal',
+            name='stale',
+            field=models.BooleanField(default=False),
         ),
     ]

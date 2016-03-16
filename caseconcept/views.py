@@ -6,20 +6,27 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from caseconcept import forms
 
-from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies
+from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies, DEFAULT_PROBLEMS
 from caseconcept import models
 
 
 @login_required()
 def case_index(request):
-    if models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id)).exists():
+    problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+    if problems.exists():
         welcome = False
+        texts = [problem.text for problem in problems]
     else:
         welcome = True
-    return render(request, 'caseconcept/case-problem.html', {'welcome': welcome,
-                                                             'frequencyOptions': FREQUENCY_CHOICES,
-                                                             'severityOptions': SEVERITY_CHOICES,
-                                                             'error': request.GET.get('formIssue', False)})
+        texts = None
+    return render(request, 'caseconcept/case-problem.html',
+                  {'welcome': welcome,
+                   'frequencyOptions': FREQUENCY_CHOICES,
+                   'severityOptions': SEVERITY_CHOICES,
+                   'error': request.GET.get('formIssue', False),
+                   'texts': texts,
+                   'default_problems': DEFAULT_PROBLEMS,
+                   'custom_problems': [problem.text for problem in problems if problem.text not in DEFAULT_PROBLEMS]})
 
 
 @login_required()
@@ -45,7 +52,6 @@ def case_problem_description(request):
     if request.method == 'POST':
         errors_1, errors_2 = None, None
         problem_aspect = models.ProblemAspect.objects.get(id=request.POST['problem'])
-        print problem_aspect
         problem_description_form = forms.ProblemAspectSituationForm({
             'situation': request.POST['situationInput1'],
             'thought': request.POST['thoughtInput1'],
@@ -96,10 +102,14 @@ def case_problem_description(request):
 @login_required()
 def case_problem_summary(request):
     if request.method == 'POST':
+        for problem in models.ProblemAspect.objects.filter(improve=True):
+            problem.improve = False
+            problem.save()
         for problem_id in request.POST.getlist('problems[]'):
             problem = models.ProblemAspect.objects.get(id=int(problem_id))
             problem.improve = True
             problem.save()
+        print request.POST.getlist('problems[]')
         # if len(request.POST.getlist('problems[]')) >= 1:
         return HttpResponseRedirect(reverse('case:goals'))
         # else:
@@ -125,15 +135,19 @@ def case_goals(request):
             problem.save()
         else:
             return HttpResponseRedirect(reverse('case:index'))
-    if request.method == 'POST':
+    else:
         # Get the first three problems that have been marked as improve = True
-        problems = models.ProblemAspect.objects.filter(improve=True)[:3]
+        problems = models.ProblemAspect.objects.filter(improve=True)
+        if len(problems) > 1:
+            problems = problems.order_by('-created')[:3]
+    if request.method == 'POST':
         for problem in problems:
             models.ProblemGoal.objects.get_or_create(
                 user=User.objects.get(id=request.user.id),
                 problem=models.ProblemAspect.objects.get(id=problem.id),
                 action=request.POST['%i-action' % problem.id],
-                frequency=int(request.POST['%i-frequency' % problem.id]))
+                frequency=int(request.POST['%i-frequency' % problem.id]),
+                stale=False)
         if len(problems) >= 2:
             return HttpResponseRedirect(reverse('case:goals_rank'))
         else:
@@ -146,12 +160,14 @@ def case_goals(request):
             return HttpResponseRedirect(reverse('case:calendar'))
     else:
         return render(request, 'caseconcept/case-goals.html',
-                      {'problems': models.ProblemAspect.objects.filter(improve=True)[:3],
+                      {'problems': problems,
                        'frequencies': goal_frequencies})
 
 
 @login_required()
 def case_goals_rank(request):
+    if not models.ProblemAspect.objects.all().exists():
+        return HttpResponseRedirect(reverse('case:index'))
     if request.method == 'POST':
         # Get list of goals
         goals = request.POST.getlist('goals[]')
@@ -175,8 +191,10 @@ def case_goals_rank(request):
         return render(request, 'caseconcept/case-goal-confirm.html',
                       {'ranking': ranking})
     else:
+        goals = models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id), stale=False).order_by(
+            '-created')[:3]
         return render(request, 'caseconcept/case-goals-rank.html',
-                      {'goals': models.ProblemGoal.objects.filter(user=User.objects.get(id=request.user.id))[:3]})
+                      {'goals': goals})
 
 
 @login_required()
@@ -192,7 +210,7 @@ def case_goal_rank_confirm(request):
 
 @login_required
 def calendar(request):
-    goal = models.ProblemGoalRanking.objects.filter(user=User.objects.get(id=request.user.id)).latest('current_goal')
+    goal = models.ProblemGoalRanking.objects.filter(user=User.objects.get(id=request.user.id)).order_by('-created')[0]
     if request.method == 'POST':
         for slot in request.POST.getlist('weekday_time'):
             planner_form = forms.PlannerForm({'weekday_time': slot})

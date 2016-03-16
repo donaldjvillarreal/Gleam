@@ -14,86 +14,101 @@
         <div class="alert alert-warning" id="rowLimitWarning">
             Only 3 rows may be selected.
         </div>
-        <table class="table " id="problems-table">
+        <table class="table">
             <thead>
             <tr>
+                <th><i class="fa fa-check-square"></i></th>
                 <th>Problem</th>
                 <th>Frequency</th>
                 <th>Severity</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="problems-table">
             {% for problem in problems %}
                 <tr data-id="{{ problem.id }}">
-                <td>
-                    {{ problem.text }}
-                </td>
-                <td>
-                    {{ problem.frequency_verbose }}
-                </td>
-                <td>
-                    {{ problem.severity_verbose }}
-                </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" id="{{ problem.id }}">
+                            <span class="c-indicator"></span>
+                        </label>
+                    </td>
+                    <td>
+                        {{ problem.text }}
+                    </td>
+                    <td>
+                        {{ problem.frequency_verbose }}
+                    </td>
+                    <td>
+                        {{ problem.severity_verbose }}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-    <div class="row">
-        {% csrf_token %}
-        <a href="#" class="btn btn-success pull-right" id="nextButton">Next <i class="fa fa-arrow-right"></i> </a>
-    </div>
+        <div class="row">
+            {% csrf_token %}
+            <a href="#" class="btn btn-success pull-right" id="nextButton">Next <i class="fa fa-arrow-right"></i> </a>
+        </div>
     </div>
 
-    <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <br>
-                <p class="modal-body">
-                 At least 1 row must be selected.
-                </p>
+    <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <br>
+                        <p class="modal-body">
+                            At least 1 row must be selected.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
         </div>
-      </div>
     </div>
 {% endblock %}
 {% block js_scripts %}
     <script type="application/javascript">
-    $('#rowLimitWarning').hide();
-    $(document).ready(function () {
-        $('#problems-table tr').on('click', function () {
-            if ($(this).hasClass('selected')){
-                $(this).removeClass('selected');
-                $('#rowLimitWarning').hide();
-            }
-            else if($('.selected').length === 3){
-                $('#rowLimitWarning').show();
-            } else {
-                $('#rowLimitWarning').hide();
-                $(this).toggleClass('selected');
-            }
-        });
+        $('#rowLimitWarning').hide();
+        $(document).ready(function () {
+            $('#problems-table tr').on('click', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $('#rowLimitWarning').hide();
+                }
+                else if ($('.selected').length === 3) {
+                    $('#rowLimitWarning').show();
+                } else {
+                    $('#rowLimitWarning').hide();
+                    $(this).toggleClass('selected');
+                }
+                var checkBoxToUncheckId = $(this).attr('data-id');
+                if ($(this).hasClass('selected')) {
+                    $('#' + checkBoxToUncheckId).prop('checked', true);
+                } else {
+                    $('#' + checkBoxToUncheckId).prop('checked', false);
+                }
+            });
 
-        $('#nextButton').on('click', function () {
-            if ($('.selected').length === 0){
-                $('#warningModal').modal('show');
-                return;
-            } else {
-                var selectedRows = [];
-                $('.selected').each(function () {
-                    selectedRows.push($(this).attr('data-id'));
-                });
-                $.redirect('{% url 'case:problem_summary' %}',
-                        {'problems': selectedRows,
-                            'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value });
-            }
+            $('#nextButton').on('click', function () {
+                if ($('.selected').length === 0) {
+                    $('#warningModal').modal('show');
+                } else {
+                    var selectedRows = [];
+                    $('.selected').each(function () {
+                        selectedRows.push($(this).attr('data-id'));
+                    });
+                    $.redirect('{% url 'case:problem_summary' %}',
+                            {
+                                'problems': selectedRows,
+                                'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+                            });
+                }
+            });
         });
-    });
     </script>
 {% endblock %}

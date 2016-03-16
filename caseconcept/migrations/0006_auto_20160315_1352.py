@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('diagnostic', '0005_auto_20160305_1455'),
+        ('caseconcept', '0005_auto_20160315_1341'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.AlterField(
             model_name='problemaspect',
-            name='default',
-            field=models.BooleanField(default=False),
+            name='text',
+            field=models.CharField(unique=True, max_length=50),
         ),
     ]
