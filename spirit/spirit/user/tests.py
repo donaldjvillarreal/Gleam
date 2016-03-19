@@ -28,7 +28,6 @@ User = get_user_model()
 
 
 class UserViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -66,7 +65,7 @@ class UserViewTest(TestCase):
         """
         utils.login(self)
         response = self.client.get(reverse("spirit:user:topics", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['topics']), [self.topic, ])
         self.assertEqual(response.context['p_user'], self.user2)
@@ -87,7 +86,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:topics", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(list(response.context['topics']), [topic_b, topic_c, topic_a])
 
     def test_profile_topics_bookmarks(self):
@@ -112,7 +111,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:topics", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['topics']), [topic, ])
 
@@ -134,7 +133,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:topics", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(list(response.context['topics']), [])
 
     def test_profile_topics_invalid_slug(self):
@@ -143,9 +142,9 @@ class UserViewTest(TestCase):
         """
         utils.login(self)
         response = self.client.get(reverse("spirit:user:topics", kwargs={'pk': self.user2.pk,
-                                                                            'slug': "invalid"}))
+                                                                         'slug': "invalid"}))
         expected_url = reverse("spirit:user:topics", kwargs={'pk': self.user2.pk,
-                                                                'slug': self.user2.st.slug})
+                                                             'slug': self.user2.st.slug})
         self.assertRedirects(response, expected_url, status_code=301)
 
     def test_profile_comments(self):
@@ -156,7 +155,7 @@ class UserViewTest(TestCase):
         comment = utils.create_comment(user=self.user2, topic=self.topic)
         utils.create_comment(user=self.user, topic=self.topic)
         response = self.client.get(reverse("spirit:user:detail", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['comments']), [comment, ])
         self.assertEqual(response.context['p_user'], self.user2)
@@ -174,7 +173,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:detail", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(list(response.context['comments']), [comment_b, comment_c, comment_a])
 
     @override_djconfig(comments_per_page=1)
@@ -187,7 +186,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:detail", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['comments']), [comment, ])
 
@@ -212,7 +211,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:detail", kwargs={'pk': self.user2.pk,
-                                                                            'slug': self.user2.st.slug}))
+                                                                         'slug': self.user2.st.slug}))
         self.assertEqual(list(response.context['comments']), [])
 
     def test_profile_comments_invalid_slug(self):
@@ -221,9 +220,9 @@ class UserViewTest(TestCase):
         """
         utils.login(self)
         response = self.client.get(reverse("spirit:user:detail", kwargs={'pk': self.user2.pk,
-                                                                            'slug': "invalid"}))
+                                                                         'slug': "invalid"}))
         expected_url = reverse("spirit:user:detail", kwargs={'pk': self.user2.pk,
-                                                                'slug': self.user2.st.slug})
+                                                             'slug': self.user2.st.slug})
         self.assertRedirects(response, expected_url, status_code=301)
 
     def test_profile_likes(self):
@@ -236,7 +235,7 @@ class UserViewTest(TestCase):
         like = CommentLike.objects.create(user=self.user2, comment=comment)
         CommentLike.objects.create(user=self.user, comment=comment2)
         response = self.client.get(reverse("spirit:user:likes", kwargs={'pk': self.user2.pk,
-                                                                           'slug': self.user2.st.slug}))
+                                                                        'slug': self.user2.st.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['comments']), [like.comment, ])
         self.assertEqual(response.context['p_user'], self.user2)
@@ -257,7 +256,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:likes", kwargs={'pk': self.user2.pk,
-                                                                           'slug': self.user2.st.slug}))
+                                                                        'slug': self.user2.st.slug}))
         self.assertEqual(list(response.context['comments']), [comment_b, comment_c, comment_a])
 
     def test_profile_likes_dont_show_removed_or_private(self):
@@ -286,7 +285,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:likes", kwargs={'pk': self.user2.pk,
-                                                                           'slug': self.user2.st.slug}))
+                                                                        'slug': self.user2.st.slug}))
         self.assertEqual(list(response.context['comments']), [])
 
     def test_profile_likes_invalid_slug(self):
@@ -295,9 +294,9 @@ class UserViewTest(TestCase):
         """
         utils.login(self)
         response = self.client.get(reverse("spirit:user:likes", kwargs={'pk': self.user2.pk,
-                                                                           'slug': "invalid"}))
+                                                                        'slug': "invalid"}))
         expected_url = reverse("spirit:user:likes", kwargs={'pk': self.user2.pk,
-                                                               'slug': self.user2.st.slug})
+                                                            'slug': self.user2.st.slug})
         self.assertRedirects(response, expected_url, status_code=301)
 
     @override_djconfig(comments_per_page=1)
@@ -312,7 +311,7 @@ class UserViewTest(TestCase):
 
         utils.login(self)
         response = self.client.get(reverse("spirit:user:likes", kwargs={'pk': self.user2.pk,
-                                                                           'slug': self.user2.st.slug}))
+                                                                        'slug': self.user2.st.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['comments']), [like.comment, ])
 
@@ -440,7 +439,6 @@ class UserViewTest(TestCase):
 
 
 class UserFormTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -526,7 +524,7 @@ class UserFormTest(TestCase):
         Check it's an email
         """
         # Unique email
-        form_data = {'email': 'unique@bar.com', }
+        form_data = {'email': 'unique@bar.com',}
         form = EmailCheckForm(form_data)
         self.assertTrue(form.is_valid())
 
@@ -542,7 +540,7 @@ class UserFormTest(TestCase):
         Duplicated email allowed
         """
         utils.create_user(email="duplicated@bar.com")
-        form_data = {'email': 'duplicated@bar.com', }
+        form_data = {'email': 'duplicated@bar.com',}
         form = EmailCheckForm(form_data)
         self.assertTrue(form.is_valid())
 
@@ -552,7 +550,7 @@ class UserFormTest(TestCase):
         Should lower case the email before validating it
         """
         utils.create_user(email="duplicated@bar.com")
-        form_data = {'email': 'DuPlIcAtEd@bAr.COM', }
+        form_data = {'email': 'DuPlIcAtEd@bAr.COM',}
         form = EmailCheckForm(form_data)
         self.assertFalse(form.is_valid())
 
@@ -562,13 +560,12 @@ class UserFormTest(TestCase):
         Should not lower case the email before validating it
         """
         utils.create_user(email="duplicated@bar.com")
-        form_data = {'email': 'DuPlIcAtEd@bAr.COM', }
+        form_data = {'email': 'DuPlIcAtEd@bAr.COM',}
         form = EmailCheckForm(form_data)
         self.assertTrue(form.is_valid())
 
 
 class UserModelTest(TestCase):
-
     def setUp(self):
         cache.clear()
 
@@ -593,9 +590,7 @@ class UserModelTest(TestCase):
         self.assertTrue(user.st.is_moderator)
 
 
-
 class UtilsUserTests(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -689,7 +684,7 @@ class UtilsUserTests(TestCase):
 
             change_token = UserEmailChangeTokenGenerator()
             token = change_token.generate(self.user, new_email)
-            self.assertDictEqual(context, {'token': token, })
+            self.assertDictEqual(context, {'token': token,})
 
             self.assertEqual(subject, _("Email change"))
             self.assertEqual(template_name, 'spirit/user/email_change_email.html')
@@ -718,6 +713,7 @@ class UtilsUserTests(TestCase):
         """
         Base email sender
         """
+
         class SiteMock:
             name = "foo"
             domain = "bar.com"
@@ -759,6 +755,7 @@ class UtilsUserTests(TestCase):
         """
         Should use DEFAULT_FROM_EMAIL instead of the default
         """
+
         class SiteMock:
             name = "foo"
             domain = "bar.com"

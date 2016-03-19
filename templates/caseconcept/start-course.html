@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron">
+                <h2>Great! Your battle plan is ready. Now let's commence training!</h2> <br>
+                <a href="#" class="btn btn-large btn-primary pull-xs-right">Let's go! <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card card-block">
+                <h5>You have subscribed to the following training schedule</h5>
+                <ul class="collection">
+                    {% for slot in slots %}
+                        <li class="collection-item">{{ slot }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,7 +10,6 @@ from ..models import Category
 
 
 class CategoryForm(forms.ModelForm):
-
     class Meta:
         model = Category
         fields = ("parent", "title", "description", "is_global", "is_closed", "is_removed")

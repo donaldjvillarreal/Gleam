@@ -35,7 +35,6 @@ User = get_user_model()
 
 
 class UtilsTests(TestCase):
-
     def setUp(self):
         cache.clear()
 
@@ -43,10 +42,11 @@ class UtilsTests(TestCase):
         """
         return form errors string
         """
+
         class MockForm:
             non_field_errors = ["error1", ]
-            hidden_fields = [{'errors': "error2", }, ]
-            visible_fields = [{'errors': "error3", }, ]
+            hidden_fields = [{'errors': "error2",}, ]
+            visible_fields = [{'errors': "error3",}, ]
 
         res = utils.render_form_errors(MockForm())
         lines = [line.strip() for line in res.splitlines()]
@@ -62,8 +62,8 @@ class UtilsTests(TestCase):
         self.assertEqual(res['Content-Type'], 'application/json')
         self.assertDictEqual(json.loads(res.content.decode('utf-8')), {})
 
-        res = utils.json_response({"foo": "bar", })
-        self.assertDictEqual(json.loads(res.content.decode('utf-8')), {"foo": "bar", })
+        res = utils.json_response({"foo": "bar",})
+        self.assertDictEqual(json.loads(res.content.decode('utf-8')), {"foo": "bar",})
 
         res = utils.json_response(status=404)
         self.assertEqual(res.status_code, 404)
@@ -141,9 +141,9 @@ class MockDateTime(datetime.datetime):
 
 
 class UtilsTemplateTagTests(TestCase):
-
     def test_shortnaturaltime(self):
         """"""
+
         class naive(datetime.tzinfo):
             def utcoffset(self, dt):
                 return None
@@ -151,7 +151,7 @@ class UtilsTemplateTagTests(TestCase):
         def render(date):
             t = Template('{% load spirit_tags %}'
                          '{{ date|shortnaturaltime }}')
-            return t.render(Context({'date': date, }))
+            return t.render(Context({'date': date,}))
 
         orig_humanize_datetime, ttags_utils.datetime = ttags_utils.datetime, MockDateTime
         try:
@@ -183,6 +183,7 @@ class UtilsTemplateTagTests(TestCase):
         """
         Test messages grouped by level
         """
+
         # TODO: test template rendering
         class MockMessage:
             def __init__(self, level, message):
@@ -207,7 +208,7 @@ class UtilsTemplateTagTests(TestCase):
                      '{% get_gplus_share_url url="/á/foo bar/" %}'
                      '{% get_email_share_url url="/á/foo bar/" title="á" %}'
                      '{% get_share_url url="/á/foo bar/" %}')
-        res = t.render(Context({'request': RequestFactory().get('/'), }))
+        res = t.render(Context({'request': RequestFactory().get('/'),}))
         self.assertEqual(res.strip(), "http://www.facebook.com/sharer.php?s=100&p%5Burl%5D=http%3A%2F%2Ftestserver"
                                       "%2F%25C3%25A1%2Ffoo%2520bar%2F&p%5Btitle%5D=%C3%A1"
                                       "https://twitter.com/share?url=http%3A%2F%2Ftestserver%2F%25C3%25A1%2F"
@@ -233,7 +234,6 @@ class UtilsTemplateTagTests(TestCase):
 
 
 class UtilsFormsTests(TestCase):
-
     def test_nested_model_choise_form(self):
         """
         NestedModelChoiceField
@@ -254,7 +254,6 @@ class UtilsFormsTests(TestCase):
 
 
 class UtilsTimezoneTests(TestCase):
-
     def test_timezone(self):
         """
         Timezones, requires pytz
@@ -266,7 +265,6 @@ class UtilsTimezoneTests(TestCase):
 
 
 class UtilsDecoratorsTests(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = test_utils.create_user()
@@ -275,6 +273,7 @@ class UtilsDecoratorsTests(TestCase):
         """
         Tests the user is logged in and is also a moderator
         """
+
         @moderator_required
         def view(req):
             pass
@@ -295,6 +294,7 @@ class UtilsDecoratorsTests(TestCase):
         """
         Tests the user is logged in and is also an admin
         """
+
         @administrator_required
         def view(req):
             pass
@@ -310,4 +310,3 @@ class UtilsDecoratorsTests(TestCase):
 
         req.user.st.is_administrator = True
         self.assertIsNone(view(req))
-

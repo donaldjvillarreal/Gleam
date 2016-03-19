@@ -10,7 +10,6 @@ import spirit.comment.flag.admin.urls
 import spirit.topic.admin.urls
 import spirit.user.admin.urls
 
-
 urlpatterns = [
     url(r'^$', views.dashboard, name='index'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),

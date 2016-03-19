@@ -22,7 +22,7 @@ class Command(BaseCommand):
         tx_dir = os.path.join(root, '.tx')
 
         if not os.path.isdir(tx_dir):
-            raise CommandError('Can\'t find the .tx folder in %s' % (root, ))
+            raise CommandError('Can\'t find the .tx folder in %s' % (root,))
 
         with utils.pushd(root):
             call(["tx", "pull", "-a"])

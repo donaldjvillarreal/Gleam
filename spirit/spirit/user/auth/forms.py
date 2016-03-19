@@ -14,7 +14,6 @@ User = get_user_model()
 
 
 class RegistrationForm(CleanEmailMixin, forms.ModelForm):
-
     email2 = forms.CharField(
         label=_("Email confirmation"),
         widget=forms.EmailInput,
@@ -45,8 +44,8 @@ class RegistrationForm(CleanEmailMixin, forms.ModelForm):
     def clean_username(self):
         username = self.cleaned_data["username"]
 
-        is_taken = User.objects\
-            .filter(username=username)\
+        is_taken = User.objects \
+            .filter(username=username) \
             .exists()
 
         if is_taken:
@@ -75,7 +74,6 @@ class RegistrationForm(CleanEmailMixin, forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
-
     username = forms.CharField(label=_("Username or Email"), max_length=254)
 
     def __init__(self, *args, **kwargs):
@@ -94,8 +92,8 @@ class LoginForm(AuthenticationForm):
         if not username:
             return
 
-        is_found = User.objects\
-            .filter(username=username)\
+        is_found = User.objects \
+            .filter(username=username) \
             .exists()
 
         if is_found:
@@ -104,8 +102,8 @@ class LoginForm(AuthenticationForm):
         if settings.ST_CASE_INSENSITIVE_EMAILS:
             username = username.lower()
 
-        is_found_email = User.objects\
-            .filter(email=username)\
+        is_found_email = User.objects \
+            .filter(email=username) \
             .exists()
 
         if is_found_email:
@@ -121,7 +119,6 @@ class LoginForm(AuthenticationForm):
 
 
 class ResendActivationForm(forms.Form):
-
     email = forms.CharField(label=_("Email"), widget=forms.EmailInput, max_length=254)
 
     def clean_email(self):
@@ -130,16 +127,16 @@ class ResendActivationForm(forms.Form):
         if settings.ST_CASE_INSENSITIVE_EMAILS:
             email = email.lower()
 
-        is_existent = User.objects\
-            .filter(email=email)\
+        is_existent = User.objects \
+            .filter(email=email) \
             .exists()
 
         if not is_existent:
             raise forms.ValidationError(_("The provided email does not exists."))
 
-        self.user = User.objects\
-            .filter(email=email, st__is_verified=False)\
-            .order_by('-pk')\
+        self.user = User.objects \
+            .filter(email=email, st__is_verified=False) \
+            .order_by('-pk') \
             .first()
 
         if not self.user:

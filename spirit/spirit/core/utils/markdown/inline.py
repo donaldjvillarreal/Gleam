@@ -19,7 +19,6 @@ _text = re.compile(
 
 
 class InlineGrammar(mistune.InlineGrammar):
-
     # todo: match unicode emojis
     emoji = re.compile(
         r'^:(?P<emoji>[A-Za-z0-9_\-\+]+?):'
@@ -38,7 +37,6 @@ class InlineGrammar(mistune.InlineGrammar):
 
 
 class InlineLexer(mistune.InlineLexer):
-
     default_rules = copy.copy(mistune.InlineLexer.default_rules)
     default_rules.insert(2, 'emoji')
     default_rules.insert(2, 'mention')
@@ -79,8 +77,8 @@ class InlineLexer(mistune.InlineLexer):
 
         # New mention
         try:
-            user = User.objects\
-                .select_related('st')\
+            user = User.objects \
+                .select_related('st') \
                 .get(username=username)
         except User.DoesNotExist:
             return m.group(0)

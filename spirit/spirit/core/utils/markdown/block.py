@@ -11,12 +11,11 @@ from .parsers.poll import PollParser
 
 
 class BlockGrammar(mistune.BlockGrammar):
-
     # todo: remove all *_link
-    #link_block = re.compile(
+    # link_block = re.compile(
     #    r'^https?://[^\s]+'
     #    r'(?:\n+|$)'
-    #)
+    # )
 
     audio_link = re.compile(
         r'^https?://[^\s]+\.(mp3|ogg|wav)'
@@ -93,7 +92,6 @@ class BlockGrammar(mistune.BlockGrammar):
 
 
 class BlockLexer(mistune.BlockLexer):
-
     default_rules = copy.copy(mistune.BlockLexer.default_rules)
     default_rules.insert(0, 'audio_link')
     default_rules.insert(0, 'image_link')

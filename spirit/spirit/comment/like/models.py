@@ -10,7 +10,6 @@ from django.utils import timezone
 
 
 class CommentLike(models.Model):
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_comment_likes')
     comment = models.ForeignKey('spirit_comment.Comment', related_name='comment_likes')
 
@@ -23,4 +22,4 @@ class CommentLike(models.Model):
         verbose_name_plural = _("likes")
 
     def get_delete_url(self):
-        return reverse('spirit:comment:like:delete', kwargs={'pk': str(self.pk), })
+        return reverse('spirit:comment:like:delete', kwargs={'pk': str(self.pk),})

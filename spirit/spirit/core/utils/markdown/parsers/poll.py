@@ -9,7 +9,6 @@ from django.utils import timezone
 
 from spirit.comment.poll.models import CommentPoll, CommentPollChoice, PollMode
 
-
 __all__ = ['PollParser']
 logger = logging.getLogger('django')
 
@@ -19,7 +18,6 @@ class ParserError(Exception):
 
 
 class PollParser(object):
-
     fields = {'invalid_params', 'invalid_body', 'name', 'title',
               'min', 'max', 'close', 'choices', 'mode'}
 

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/case.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <progress class="progress progress-striped" value="80" max="100">80%</progress>
+
+        <h5 class="alert alert-info">
+            Rank your goals from easiest to hardest by dragging and dropping.
+        </h5>
+
+        <div class="row">
+            <div class="col-sm-3 pull-left">
+                <h4 class="label label-pill label-info">Goal bank</h4>
+            </div>
+        </div>
+        <div id="sortable" class="row">
+            {% for goal in goals %}
+                <div class="col-sm-4">
+                    <div class="card card-block clickable">
+                        <input type="hidden" value="{{ goal.id }}" class="goals">
+                        <h5 class="card-title">
+                            <i class="fa fa-hand-grab-o"></i> {{ goal.problem.text }}
+                        </h5>
+                        <div class="card-text">
+                            <span class="label label-primary">Action</span> {{ goal.action }}
+                            <hr>
+                            <span class="label label-primary">Frequency</span> {{ goal.frequency_verbose }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="alert alert-success">Easiest</h5>
+            </div>
+            <div class="col-sm-6">
+                <h5 class="alert alert-danger">Hardest</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 pull-left">
+                <h4 class="label label-pill label-info">Ranked goals</h4>
+            </div>
+        </div>
+        <span class="text-muted pull-left" id="dragDropText">Drag and drop goals here.</span>
+        <div class="row jumbotron list-inline" id="sortedGroup">
+
+        </div>
+        <br>
+        <div class="row">
+            {% csrf_token %}
+            <a href="#" class="btn btn-primary pull-right" id="nextButton">Next <i class="fa fa-arrow-right"></i> </a>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}
+    <script type="application/javascript" src="{% static 'js/sortable.js' %}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('.clickable').on('mousedown', function () {
+                $('.clickable').removeClass('dragging');
+                $(this).addClass('dragging');
+            });
+            $('.clickable').on('mouseup', function () {
+                $(this).removeClass('dragging');
+            });
+
+
+            var sortable = document.getElementById('sortable');
+            var sortedGroup = document.getElementById('sortedGroup');
+
+            Sortable.create(sortable, {
+                sort: false,
+                group: {
+                    name: 'sortable',
+                },
+                animation: 100
+            });
+            Sortable.create(sortedGroup, {
+                group: {
+                    name: 'sortedGroup',
+                    put: ['sortable']
+                },
+                animation: 100
+            });
+
+
+            $('#nextButton').on('click', function () {
+                var orderedGoals = [];
+                $('.goals').each(function () {
+                    orderedGoals.push($(this).val());
+                });
+                $.redirect('{% url 'case:goals_rank' %}',
+                        {
+                            'goals': orderedGoals,
+                            'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+                        });
+            });
+        });
+    </script>
+{% endblock %}

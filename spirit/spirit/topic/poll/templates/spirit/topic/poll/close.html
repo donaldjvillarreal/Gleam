@@ -17,7 +17,8 @@
     <form action="." method="post">
         {% csrf_token %}
 
-        <input class="button" type="submit" name="post" value="{% if poll.is_closed %}{% trans "Open" %}{% else %}{% trans "Close" %}{% endif %}" />
+        <input class="button" type="submit" name="post"
+               value="{% if poll.is_closed %}{% trans "Open" %}{% else %}{% trans "Close" %}{% endif %}"/>
     </form>
 
 {% endblock %}

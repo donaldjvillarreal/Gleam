@@ -3,14 +3,45 @@
 
 {% block body %}
 
+
 <div class="container jumbotron">
+
+
     <form role="form" method="post" action="">
         {% csrf_token %}
+        <style type="text/css"> 
+            ul {
+                list-style-type: none;
+                color: red;
+            } 
+            .warning {
+                color: red;
+            }
+        </style> 
+
         <fieldset class="form-group">
-            <label for="usernameInput" class="col-md-2">Username</label>
             <div class="col-md-5">
-                <input id="usernameInput" name="username" class="form-control" type="text" placeholder="maximum of 30 characters">
+                {% if user_form.errors or profile_form.errors%}
+                    Please fill out all required fields
+                    <ul>
+                        {% for error in user_form.errors %}
+                            <li><strong>{{ error. }}</strong></li>
+                        {% endfor %}
+                        {% for error in profile_form.errors %}
+                            <li><strong>{{ error }}</strong></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+            
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="username" class="col-md-2">Username<font color=red>*</font></label>
+            <div class="col-md-5">
+                <input id="username" name="username" class="form-control" type="text" placeholder="maximum of 30 characters" onblur="checkUsername()">
+            </div>
+            <div id="feedbackUser"></div>
         </fieldset>
 
         <fieldset class="form-group">
@@ -21,28 +52,38 @@
         </fieldset>
  
         <fieldset class="form-group">
-            <label for="passwordInput" class="col-md-2">Password</label>
+            <label for="password" class="col-md-2">Password<font color=red>*</font></label>
             <div class="col-md-5">
-                <input id="passwordInput" name="password" type="password" class="form-control">
+                <input id="password" name="password" type="password" class="form-control">
             </div>
         </fieldset>
 
         <fieldset class="form-group">
-            <label for="firstnameInput" class="col-md-2">First Name</label>
+            <label for="password2" class="col-md-2">Confirm Password<font color=red>*</font></label>
             <div class="col-md-5">
-                <input id="firstnameInput" name="first_name" type="text" class="form-control">
+                <input id="password2" name="password2" type="password" class="form-control" onblur="checkPassMatch()">
             </div>
+            <div id="feedbackPW2"></div>
         </fieldset>
 
         <fieldset class="form-group">
-            <label for="lastnameInput" class="col-md-2">Last Name</label>
+            <label for="first_name" class="col-md-2">First Name<font color=red>*</font></label>
             <div class="col-md-5">
-                <input id="lastnameInput" name="last_name" type="text" class="form-control">
+                <input id="first_name" name="first_name" type="text" class="form-control" onblur="checkElement('first_name', 'feedbackFirst')">
             </div>
+            <div id="feedbackFirst"></div>
         </fieldset>
 
         <fieldset class="form-group">
-            <label for="dobInput" class="col-md-2">Date of Birth</label>
+            <label for="last_name" class="col-md-2">Last Name<font color=red>*</font></label>
+            <div class="col-md-5">
+                <input id="last_name" name="last_name" type="text" class="form-control" onblur="checkElement('last_name', 'feedbackLast')">
+            </div>
+            <div id="feedbackLast"></div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label for="dobInput" class="col-md-2">Date of Birth<font color=red>*</font></label>
             <div class="col-md-5">
                 <input id="dobInput" name="dob" type="date" class="form-control" placeholder="YYYY-MM-DD">
             </div>
@@ -74,9 +115,77 @@
         </fieldset>
 
         <fieldset class="form-group">
-            <input type="submit" name="submit" value="Register" class="btn btn-primary"/>
+            <div class="col-md-5">
+                <input id="timezone" name="timezone" type="hidden" class="form-control">
+            </div>
         </fieldset>
-        
+
+        <fieldset class="form-group">
+            <div class="col-md-5">
+                <input type="submit" name="submit" id="submit" value="Register" class="btn btn-primary" onload="checkAll()"/>
+            </div>
+            <font color=red>*</font> Denotes required field
+        </fieldset>
+
+        <script type="text/javascript">
+
+            function checkUsername() {
+                var elUser = document.getElementById('username');
+                var UserMsg = document.getElementById('feedbackUser');
+                var username = elUser.value;
+                if (username.length < 5) {
+                    UserMsg.className = 'warning';
+                    UserMsg.textContent = 'Username must be at least 5 characters';
+                } else if (username.length > 20) {
+                    UserMsg.className = 'warning';
+                    UserMsg.textContent = 'Username must be less than 20 characters';
+                    valid = false;
+                } else {
+                    UserMsg.textContent = '';
+                    valid = true;
+                }
+            }
+
+            function checkPassMatch() {
+                var password = document.getElementById('password');
+                var confirm = document.getElementById('password2');
+                var PWMsg = document.getElementById('feedbackPW2');
+                if (password.value == confirm.value) {
+                    PWMsg.textContent = '';
+                    valid = true;
+                }
+                else {
+                    PWMsg.className = 'warning';
+                    PWMsg.textContent = 'Passwords Do Not Match';
+                    valid = false;
+                }
+            }
+
+            function checkElement(element, feedback) {
+                var elChecked = document.getElementById(element);
+                var CheckedMsg = document.getElementById(feedback);
+                var elCheck = elChecked.value;
+                if (elCheck.length < 1) {
+                    CheckedMsg.className = 'warning';
+                    CheckedMsg.textContent = 'Required Field';
+                    valid = false;
+                } else {
+                    CheckedMsg.textContent = '';
+                    valid = true;
+                }
+            }
+
+            function checkAll() {
+                window.onload
+                if (valid) document.getElementById("submit").disabled = true;
+                else document.getElementById("submit").disabled = true;
+            }
+  
+            var date = new Date();
+            document.getElementById('timezone').value = date.getTimezoneOffset();
+
+        </script>
     </form>
 </div>
 {% endblock %}
+

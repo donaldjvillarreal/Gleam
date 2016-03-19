@@ -15,7 +15,6 @@ User = get_user_model()
 
 
 class CleanEmailMixin(object):
-
     def clean_email(self):
         email = self.cleaned_data["email"]
 
@@ -25,8 +24,8 @@ class CleanEmailMixin(object):
         if not settings.ST_UNIQUE_EMAILS:
             return email
 
-        is_taken = User.objects\
-            .filter(email=email)\
+        is_taken = User.objects \
+            .filter(email=email) \
             .exists()
 
         if is_taken:
@@ -39,12 +38,10 @@ class CleanEmailMixin(object):
 
 
 class EmailCheckForm(CleanEmailMixin, forms.Form):
-
     email = forms.CharField(label=_("Email"), widget=forms.EmailInput, max_length=254)
 
 
 class EmailChangeForm(CleanEmailMixin, forms.Form):
-
     email = forms.CharField(label=_("Email"), widget=forms.EmailInput, max_length=254)
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
@@ -62,14 +59,12 @@ class EmailChangeForm(CleanEmailMixin, forms.Form):
 
 
 class UserForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ("first_name", "last_name")
 
 
 class UserProfileForm(forms.ModelForm):
-
     class Meta:
         model = UserProfile
         fields = ("location", "timezone")

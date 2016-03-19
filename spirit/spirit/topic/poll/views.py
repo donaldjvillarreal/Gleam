@@ -45,12 +45,12 @@ def close(request, pk):
 
     if request.method == 'POST':
         not_is_closed = not poll.is_closed
-        TopicPoll.objects.filter(pk=poll.pk)\
+        TopicPoll.objects.filter(pk=poll.pk) \
             .update(is_closed=not_is_closed)
 
         return redirect(request.GET.get('next', poll.get_absolute_url()))
 
-    context = {'poll': poll, }
+    context = {'poll': poll,}
 
     return render(request, 'spirit/topic/poll/close.html', context)
 

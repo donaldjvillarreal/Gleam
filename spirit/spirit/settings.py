@@ -130,7 +130,6 @@ TEMPLATES = [
     },
 ]
 
-
 #
 # Third-party apps settings defined below...
 #

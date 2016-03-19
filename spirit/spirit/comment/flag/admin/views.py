@@ -51,7 +51,7 @@ def _index(request, queryset, template):
         per_page=config.comments_per_page,
         page_number=request.GET.get('page', 1)
     )
-    context = {'flags': flags, }
+    context = {'flags': flags,}
     return render(request, template, context)
 
 

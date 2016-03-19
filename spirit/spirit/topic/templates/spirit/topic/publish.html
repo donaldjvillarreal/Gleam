@@ -7,13 +7,13 @@
 {% block head-extra %}
     <script>
 
-	$( document ).ready(function() {
+        $(document).ready(function () {
 
-		$( "textarea" ).store( "topic_publish_comment" );
+            $("textarea").store("topic_publish_comment");
 
-	});
+        });
 
-	</script>
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -34,7 +34,7 @@
         <div class="container">
             {% include "spirit/comment/_editor.html" %}
 
-            <input class="button reply-button" type="submit" value="{% trans "Publish" %}" />
+            <input class="button reply-button" type="submit" value="{% trans "Publish" %}"/>
         </div>
     </form>
 

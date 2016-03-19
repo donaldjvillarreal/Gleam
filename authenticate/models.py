@@ -11,14 +11,17 @@ class UserProfile(models.Model):
 
     # The additional attributes we wish to include.
     GENDER = (('M','Male'),
-		 	  ('F','Female'),
-		 	  ('U','Prefer Not to Answer'))
+              ('F','Female'),
+              ('U','Prefer Not to Answer'))
+    
     gender = models.CharField(max_length=1,
                               choices=GENDER,
                               default='U')
     picture = models.ImageField(upload_to='static/profile_images', null=True, blank=True)
 
     dob = models.DateField(null=False, blank=False)
+
+    timezone = models.IntegerField(default=0, null=False, blank=False)
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):

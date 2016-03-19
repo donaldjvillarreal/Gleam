@@ -8,7 +8,6 @@ from .models import CommentBookmark
 
 
 class BookmarkForm(forms.ModelForm):
-
     class Meta:
         model = CommentBookmark
         fields = ['comment_number', ]
@@ -22,6 +21,6 @@ class BookmarkForm(forms.ModelForm):
         comment_number = self.cleaned_data['comment_number']
 
         # Bookmark is created/updated on topic view.
-        CommentBookmark.objects\
-            .filter(user=self.user, topic=self.topic)\
+        CommentBookmark.objects \
+            .filter(user=self.user, topic=self.topic) \
             .update(comment_number=comment_number)

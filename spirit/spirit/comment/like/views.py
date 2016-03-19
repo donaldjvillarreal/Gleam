@@ -24,7 +24,7 @@ def create(request, comment_id):
             like.comment.increase_likes_count()
 
             if request.is_ajax():
-                return json_response({'url_delete': like.get_delete_url(), })
+                return json_response({'url_delete': like.get_delete_url(),})
 
             return redirect(request.POST.get('next', comment.get_absolute_url()))
     else:
@@ -47,11 +47,11 @@ def delete(request, pk):
         like.comment.decrease_likes_count()
 
         if request.is_ajax():
-            url = reverse('spirit:comment:like:create', kwargs={'comment_id': like.comment.pk, })
-            return json_response({'url_create': url, })
+            url = reverse('spirit:comment:like:create', kwargs={'comment_id': like.comment.pk,})
+            return json_response({'url_create': url,})
 
         return redirect(request.POST.get('next', like.comment.get_absolute_url()))
 
-    context = {'like': like, }
+    context = {'like': like,}
 
     return render(request, 'spirit/comment/like/delete.html', context)

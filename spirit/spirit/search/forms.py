@@ -15,19 +15,17 @@ from ..category.models import Category
 
 
 class BaseSearchForm(SearchForm):
-
     def clean_q(self):
         q = self.cleaned_data['q']
 
         if len(q) < settings.ST_SEARCH_QUERY_MIN_LEN:
             raise forms.ValidationError(_("Your search must contain at least %(length)s characters.")
-                                        % {'length': settings.ST_SEARCH_QUERY_MIN_LEN, })
+                                        % {'length': settings.ST_SEARCH_QUERY_MIN_LEN,})
 
         return q
 
 
 class BasicSearchForm(BaseSearchForm):
-
     def search(self):
         sqs = super(BasicSearchForm, self).search()
 
@@ -39,7 +37,6 @@ class BasicSearchForm(BaseSearchForm):
 
 
 class AdvancedSearchForm(BaseSearchForm):
-
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.visible(),
                                               required=False,
                                               label=_('Filter by'),

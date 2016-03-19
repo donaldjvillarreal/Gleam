@@ -7,9 +7,7 @@ from django.template.loader import render_to_string
 
 from ..forms import PollVoteManyForm
 
-
 __all__ = ['PATTERN', 'render_polls']
-
 
 PATTERN = re.compile(r'(?:<poll\s+name=(?P<name>[\w\-_]+)>)')
 

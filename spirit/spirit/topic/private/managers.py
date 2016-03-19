@@ -8,7 +8,6 @@ from django.db.models import Q
 
 
 class TopicPrivateQuerySet(models.QuerySet):
-
     def for_delete_or_404(self, pk, user):
         # User is the creator *or* has access
         return get_object_or_404(self,

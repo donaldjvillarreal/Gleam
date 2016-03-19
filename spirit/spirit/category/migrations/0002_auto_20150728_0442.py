@@ -34,7 +34,6 @@ def default_categories(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('spirit_category', '0001_initial'),
     ]

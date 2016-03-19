@@ -48,7 +48,7 @@ def _index(request, queryset, template):
         per_page=config.topics_per_page,
         page_number=request.GET.get('page', 1)
     )
-    context = {'users': users, }
+    context = {'users': users,}
     return render(request, template, context)
 
 

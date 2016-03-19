@@ -7,7 +7,6 @@ from django.db.models import Q
 
 
 class CategoryQuerySet(models.QuerySet):
-
     def unremoved(self):
         return self.filter(Q(parent=None) | Q(parent__is_removed=False),
                            is_removed=False)

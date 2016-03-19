@@ -10,7 +10,6 @@ from ..comment.bookmark.models import CommentBookmark
 
 
 class TopicQuerySet(models.QuerySet):
-
     def unremoved(self):
         return self.filter(Q(category__parent=None) | Q(category__parent__is_removed=False),
                            category__is_removed=False,
@@ -48,8 +47,8 @@ class TopicQuerySet(models.QuerySet):
         if not user.is_authenticated():
             return self
 
-        user_bookmarks = CommentBookmark.objects\
-            .filter(user=user)\
+        user_bookmarks = CommentBookmark.objects \
+            .filter(user=user) \
             .select_related('topic')
         prefetch = Prefetch("commentbookmark_set", queryset=user_bookmarks, to_attr='bookmarks')
         return self.prefetch_related(prefetch)

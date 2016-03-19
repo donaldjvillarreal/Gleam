@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from authenticate.models import User, UserProfile
+from diagnostic.models import SurveySet
 
 
 def register(request):
@@ -15,10 +16,30 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
+        username = request.POST['username']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if not password2:
+            #user_form.errors.append("Please confirm your password")
+            pass
+
+        elif password != password2:
+            #user_form.errors.append("Passwords do not match")
+            pass
+
         # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
+        elif user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
+
+            # Check if surveySet exists under their session id
+            if request.session.exists(request.session.session_key):
+                survey_set = SurveySet.objects.filter(session=request.session.session_key)
+                if survey_set.exists():
+                    survey_set = survey_set.first()
+                    survey_set.user = user
+                    survey_set.save()
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
@@ -39,12 +60,10 @@ def register(request):
             # Now we save the UserProfile model instance.
             profile.save()
 
-            username = request.POST['username']
-            password = request.POST['password']
             userlogin = authenticate(username=username, password=password)
             login(request, userlogin)
 
-            return HttpResponseRedirect(request.GET.get('next', '/'))
+            return HttpResponseRedirect(request.GET.get('next', 'authenticate:login'))
 
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.

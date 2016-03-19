@@ -15,7 +15,6 @@ from .tags import render_like_form
 
 
 class LikeViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -29,7 +28,7 @@ class LikeViewTest(TestCase):
         """
         utils.login(self)
         form_data = {}
-        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk, }),
+        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk,}),
                                     form_data)
         self.assertRedirects(response, self.comment.get_absolute_url(), status_code=302, target_status_code=302)
         self.assertEqual(len(CommentLike.objects.all()), 1)
@@ -39,8 +38,8 @@ class LikeViewTest(TestCase):
         create like using next
         """
         utils.login(self)
-        form_data = {'next': '/fakepath/', }
-        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk, }),
+        form_data = {'next': '/fakepath/',}
+        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk,}),
                                     form_data)
         self.assertRedirects(response, '/fakepath/', status_code=302, target_status_code=404)
 
@@ -51,7 +50,7 @@ class LikeViewTest(TestCase):
         CommentLike.objects.create(user=self.user, comment=self.comment)
         utils.login(self)
         form_data = {}
-        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk, }),
+        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk,}),
                                     form_data)
         self.assertEqual(response.status_code, 200)
 
@@ -61,7 +60,7 @@ class LikeViewTest(TestCase):
         """
         utils.login(self)
         form_data = {}
-        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk, }),
+        response = self.client.post(reverse('spirit:comment:like:create', kwargs={'comment_id': self.comment.pk,}),
                                     form_data)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Comment.objects.get(pk=self.comment.pk).likes_count, 1)
@@ -73,7 +72,7 @@ class LikeViewTest(TestCase):
         utils.login(self)
         like = CommentLike.objects.create(user=self.user, comment=self.comment)
         form_data = {}
-        response = self.client.post(reverse('spirit:comment:like:delete', kwargs={'pk': like.pk, }),
+        response = self.client.post(reverse('spirit:comment:like:delete', kwargs={'pk': like.pk,}),
                                     form_data)
         self.assertRedirects(response, self.comment.get_absolute_url(), status_code=302, target_status_code=302)
         self.assertEqual(len(CommentLike.objects.all()), 0)
@@ -84,8 +83,8 @@ class LikeViewTest(TestCase):
         """
         utils.login(self)
         like = CommentLike.objects.create(user=self.user, comment=self.comment)
-        form_data = {'next': '/fakepath/', }
-        response = self.client.post(reverse('spirit:comment:like:delete', kwargs={'pk': like.pk, }),
+        form_data = {'next': '/fakepath/',}
+        response = self.client.post(reverse('spirit:comment:like:delete', kwargs={'pk': like.pk,}),
                                     form_data)
         self.assertRedirects(response, '/fakepath/', status_code=302, target_status_code=404)
 
@@ -97,14 +96,13 @@ class LikeViewTest(TestCase):
         comment = utils.create_comment(topic=self.topic, likes_count=1)
         like = CommentLike.objects.create(user=self.user, comment=comment)
         form_data = {}
-        response = self.client.post(reverse('spirit:comment:like:delete', kwargs={'pk': like.pk, }),
+        response = self.client.post(reverse('spirit:comment:like:delete', kwargs={'pk': like.pk,}),
                                     form_data)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Comment.objects.get(pk=comment.pk).likes_count, 0)
 
 
 class LikeFormTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -135,7 +133,6 @@ class LikeFormTest(TestCase):
 
 
 class LikeTemplateTagsTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()

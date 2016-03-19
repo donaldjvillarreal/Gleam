@@ -14,7 +14,6 @@ from .managers import CommentPollQuerySet, CommentPollChoiceQuerySet, CommentPol
 
 
 class PollMode(object):
-
     DEFAULT, SECRET = range(2)
     LIST = (
         (DEFAULT, 'default'),
@@ -25,7 +24,6 @@ class PollMode(object):
 
 
 class CommentPoll(models.Model):
-
     comment = models.ForeignKey('spirit_comment.Comment', related_name='comment_polls')
 
     name = models.CharField(_("name"), max_length=255)
@@ -116,7 +114,7 @@ class CommentPoll(models.Model):
                     field: poll[field]
                     for field in default_fields
                     if field in poll
-                }
+                    }
                 defaults.update({'is_removed': False})
 
                 cls.objects.update_or_create(
@@ -127,7 +125,6 @@ class CommentPoll(models.Model):
 
 
 class CommentPollChoice(models.Model):
-
     poll = models.ForeignKey(CommentPoll, related_name='poll_choices')
 
     number = models.PositiveIntegerField(_("number"))
@@ -161,14 +158,14 @@ class CommentPollChoice(models.Model):
 
     @classmethod
     def increase_vote_count(cls, poll, voter):
-        cls.objects\
-            .for_vote(poll=poll, voter=voter)\
+        cls.objects \
+            .for_vote(poll=poll, voter=voter) \
             .update(vote_count=F('vote_count') + 1)
 
     @classmethod
     def decrease_vote_count(cls, poll, voter):
-        cls.objects\
-            .for_vote(poll=poll, voter=voter)\
+        cls.objects \
+            .for_vote(poll=poll, voter=voter) \
             .update(vote_count=F('vote_count') - 1)
 
     @classmethod
@@ -200,7 +197,6 @@ class CommentPollChoice(models.Model):
 
 
 class CommentPollVote(models.Model):
-
     voter = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_cp_votes')
     choice = models.ForeignKey(CommentPollChoice, related_name='choice_votes')
 

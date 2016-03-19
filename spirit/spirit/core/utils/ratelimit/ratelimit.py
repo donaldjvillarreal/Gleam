@@ -7,7 +7,6 @@ import hashlib
 from django.conf import settings
 from django.core.cache import caches
 
-
 TIME_DICT = {
     's': 1,
     'm': 60,
@@ -15,7 +14,6 @@ TIME_DICT = {
 
 
 class RateLimit:
-
     def __init__(self, request, uid, method=None, field=None, rate='5/5m'):
         self.request = request
         self.uid = uid
@@ -25,8 +23,8 @@ class RateLimit:
         self.cache_keys = []
         self.cache_values = {}
 
-        if self.request.method in (m.upper() for m in self.method)\
-                and settings.ST_RATELIMIT_ENABLE:
+        if self.request.method in (m.upper() for m in self.method) \
+            and settings.ST_RATELIMIT_ENABLE:
             self.limit, self.time = self.split_rate(rate)
             self.cache_keys = self._get_keys(field)
             self.cache_values = self._incr_cache()

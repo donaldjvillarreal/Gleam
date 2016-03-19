@@ -18,7 +18,6 @@ def render_comments(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('spirit_comment', '0002_auto_20150828_2003'),
     ]

@@ -20,7 +20,7 @@
   @extend %inline-list;
   float: right;
   line-height: $base-line-height * 2;
-  
+
   li {
     margin-left: $base-spacing-size;
   }
@@ -28,11 +28,11 @@
 
 .header-tab-link {
   &.is-selected {
-	color: $black;
+    color: $black;
   }
-  
+
   &.is-highlighted {
-	color: $red;
+    color: $red;
   }
 }
 
@@ -47,10 +47,10 @@
 }
 
 .header-nav {
-  @include media( $medium ) {
+  @include media($medium) {
     text-align: right;
   }
-  
+
   .menu {
     text-align: left;
   }

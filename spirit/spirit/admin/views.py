@@ -21,7 +21,6 @@ User = get_user_model()
 
 @administrator_required
 def config_basic(request):
-
     if request.method == 'POST':
         form = BasicConfigForm(data=request.POST)
 
@@ -32,7 +31,7 @@ def config_basic(request):
     else:
         form = BasicConfigForm()
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/admin/config_basic.html', context)
 

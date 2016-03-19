@@ -6,7 +6,6 @@ import django.core.validators
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('spirit_user', '0001_initial'),
     ]
@@ -60,6 +59,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='username',
-            field=models.CharField(validators=[django.core.validators.RegexValidator('^[\\w.@+-]+$', 'Enter a valid username. This value may contain only letters, numbers and @/./+/-/_ characters.', 'invalid')], max_length=30, error_messages={'unique': 'A user with that username already exists.'}, verbose_name='username', help_text='Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.', unique=True),
+            field=models.CharField(validators=[django.core.validators.RegexValidator('^[\\w.@+-]+$',
+                                                                                     'Enter a valid username. This value may contain only letters, numbers and @/./+/-/_ characters.',
+                                                                                     'invalid')], max_length=30,
+                                   error_messages={'unique': 'A user with that username already exists.'},
+                                   verbose_name='username',
+                                   help_text='Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.',
+                                   unique=True),
         ),
     ]

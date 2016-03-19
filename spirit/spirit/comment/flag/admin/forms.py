@@ -8,10 +8,9 @@ from ..models import CommentFlag
 
 
 class CommentFlagForm(forms.ModelForm):
-
     class Meta:
         model = CommentFlag
-        fields = ("is_closed", )
+        fields = ("is_closed",)
 
     def __init__(self, user=None, *args, **kwargs):
         super(CommentFlagForm, self).__init__(*args, **kwargs)

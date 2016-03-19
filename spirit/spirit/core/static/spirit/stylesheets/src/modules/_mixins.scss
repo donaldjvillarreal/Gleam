@@ -6,7 +6,6 @@
   zoom: 1;
 }
 
-
 @mixin sticky-footer($footer-height) {
   html {
     position: relative;
@@ -26,12 +25,10 @@
   }
 }
 
-
 @mixin rem($property, $pxval) {
   $property: $pxval * 1px;
   $property: rem($pxval);
 }
-
 
 @mixin rgba($property, $color, $alpha: 1) {
   $property: $color;

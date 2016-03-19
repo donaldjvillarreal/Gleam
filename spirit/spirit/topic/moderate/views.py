@@ -12,16 +12,15 @@ from ..models import Topic
 
 
 class BaseView(View):
-
     action = None
     field_name = None
     to_value = None  # bool
 
     def update(self, pk):
         not_value = not self.to_value
-        return Topic.objects\
-            .filter(**{'pk': pk, self.field_name: not_value})\
-            .update(**{self.field_name: self.to_value, })
+        return Topic.objects \
+            .filter(**{'pk': pk, self.field_name: not_value}) \
+            .update(**{self.field_name: self.to_value,})
 
     def post(self, request, *args, **kwargs):
         pk = kwargs['pk']
@@ -37,7 +36,7 @@ class BaseView(View):
         return redirect(request.POST.get('next', self.topic.get_absolute_url()))
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'spirit/topic/moderate.html', {'topic': self.topic, })
+        return render(request, 'spirit/topic/moderate.html', {'topic': self.topic,})
 
     def check_configuration(self):
         assert self.field_name is not None, "You forgot to set field_name attribute"
@@ -51,54 +50,46 @@ class BaseView(View):
 
 
 class DeleteView(BaseView):
-
     field_name = 'is_removed'
     to_value = True
 
 
 class UnDeleteView(BaseView):
-
     field_name = 'is_removed'
     to_value = False
 
 
 class LockView(BaseView):
-
     action = CLOSED
     field_name = 'is_closed'
     to_value = True
 
 
 class UnLockView(BaseView):
-
     action = UNCLOSED
     field_name = 'is_closed'
     to_value = False
 
 
 class PinView(BaseView):
-
     action = PINNED
     field_name = 'is_pinned'
     to_value = True
 
 
 class UnPinView(BaseView):
-
     action = UNPINNED
     field_name = 'is_pinned'
     to_value = False
 
 
 class GlobalPinView(BaseView):
-
     action = PINNED
     field_name = 'is_globally_pinned'
     to_value = True
 
 
 class GlobalUnPinView(BaseView):
-
     action = UNPINNED
     field_name = 'is_globally_pinned'
     to_value = False

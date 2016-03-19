@@ -9,6 +9,7 @@ from django.db.models import Prefetch
 
 class NestedModelChoiceField(forms.ModelChoiceField):
     """A ModelChoiceField that groups parents and childrens"""
+
     # TODO: subclass ModelChoiceIterator, remove _populate_choices()
 
     def __init__(self, related_name, parent_field, label_field, *args, **kwargs):
@@ -26,9 +27,9 @@ class NestedModelChoiceField(forms.ModelChoiceField):
     def _populate_choices(self):
         # This is *hackish* but simpler than subclassing ModelChoiceIterator
         choices = [("", self.empty_label), ]
-        kwargs = {self.parent_field: None, }
-        queryset = self.queryset\
-            .filter(**kwargs)\
+        kwargs = {self.parent_field: None,}
+        queryset = self.queryset \
+            .filter(**kwargs) \
             .prefetch_related(Prefetch(self.related_name, queryset=self.queryset))
 
         for parent in queryset:

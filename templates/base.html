@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Gleam - {% block title %}{% endblock %}</title>
+    <script type="application/javascript" src="{% static 'js/kill-iframe.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -20,9 +21,8 @@
 <div class="wrapper">
     {% block body %}
     {% endblock %}
-    <div class="push"></div>
 </div>
-
+<div class="push"></div>
 {% include 'base-footer.html' %}
 
 <script type="application/javascript" src="{% static 'js/jquery-latest.js' %}"></script>

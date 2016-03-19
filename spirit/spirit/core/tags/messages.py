@@ -7,7 +7,6 @@ from django.contrib.messages import constants
 
 from .registry import register
 
-
 TAGS = {
     constants.DEBUG: 'debug',
     constants.INFO: 'info',
@@ -26,4 +25,4 @@ def render_messages(messages):
         messages_group.append(m)
         grouped[TAGS[m.level]] = messages_group
 
-    return {'messages_grouped': grouped, }
+    return {'messages_grouped': grouped,}

@@ -14,7 +14,7 @@ $minor-seventh: 1.777777778;
 $major-sixth: 1.666666667;
 $minor-sixth: 1.6;
 $fifth: 1.5;
-$augmented-fourth : 1.41421;
+$augmented-fourth: 1.41421;
 $fourth: 1.333333333;
 $major-third: 1.25;
 $minor-third: 1.2;
@@ -23,7 +23,6 @@ $minor-second: 1.066666667;
 
 $ms-base: $base-font-size !default;
 $ms-ratio: $golden !default;
-
 
 @function ms($Value: 0, $Bases: $ms-base, $Ratios: $ms-ratio) {
   // Bourbon function

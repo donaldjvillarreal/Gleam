@@ -10,7 +10,6 @@ try:
 except ImportError:
     task = None
 
-
 if not hasattr(settings, 'BROKER_URL'):
     def task(f):
         f.delay = f

@@ -8,7 +8,6 @@ import spirit.core.utils.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
     ]
 

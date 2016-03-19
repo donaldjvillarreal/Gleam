@@ -55,9 +55,9 @@ def index_ajax(request):
     if not request.is_ajax():
         return Http404()
 
-    notifications = TopicNotification.objects\
-        .for_access(request.user)\
-        .order_by("is_read", "-date")\
+    notifications = TopicNotification.objects \
+        .for_access(request.user) \
+        .order_by("is_read", "-date") \
         .select_related('comment__user__st', 'comment__topic')
 
     notifications = notifications[:settings.ST_NOTIFICATIONS_PER_PAGE]
@@ -71,15 +71,15 @@ def index_ajax(request):
             'is_read': n.is_read
         }
         for n in notifications
-    ]
+        ]
 
-    return HttpResponse(json.dumps({'n': notifications, }), content_type="application/json")
+    return HttpResponse(json.dumps({'n': notifications,}), content_type="application/json")
 
 
 @login_required
 def index_unread(request):
-    notifications = TopicNotification.objects\
-        .for_access(request.user)\
+    notifications = TopicNotification.objects \
+        .for_access(request.user) \
         .filter(is_read=False)
 
     page = paginate(
@@ -110,6 +110,6 @@ def index(request):
         page_number=request.GET.get('page', 1)
     )
 
-    context = {'notifications': notifications, }
+    context = {'notifications': notifications,}
 
     return render(request, 'spirit/topic/notification/index.html', context)

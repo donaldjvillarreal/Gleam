@@ -12,7 +12,6 @@ from .models import TopicPollChoice, TopicPoll, TopicPollVote
 
 
 class TopicPollForm(forms.ModelForm):
-
     class Meta:
         model = TopicPoll
         fields = ['choice_limit', ]
@@ -37,7 +36,6 @@ class TopicPollForm(forms.ModelForm):
 
 
 class TopicPollChoiceForm(forms.ModelForm):
-
     class Meta:
         model = TopicPollChoice
         fields = ['description', ]
@@ -53,7 +51,6 @@ class TopicPollChoiceForm(forms.ModelForm):
 
 
 class TopicPollChoiceInlineFormSet(BaseInlineFormSet):
-
     def __init__(self, can_delete=None, *args, **kwargs):
         super(TopicPollChoiceInlineFormSet, self).__init__(*args, **kwargs)
         self._is_filled_cache = None
@@ -144,13 +141,13 @@ class TopicPollVoteManyForm(forms.Form):
         if not self.poll.is_multiple_choice:
             selected_choices = selected_choices[0]
 
-        self.initial = {'choices': selected_choices, }
+        self.initial = {'choices': selected_choices,}
 
     def clean_choices(self):
         choices = self.cleaned_data['choices']
 
         if (self.poll.is_multiple_choice and
-                len(choices) > self.poll.choice_limit):
+                    len(choices) > self.poll.choice_limit):
             raise forms.ValidationError(_("Too many selected choices. Limit is %s")
                                         % self.poll.choice_limit)
 
@@ -170,11 +167,11 @@ class TopicPollVoteManyForm(forms.Form):
         if not self.poll.is_multiple_choice:
             choices = [choices, ]
 
-        TopicPollVote.objects\
-            .filter(user=self.user, choice__poll=self.poll)\
+        TopicPollVote.objects \
+            .filter(user=self.user, choice__poll=self.poll) \
             .delete()
 
         return TopicPollVote.objects.bulk_create([
-            TopicPollVote(user=self.user, choice=choice)
-            for choice in choices
-        ])
+                                                     TopicPollVote(user=self.user, choice=choice)
+                                                     for choice in choices
+                                                     ])

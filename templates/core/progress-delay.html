@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            The most important aspect of CBT is practice. If you’re not using these skills in your daily life,
+            knowing the theory behind them won’t help you. That’s why it’s a good idea to set aside specific
+            times for your CBT training. We recommend using the course at least 2 to 3 times a week.
+        </div>
+
+        <h5 class="alert alert-info">
+            Please select any and all factors that might be an obstacle to your therapy.
+        </h5>
+
+        <h5 class="alert alert-danger" id="inputWarning">
+            At least one choice must be selected.
+        </h5>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <form action="" method="post" id="form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12 checkbox">
+                            <label>
+                                <input type="checkbox" id="work" name="work"> Work
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" id="workInput">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">
+                                Work can be stressful, but your well-being is important too.
+                                And your CBT skills can only help your work performance in the long run.
+                                If you think that your work schedule will conflict with your CBT schedule,
+                                let’s revisit your time commitment now [LINK].
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 checkbox">
+                            <label>
+                                <input type="checkbox" id="computer" name="access_to_computer"> Access to computer
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" id="computerInput">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">
+                                Here are a list of resources for computers (based on their location?)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 checkbox">
+                            <label>
+                                <input type="checkbox" id="time" name="time_commitment"> Time commitment issue
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" id="timeCommitmentInput">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">
+                                Of course! Realistically, there are always going to be things standing in the way of
+                                you getting better. But it’s important to make time for yourself. Let’s revisit your
+                                schedule. Your health and happiness is number 1 for us. [LINK]
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 checkbox">
+                            <label>
+                                <input type="checkbox" id="motivation" name="motivation"> Motivation
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" id="motivationInput">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">
+                                There are many motivation techniques that can help keep you on track.
+                                Here’s a list of some that we’ve found helpful. (?)
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 checkbox">
+                            <label>
+                                <input type="checkbox" id="forgetfulness" name="forgetfulness"> Forgetfulness
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" id="forgetfulnessInput">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">
+                                We can send you a notification to your mobile device, if you have one.
+                                Or else, we’ll email you.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 checkbox">
+                            <label>
+                                <input type="checkbox" id="tired" name="tired"> Tired
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" id="tiredInput">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">
+                                Most people think of physical exhaustion when they think of being tired. But mental
+                                exertion can be tiring, too. If you are finding your CBT training to be too draining,
+                                let’s revisit your goals and see if we can tweak them to be less taxing.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" value="Next" class="btn btn-primary pull-right">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js_scripts %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            var workInput = $('#workInput');
+            var computerInput = $('#computerInput');
+            var timeCommitmentInput = $('#timeCommitmentInput');
+            var motivationInput = $('#motivationInput');
+            var forgetfulnessInput = $('#forgetfulnessInput');
+            var tiredInput = $('#tiredInput');
+            $('#inputWarning').hide();
+
+            workInput.hide();
+            computerInput.hide();
+            timeCommitmentInput.hide();
+            motivationInput.hide();
+            forgetfulnessInput.hide();
+            tiredInput.hide();
+
+            $('#work').on('change', function () {
+                if (this.checked) {
+                    workInput.show();
+                } else {
+                    workInput.hide();
+                }
+            });
+
+            $('#computer').on('change', function () {
+                if (this.checked) {
+                    computerInput.show();
+                } else {
+                    computerInput.hide();
+                }
+            });
+
+            $('#time').on('change', function () {
+                if (this.checked) {
+                    timeCommitmentInput.show();
+                } else {
+                    timeCommitmentInput.hide();
+                }
+            });
+
+
+            $('#motivation').on('change', function () {
+                if (this.checked) {
+                    motivationInput.show();
+                } else {
+                    motivationInput.hide();
+                }
+            });
+
+
+            $('#forgetfulness').on('change', function () {
+                if (this.checked) {
+                    forgetfulnessInput.show();
+                } else {
+                    forgetfulnessInput.hide();
+                }
+            });
+
+
+            $('#tired').on('change', function () {
+                if (this.checked) {
+                    tiredInput.show();
+                } else {
+                    tiredInput.hide();
+                }
+            });
+
+            $('#form').on('submit', function (e) {
+                checked = $("input[type=checkbox]:checked").length;
+                if (!checked) {
+                    $('#inputWarning').show();
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

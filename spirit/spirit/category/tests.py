@@ -19,7 +19,6 @@ from .models import Category
 
 
 class CategoryViewTest(TestCase):
-
     def setUp(self):
         cache.clear()
         self.user = utils.create_user()
@@ -91,7 +90,7 @@ class CategoryViewTest(TestCase):
         """
         invalid category
         """
-        response = self.client.get(reverse('spirit:category:detail', kwargs={'pk': str(99), }))
+        response = self.client.get(reverse('spirit:category:detail', kwargs={'pk': str(99),}))
         self.assertEqual(response.status_code, 404)
 
     def test_category_detail_view_invalid_slug(self):
@@ -148,9 +147,7 @@ class CategoryViewTest(TestCase):
         self.assertEqual(list(response.context['topics']), [topic, ])
 
 
-
 class CategoryMigrationTest(TestCase):
-
     def setUp(self):
         cache.clear()
 

@@ -7,7 +7,6 @@ from django.db.models import Q
 
 
 class TopicNotificationQuerySet(models.QuerySet):
-
     def unremoved(self):
         return self.filter(Q(topic__category__parent=None) | Q(topic__category__parent__is_removed=False),
                            topic__category__is_removed=False,
@@ -21,11 +20,11 @@ class TopicNotificationQuerySet(models.QuerySet):
                            user=user)
 
     def for_access(self, user):
-        return self.unremoved()\
-            ._access(user=user)\
+        return self.unremoved() \
+            ._access(user=user) \
             .exclude(action=0)  # Undefined action
 
     def read(self, user):
         # returns updated rows count (int)
-        return self.filter(user=user)\
+        return self.filter(user=user) \
             .update(is_read=True)

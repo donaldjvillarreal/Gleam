@@ -9,7 +9,6 @@ from .models import TopicFavorite
 
 
 class FavoriteForm(forms.ModelForm):
-
     class Meta:
         model = TopicFavorite
         fields = []

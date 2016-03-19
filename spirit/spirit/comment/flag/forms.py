@@ -11,7 +11,6 @@ from .models import Flag, CommentFlag
 
 
 class FlagForm(forms.ModelForm):
-
     class Meta:
         model = Flag
         fields = ['reason', 'body']
@@ -40,7 +39,7 @@ class FlagForm(forms.ModelForm):
 
             try:
                 CommentFlag.objects.update_or_create(comment=self.comment,
-                                                     defaults={'date': timezone.now(), })
+                                                     defaults={'date': timezone.now(),})
             except IntegrityError:
                 pass
 

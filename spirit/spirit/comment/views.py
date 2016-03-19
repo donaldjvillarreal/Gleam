@@ -40,7 +40,7 @@ def publish(request, topic_id, pk=None):
         if pk:
             comment = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
             quote = markdown.quotify(comment.comment, comment.user.username)
-            initial = {'comment': quote, }
+            initial = {'comment': quote,}
 
         form = CommentForm(initial=initial)
 
@@ -67,7 +67,7 @@ def update(request, pk):
     else:
         form = CommentForm(instance=comment)
 
-    context = {'form': form, }
+    context = {'form': form,}
 
     return render(request, 'spirit/comment/update.html', context)
 
@@ -77,13 +77,13 @@ def delete(request, pk, remove=True):
     comment = get_object_or_404(Comment, pk=pk)
 
     if request.method == 'POST':
-        Comment.objects\
-            .filter(pk=pk)\
+        Comment.objects \
+            .filter(pk=pk) \
             .update(is_removed=remove)
 
         return redirect(comment.get_absolute_url())
 
-    context = {'comment': comment, }
+    context = {'comment': comment,}
 
     return render(request, 'spirit/comment/moderate.html', context)
 
@@ -126,6 +126,6 @@ def image_upload_ajax(request):
 
     if form.is_valid():
         image = form.save()
-        return json_response({'url': image.url, })
+        return json_response({'url': image.url,})
 
-    return json_response({'error': dict(form.errors.items()), })
+    return json_response({'error': dict(form.errors.items()),})

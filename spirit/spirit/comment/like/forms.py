@@ -9,7 +9,6 @@ from .models import CommentLike
 
 
 class LikeForm(forms.ModelForm):
-
     class Meta:
         model = CommentLike
         fields = []

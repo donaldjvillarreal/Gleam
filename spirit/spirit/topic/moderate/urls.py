@@ -6,7 +6,6 @@ from django.conf.urls import url
 
 from . import views
 
-
 urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', views.DeleteView.as_view(), name='delete'),
     url(r'^undelete/(?P<pk>\d+)/$', views.UnDeleteView.as_view(), name='undelete'),

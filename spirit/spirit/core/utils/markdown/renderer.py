@@ -22,7 +22,6 @@ def sanitize_url(url):
 
 
 class Renderer(mistune.Renderer):
-
     # Override
     def autolink(self, link, is_email=False):
         link = sanitize_url(link)

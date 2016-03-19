@@ -7,18 +7,17 @@ from django.dispatch import Signal
 
 from .models import TopicPollChoice
 
-
 topic_poll_pre_vote = Signal(providing_args=['poll, user'])
 topic_poll_post_vote = Signal(providing_args=['poll, user'])
 
 
 def poll_pre_vote(sender, poll, user, **kwargs):
-    TopicPollChoice.objects.filter(poll=poll, votes__user=user)\
+    TopicPollChoice.objects.filter(poll=poll, votes__user=user) \
         .update(vote_count=F('vote_count') - 1)
 
 
 def poll_post_vote(sender, poll, user, **kwargs):
-    TopicPollChoice.objects.filter(poll=poll, votes__user=user)\
+    TopicPollChoice.objects.filter(poll=poll, votes__user=user) \
         .update(vote_count=F('vote_count') + 1)
 
 
