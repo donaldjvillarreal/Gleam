@@ -83,7 +83,7 @@ def case_problem_description(request):
         if errors_1 is not None or errors_2 is not None:
             # Some form errors, display them
             return render(request, 'caseconcept/case-problem-descriptions.html',
-                          {'problem': request.POST['problem'],
+                          {'problem': models.ProblemAspect.objects.get(id=request.POST['problem']),
                            'distressLevels': range(0, 11),
                            'errors_1': errors_1,
                            'errors_2': errors_2})

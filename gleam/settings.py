@@ -258,3 +258,15 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(os.path.dirname(__file__), 'search/whoosh_index'),
     },
 }
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'gleam.notifications@gmail.com'
+EMAIL_HOST_PASSWORD = '160noreply'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Development Settings
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
