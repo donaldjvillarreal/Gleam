@@ -113,8 +113,12 @@ class PracticeCalendar(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         super(PracticeCalendar, self).save()
+        if int(self.weekday_time[1:3]) == 0:
+            hour = 24
+        else:
+            hour = int(self.weekday_time[1:3])
         cron_tab_schedule, created = CrontabSchedule.objects.get_or_create(day_of_week=int(self.weekday_time[0]) - 1,
-                                                                           hour=int(self.weekday_time[1:3]),
+                                                                           hour=hour,
                                                                            minute=int(self.weekday_time[3:5]))
         PeriodicTask.objects.get_or_create(name=str(self.id),
                                            task='caseconcept.tasks.send_notifications',
