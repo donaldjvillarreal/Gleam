@@ -115,6 +115,8 @@ INSTALLED_APPS = [
     #'bootstrap3',
     'django_markdown',
     'rest_framework',
+    # Celery
+    'djcelery',
 ]
 
 # python manage.py createcachetable
@@ -270,3 +272,7 @@ EMAIL_USE_TLS = True
 # Development Settings
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+# Celery
+BROKER_URL = 'redis://localhost:6379/0'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
