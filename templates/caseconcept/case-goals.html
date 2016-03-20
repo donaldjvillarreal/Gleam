@@ -13,25 +13,34 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="">
-                    <h5>Here is an example to get you started: </h5>
+                    <p><span class="label label-info">Example</span> The following relates to how Amelia would make a
+                        goal.</p>
                     <div class="card card-block">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="card-title"><span class="label label-info">Problem Description</span> Problem
+                                <h4 class="card-title"><span class="label label-info">Problem Description</span> Work
                                 </h4>
                                 <div class="card-text">
                                     <label for="exampleProblem"><span class="label label-info">Goal</span> </label>
-                                    <input type="text" class="form-control" id="exampleProblem" disabled value="action">
+                                    <textarea type="text" class="form-control" id="exampleProblem" disabled>I will take an hour every morning at work to plan her day. She will write down all meetings and deadlines in her calendar, and she will schedule time to work on each task.</textarea>
                                     <label>
                                         <span class="label label-info">Frequency</span>
                                         <select disabled class="form-control">
-                                            <option>2 times a week</option>
+                                            <option>5 times a week</option>
                                         </select>
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <p>
+                        <span class="label label-info">Why is this a good goal?</span> <br>
+                        By planning out her time, Amelia can make sure everything gets accomplished.
+                        She will know that her work will get done because there will be a specific time
+                        for each task. This will keep her organized and she won’t be as overwhelmed. Meeting
+                        her deadlines will please her boss, and she will no longer fear losing her job.
+                    </p>
                 </div>
             </div>
         </div>
@@ -57,8 +66,8 @@
                                     class="label label-info">Problem Description</span> {{ problem.text }}</h4>
                             <div class="card-text">
                                 <label for="{{ problem.id }}"></label><span class="label label-info">Goal</span>
-                                <input type="text" class="form-control" id="{{ problem.id }}"
-                                       name="{{ problem.id }}-action" required>
+                                <textarea type="text" class="form-control" id="{{ problem.id }}"
+                                          name="{{ problem.id }}-action" maxlength="300" required></textarea>
                                 <label><span class="label label-info">Frequency</span>
                                     <select class="form-control pull-left" name="{{ problem.id }}-frequency">
                                         {% for freq in frequencies %}

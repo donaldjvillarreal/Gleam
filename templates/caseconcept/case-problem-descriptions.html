@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% block head %}
+    <style>
+        textarea {
+            height: 10em;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <div class="container">
         <progress class="progress progress-striped" value="10" max="100">10%</progress>
@@ -7,6 +14,9 @@
                 depression affected <strong>{{ problem.text|lower }}</strong>? <br>
                 What happened? What were you thinking when it happened? How did it make you feel? How did you react?
             </h5>
+            <p><span class="label label-info">Example</span> Amelia, a 34 year old, has been working at her current job
+                for the past 8 years.
+                Lately, she has been feeling overwhelmed and has not been keeping up with all of her tasks</p>
         </div>
 
         {% if errors_1 %}
@@ -34,27 +44,27 @@
                 <th>Thought</th>
                 <th>Feeling</th>
                 <th>Reaction</th>
-                <th>Distress Level</th>
+                <th>Distress Level <span class="text-muted small">5 is high</span></th>
             </tr>
             </thead>
             <tbody>
             <tr>
             <tr>
                 <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+                    <textarea class="form-control" maxlength="300" disabled>I have not been able to meet expectations at work. At our last meeting, my boss told me to improve my performance.</textarea>
                 </td>
                 <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+                    <textarea class="form-control" maxlength="300" disabled>If I don’t fix this now, I am definitely going to get fired.</textarea>
                 </td>
                 <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+                    <textarea class="form-control" maxlength="300" disabled>No matter how hard I try, I can’t seem to keep up. I am scared that I will be fired. I feel overwhelmed and worthless.</textarea>
                 </td>
                 <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
+                    <textarea class="form-control" maxlength="300" disabled>I have not been sleeping well and I have lost my appetite. I can’t concentrate at work.</textarea>
                 </td>
                 <td>
                     <select disabled class="form-control">
-                        <option>5</option>
+                        <option>4</option>
                     </select>
                 </td>
             </tr>

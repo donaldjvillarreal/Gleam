@@ -13,6 +13,11 @@ from caseconcept import models
 @login_required()
 def case_index(request):
     problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+    # Check if problem situation exists for problem, if not, delete.
+    for problem in problems:
+        if not models.ProblemAspectSituation.objects.filter(problem=problem).exists():
+            problem.delete()
+
     if problems.exists():
         welcome = False
         texts = [problem.text for problem in problems]
@@ -40,7 +45,7 @@ def case_problem(request):
             problem.user = User.objects.get(id=request.user.id)
             problem.save()
             return render(request, 'caseconcept/case-problem-descriptions.html', {'problem': problem,
-                                                                                  'distressLevels': range(0, 11)})
+                                                                                  'distressLevels': range(0, 6)})
         else:
             return HttpResponseRedirect('%s?formIssue=True' % reverse('case:index'))
     else:
@@ -84,7 +89,7 @@ def case_problem_description(request):
             # Some form errors, display them
             return render(request, 'caseconcept/case-problem-descriptions.html',
                           {'problem': models.ProblemAspect.objects.get(id=request.POST['problem']),
-                           'distressLevels': range(0, 11),
+                           'distressLevels': range(0, 6),
                            'errors_1': errors_1,
                            'errors_2': errors_2})
 
@@ -96,6 +101,11 @@ def case_problem_description(request):
             return HttpResponseRedirect(reverse('case:problem_summary'))
 
     else:
+        problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+        # Check if problem situation exists for problem, if not, delete.
+        for problem in problems:
+            if not models.ProblemAspectSituation.objects.filter(problem=problem).exists():
+                problem.delete()
         return HttpResponseRedirect(reverse('case:index'))
 
 
