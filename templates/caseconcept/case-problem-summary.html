@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block title %}Identify three problems to work on{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/case.css' %}">
 {% endblock %}
 {% block body %}
     <div class="container">
-        <progress class="progress progress-striped" value="10" max="100">10%</progress>
-        <h5 class="alert alert-info">
+        <progress class="progress progress-striped" value="29" max="100">29%</progress>
+        <div class="jumbotron">
             It can be really overwhelming to try to address every problem area
             in your life at once. <br>
             Select <strong>up to 3 rows</strong> that you would most like to improve.
-        </h5>
+        </div>
         <div class="alert alert-warning" id="rowLimitWarning">
             Only 3 rows may be selected.
         </div>

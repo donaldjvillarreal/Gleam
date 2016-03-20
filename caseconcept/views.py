@@ -61,7 +61,8 @@ def case_problem(request):
 def case_problem_description(request):
     if request.method == 'POST':
         errors_1, errors_2 = None, None
-        problem_aspect = models.ProblemAspect.objects.get(id=request.POST['problem'])
+        problem_id = request.POST['problem']
+        problem_aspect = models.ProblemAspect.objects.get(id=problem_id)
         problem_description_form = forms.ProblemAspectSituationForm({
             'situation': request.POST['situationInput1'],
             'thought': request.POST['thoughtInput1'],
@@ -151,13 +152,22 @@ def case_goals(request):
         if len(problems) > 1:
             problems = problems.order_by('-created')[:3]
     if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
         for problem in problems:
-            models.ProblemGoal.objects.get_or_create(
-                user=User.objects.get(id=request.user.id),
-                problem=models.ProblemAspect.objects.get(id=problem.id),
-                action=request.POST['%i-action' % problem.id],
-                frequency=int(request.POST['%i-frequency' % problem.id]),
-                stale=False)
+            frequency = int(request.POST['%i-frequency' % problem.id])
+            # Check if goals with unique columns exists, if so, delete them and create new one with updated info
+            goals = models.ProblemGoal.objects.filter(user=user,
+                                                      problem=problem.id,
+                                                      frequency=frequency)
+            if goals.exists():
+                for goal in goals:
+                    goal.delete()
+
+            models.ProblemGoal.objects.create(user=user,
+                                              problem=models.ProblemAspect.objects.get(id=problem.id),
+                                              action=request.POST['%i-action' % problem.id],
+                                              frequency=frequency,
+                                              stale=False)
         if len(problems) >= 2:
             return HttpResponseRedirect(reverse('case:goals_rank'))
         else:
