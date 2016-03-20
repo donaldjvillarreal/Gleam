@@ -237,16 +237,6 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-######################################
-#       Simple QA
-######################################
-
-#EMAIL_HOST = 'smtp.sendgrid.net'
-#EMAIL_HOST_USER = 'username'
-#EMAIL_HOST_PASSWORD = 'your-password'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -270,8 +260,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Development Settings
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 25
 
 # Celery
 BROKER_URL = 'redis://localhost:6379/0'

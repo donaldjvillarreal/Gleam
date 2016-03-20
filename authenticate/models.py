@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
@@ -10,15 +12,19 @@ class UserProfile(models.Model):
     points = models.IntegerField(default=0)
 
     # The additional attributes we wish to include.
-    GENDER = (('M','Male'),
-		 	  ('F','Female'),
-		 	  ('U','Prefer Not to Answer'))
+    GENDER = (('M', 'Male'),
+              ('F', 'Female'),
+              ('U', 'Prefer Not to Answer'))
     gender = models.CharField(max_length=1,
                               choices=GENDER,
                               default='U')
     picture = models.ImageField(upload_to='static/profile_images', null=True, blank=True)
 
-    dob = models.DateField(null=False, blank=False)
+    dob = models.DateField()
+    email = models.EmailField(null=True, blank=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: "
+                                                                   "'+999999999'. Up to 15 digits allowed.")
+    phone = models.CharField(validators=[phone_regex], blank=True, null=True, max_length=15)
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
