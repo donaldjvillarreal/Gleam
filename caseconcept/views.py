@@ -10,14 +10,18 @@ from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_f
 from caseconcept import models
 
 
-@login_required()
-def case_index(request):
-    problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
+def clean_stale_problems(user_id):
+    problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=user_id))
     # Check if problem situation exists for problem, if not, delete.
     for problem in problems:
         if not models.ProblemAspectSituation.objects.filter(problem=problem).exists():
             problem.delete()
+    return problems
 
+
+@login_required()
+def case_index(request):
+    problems = clean_stale_problems(request.user.id)
     if problems.exists():
         welcome = False
         texts = [problem.text for problem in problems]
@@ -47,6 +51,7 @@ def case_problem(request):
             return render(request, 'caseconcept/case-problem-descriptions.html', {'problem': problem,
                                                                                   'distressLevels': range(0, 6)})
         else:
+            clean_stale_problems(request.user.id)
             return HttpResponseRedirect('%s?formIssue=True' % reverse('case:index'))
     else:
         return HttpResponseRedirect(reverse('case:index'))
@@ -101,11 +106,6 @@ def case_problem_description(request):
             return HttpResponseRedirect(reverse('case:problem_summary'))
 
     else:
-        problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
-        # Check if problem situation exists for problem, if not, delete.
-        for problem in problems:
-            if not models.ProblemAspectSituation.objects.filter(problem=problem).exists():
-                problem.delete()
         return HttpResponseRedirect(reverse('case:index'))
 
 
