@@ -16,20 +16,11 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
-        username = request.POST['username']
         password = request.POST['password']
         password2 = request.POST['password2']
 
-        if not password2:
-            #user_form.errors.append("Please confirm your password")
-            pass
-
-        elif password != password2:
-            #user_form.errors.append("Passwords do not match")
-            pass
-
         # If the two forms are valid...
-        elif user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -59,9 +50,6 @@ def register(request):
 
             # Now we save the UserProfile model instance.
             profile.save()
-
-            userlogin = authenticate(username=username, password=password)
-            login(request, userlogin)
 
             return HttpResponseRedirect(request.GET.get('next', 'authenticate:login'))
 

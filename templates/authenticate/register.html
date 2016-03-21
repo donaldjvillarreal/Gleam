@@ -1,3 +1,4 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {% extends "base.html" %}
 
 
@@ -20,29 +21,22 @@
         </style> 
 
         <fieldset class="form-group">
-            <div class="col-md-5">
-                {% if user_form.errors or profile_form.errors%}
-                    Please fill out all required fields
-                    <ul>
-                        {% for error in user_form.errors %}
-                            <li><strong>{{ error. }}</strong></li>
-                        {% endfor %}
-                        {% for error in profile_form.errors %}
-                            <li><strong>{{ error }}</strong></li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-        </fieldset>
-
-        <fieldset class="form-group">
             <label for="username" class="col-md-2">Username<font color=red>*</font></label>
             <div class="col-md-5">
-                <input id="username" name="username" class="form-control" type="text" placeholder="maximum of 30 characters" onblur="checkUsername()">
+                <input id="username" name="username" class="form-control" type="text" placeholder="between 5 and 30 characters" onblur="checkUsername()">
             </div>
             <div id="feedbackUser"></div>
         </fieldset>
+
+        {% if user_form.username.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                {{ user_form.username.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
+
 
         <fieldset class="form-group">
             <label for="emailInput" class="col-md-2">Email</label>
@@ -56,7 +50,24 @@
             <div class="col-md-5">
                 <input id="password" name="password" type="password" class="form-control">
             </div>
+            
         </fieldset>
+
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                Must contain an uppercase and lowercase letter, a number and a special character: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+            </div>
+        </fieldset>
+
+        {% if user_form.password.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                {{ user_form.password.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
 
         <fieldset class="form-group">
             <label for="password2" class="col-md-2">Confirm Password<font color=red>*</font></label>
@@ -66,6 +77,15 @@
             <div id="feedbackPW2"></div>
         </fieldset>
 
+        {% if user_form.password2.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                {{ user_form.password2.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
+
         <fieldset class="form-group">
             <label for="first_name" class="col-md-2">First Name<font color=red>*</font></label>
             <div class="col-md-5">
@@ -73,6 +93,15 @@
             </div>
             <div id="feedbackFirst"></div>
         </fieldset>
+
+        {% if user_form.first_name.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                {{ user_form.first_name.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
 
         <fieldset class="form-group">
             <label for="last_name" class="col-md-2">Last Name<font color=red>*</font></label>
@@ -82,12 +111,45 @@
             <div id="feedbackLast"></div>
         </fieldset>
 
+        {% if user_form.last_name.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                {{ user_form.last_name.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
+
         <fieldset class="form-group">
             <label for="dobInput" class="col-md-2">Date of Birth<font color=red>*</font></label>
             <div class="col-md-5">
-                <input id="dobInput" name="dob" type="date" class="form-control" placeholder="YYYY-MM-DD">
+                <select id="yearSelectDOB"></select>
+                <select id="monthSelectDOB">
+                    <option value="0" selected>January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+                <select id="daySelectDOB"></select>
             </div>
         </fieldset>
+
+        {% if profile_form.dob.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                {{ profile_form.dob.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
 
         <fieldset class="form-group">
             <label for="genderInput" class="col-md-2">Gender</label>
@@ -107,6 +169,15 @@
             </div>
         </fieldset>
 
+        {% if profile_form.gender.errors %}
+        <fieldset class="form-group">
+            <div class="col-md-2"> </div>
+            <div class="col-md-5">
+                {{ profile_form.gender.errors }}
+            </div>
+        </fieldset>
+        {% endif %}
+
         <fieldset class="form-group">
             <label for="pictureInput" class="col-md-2">Upload Image</label>
             <div class="col-md-5">
@@ -122,9 +193,15 @@
 
         <fieldset class="form-group">
             <div class="col-md-5">
-                <input type="submit" name="submit" id="submit" value="Register" class="btn btn-primary" onload="checkAll()"/>
+                <input id="dob" name="dob" type="hidden" class="form-control">
             </div>
-            <font color=red>*</font> Denotes required field
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="col-md-2">
+                <input type="submit" name="submit" id="submit" value="Register" class="btn btn-primary"/>
+            </div>
+            <div class="col-md-5"><font color=red>*</font> Denotes required field</div>
         </fieldset>
 
         <script type="text/javascript">
@@ -181,8 +258,70 @@
                 else document.getElementById("submit").disabled = true;
             }
   
+
+            $(function () {
+                $("#monthSelectDOB").on("change", function () {
+                    BindDays();
+                    changeDOB();
+                });
+                $("#yearSelectDOB").on("change", function () {
+                    BindDays();
+                    changeDOB();
+                });
+                $("#daySelectDOB").on("change", function () {
+                    changeDOB();
+                });
+                BindDays();
+                addYears();
+            });
+
+            function BindDays() {
+                var month = $("#monthSelectDOB").val();
+                var dayDropDown = $("#daySelectDOB");
+                dayDropDown.empty();
+                if (month == 2) {
+                    for (var i = 1; i <= 28; i++) {
+                        dayDropDown.append("<option value=" + i + ">" + i + "</option>");
+                    }
+                    var year = $("#yearSelectDOB").val();
+                    if (parseInt(year) % 4 == 0) {
+                        dayDropDown.append("<option value='29'>29</option>");
+                    }
+                }
+                else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                    for (var i = 1; i <= 30; i++) {
+                        dayDropDown.append("<option value=" + i + ">" + i + "</option>");
+                    }
+                }
+                else {
+                    for (var i = 1; i <= 31; i++) {
+                        dayDropDown.append("<option value=" + i + ">" + i + "</option>");
+                    }
+                }
+            }
+
+            function addYears() {
+                var yearDropDown = $("#yearSelectDOB");
+                for(var j = 1900; j<=date.getFullYear(); j++) {
+                    var select = ""
+                    if (j==date.getFullYear())
+                        select = "selected"
+                    yearDropDown.append("<option value=" + j + " " + select + ">" + j + "</option>");
+                }
+            }
+
             var date = new Date();
             document.getElementById('timezone').value = date.getTimezoneOffset();
+
+            function changeDOB() {
+                var dobDate = new Date();
+                yearDOB = document.getElementById('yearSelectDOB').value;
+                monthDOB = document.getElementById('monthSelectDOB').value;
+                dayDOB = document.getElementById('daySelectDOB').value;
+                dobDate.setFullYear(yearDOB, monthDOB, dayDOB);
+                document.getElementById('dob').value = dobDate.toISOString().substring(0, 10);
+            }
+
 
         </script>
     </form>

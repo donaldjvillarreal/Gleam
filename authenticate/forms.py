@@ -1,19 +1,31 @@
 from django import forms
 from django.contrib.auth.models import User
 from authenticate.models import UserProfile
+from passwords.fields import PasswordField
 
 class UserForm(forms.ModelForm):
-    #password = forms.CharField(widget=forms.PasswordInput())
-
-	password = forms.CharField(widget=forms.PasswordInput(),
-	    						label='Password'
+	username = forms.CharField(min_length=5, max_length=30, required=True)
+	password = PasswordField(widget=forms.PasswordInput(),
+	    						label='Password',
+	    						required=True
 	)
 	password2 = forms.CharField(widget=forms.PasswordInput(),
-	    						label='Password Confirmation'
+	    						label='Password Confirmation',
+	    						required=True
 	)
 
 	first_name = forms.CharField(max_length=20, required=True)
 	last_name = forms.CharField(max_length=20, required=True)
+
+	def clean_password2(self):
+	    password = self.cleaned_data.get('password')
+	    password2 = self.cleaned_data.get('password2')
+
+	    if not password2:
+	        raise forms.ValidationError("You must confirm your password")
+	    if password != password2:
+	        raise forms.ValidationError("Your passwords do not match")
+	    return password2
 
 	class Meta:
 	    model = User
