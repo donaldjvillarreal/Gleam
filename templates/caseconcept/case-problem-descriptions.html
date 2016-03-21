@@ -1,119 +1,147 @@
 {% extends 'base.html' %}
+{% block title %}Identify situations{% endblock %}
+{% block head %}
+    <style>
+        textarea {
+            height: 10em;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <div class="container">
-        <progress class="progress progress-striped" value="10" max="100">10%</progress>
+        <progress class="progress progress-striped" value="14" max="100">14%</progress>
         <div class="row">
-            <h5 class="alert alert-info">Let’s dig a little deeper. Can you think of two specific situations where
-                depression affected <strong>{{ problem.text|lower }}</strong>? <br>
-                What happened? What were you thinking when it happened? How did it make you feel? How did you react?
-            </h5>
+            <div class="col-sm-12">
+                <div class="jumbotron"><h5>
+                    Let’s dig a little deeper. Can you think of two specific situations where
+                    depression affected <strong>{{ problem.text|lower }}</strong>? <br>
+                    What happened? What were you thinking when it happened? How did it make you feel? How did you react?
+                </h5>
+                </div>
+                <p><span class="label label-info">Example</span> Amelia, a 34 year old, has been working at her current
+                    job
+                    for the past 8 years.
+                    Lately, she has been feeling overwhelmed and has not been keeping up with all of her tasks</p>
+
+                <span class="label label-info">Tell us a little bit more about your problem</span>
+                <div>
+                    <label>
+                        <textarea class="form-control" cols="1000" id="problemSummary"></textarea>
+                    </label>
+                </div>
+            </div>
         </div>
-
-        {% if errors_1 %}
-            <div class="row">
-                <div class="alert alert-warning">
-                    Following errors occurred: <br>
-                    {{ errors_1 }}
+        <div id="mainContent">
+            {% if errors_1 %}
+                <div class="row">
+                    <div class="alert alert-warning">
+                        Following errors occurred: <br>
+                        {{ errors_1 }}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
 
-        {% if errors_2 %}
-            <div class="row">
-                <div class="alert alert-warning">
-                    Following errors occurred: <br>
-                    {{ errors_2 }}
+            {% if errors_2 %}
+                <div class="row">
+                    <div class="alert alert-warning">
+                        Following errors occurred: <br>
+                        {{ errors_2 }}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Situation</th>
-                <th>Thought</th>
-                <th>Feeling</th>
-                <th>Reaction</th>
-                <th>Distress Level</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <tr>
-                <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
-                </td>
-                <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
-                </td>
-                <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
-                </td>
-                <td>
-                    <textarea class="form-control" maxlength="300" disabled>{% lorem %}</textarea>
-                </td>
-                <td>
-                    <select disabled class="form-control">
-                        <option>5</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Situation</th>
+                    <th>Thought</th>
+                    <th>Feeling</th>
+                    <th>Reaction</th>
+                    <th>Distress Level <span class="text-muted small">5 is high</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <tr>
+                    <td>
+                        <textarea class="form-control" maxlength="300" disabled>I have not been able to meet expectations at work. At our last meeting, my boss told me to improve my performance.</textarea>
+                    </td>
+                    <td>
+                        <textarea class="form-control" maxlength="300" disabled>If I don’t fix this now, I am definitely going to get fired.</textarea>
+                    </td>
+                    <td>
+                        <textarea class="form-control" maxlength="300" disabled>No matter how hard I try, I can’t seem to keep up. I am scared that I will be fired. I feel overwhelmed and worthless.</textarea>
+                    </td>
+                    <td>
+                        <textarea class="form-control" maxlength="300" disabled>I have not been sleeping well and I have lost my appetite. I can’t concentrate at work.</textarea>
+                    </td>
+                    <td>
+                        <select disabled class="form-control">
+                            <option>4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                     <textarea id="situationInput1" class="form-control check-filled" maxlength="300"
                               required></textarea>
-                </td>
-                <td>
-                    <textarea id="thoughtInput1" class="form-control check-filled" maxlength="300" required></textarea>
-                </td>
-                <td>
-                    <textarea id="feelingInput1" class="form-control check-filled" maxlength="300" required></textarea>
-                </td>
-                <td>
-                    <textarea id="reactionInput1" class="form-control check-filled" maxlength="300" required></textarea>
-                </td>
-                <td>
-                    <select class="form-control" id="distressInput1">
-                        {% for i in distressLevels %}
-                            <option value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <textarea id="situationInput2" class="form-control" maxlength="300"></textarea>
-                </td>
-                <td>
-                    <textarea id="thoughtInput2" class="form-control" maxlength="300"></textarea>
-                </td>
-                <td>
-                    <textarea id="feelingInput2" class="form-control" maxlength="300"></textarea>
-                </td>
-                <td>
-                    <textarea id="reactionInput2" class="form-control" maxlength="300"></textarea>
-                </td>
-                <td>
-                    <select class="form-control" id="distressInput2">
-                        {% for i in distressLevels %}
-                            <option value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        {% csrf_token %}
+                    </td>
+                    <td>
+                        <textarea id="thoughtInput1" class="form-control check-filled" maxlength="300"
+                                  required></textarea>
+                    </td>
+                    <td>
+                        <textarea id="feelingInput1" class="form-control check-filled" maxlength="300"
+                                  required></textarea>
+                    </td>
+                    <td>
+                        <textarea id="reactionInput1" class="form-control check-filled" maxlength="300"
+                                  required></textarea>
+                    </td>
+                    <td>
+                        <select class="form-control" id="distressInput1">
+                            {% for i in distressLevels %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea id="situationInput2" class="form-control" maxlength="300"></textarea>
+                    </td>
+                    <td>
+                        <textarea id="thoughtInput2" class="form-control" maxlength="300"></textarea>
+                    </td>
+                    <td>
+                        <textarea id="feelingInput2" class="form-control" maxlength="300"></textarea>
+                    </td>
+                    <td>
+                        <textarea id="reactionInput2" class="form-control" maxlength="300"></textarea>
+                    </td>
+                    <td>
+                        <select class="form-control" id="distressInput2">
+                            {% for i in distressLevels %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            {% csrf_token %}
 
-        <div class="row">
-            <a href="#" class="btn btn-primary pull-left" id="anotherProblem"><i class="fa fa-arrow-left"></i> Identify
-                another
-                problem area</a>
-            <a href="#" class="btn btn-success pull-right" id="doneWithProblems"><i class="fa fa-check"></i> I'm
-                done</a>
-        </div>
-        <div class="row">
-            <span class="text-muted pull-left">Your changes will be saved.</span>
+            <div class="row">
+                <a href="#" class="btn btn-primary pull-left" id="anotherProblem"><i class="fa fa-arrow-left"></i>
+                    Identify
+                    another
+                    problem area</a>
+                <a href="#" class="btn btn-success pull-right" id="doneWithProblems"><i class="fa fa-check"></i> I'm
+                    done</a>
+            </div>
+            <div class="row">
+                <span class="text-muted pull-left">Your changes will be saved.</span>
+            </div>
         </div>
     </div>
 
@@ -140,6 +168,7 @@
 {% block js_scripts %}
     <script type="application/javascript">
         $(document).ready(function () {
+
             var payload = function () {
                 return {
                     'situationInput1': $('#situationInput1').val(),

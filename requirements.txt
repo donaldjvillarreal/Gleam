@@ -12,3 +12,5 @@ django-markdown
 djangorestframework
 markdown
 django-filter
+celery[redis]
+django-celery

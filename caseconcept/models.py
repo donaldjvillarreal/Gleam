@@ -2,6 +2,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from djcelery.models import PeriodicTask, CrontabSchedule
+import json
+
 
 from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies
 
@@ -106,6 +109,25 @@ class PracticeCalendar(models.Model):
 
     def __unicode__(self):
         return '%s, %s' % (self.user.username, self.weekday_time)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(PracticeCalendar, self).save()
+        if int(self.weekday_time[1:3]) == 0:
+            hour = 24
+        else:
+            hour = int(self.weekday_time[1:3])
+        cron_tab_schedule, created = CrontabSchedule.objects.get_or_create(day_of_week=int(self.weekday_time[0]) - 1,
+                                                                           hour=hour,
+                                                                           minute=int(self.weekday_time[3:5]))
+        PeriodicTask.objects.get_or_create(name=str(self.id),
+                                           task='caseconcept.tasks.send_notifications',
+                                           kwargs=json.dumps({'user_id': self.user.id}),
+                                           crontab=cron_tab_schedule)
+
+    def delete(self, using=None):
+        PeriodicTask.objects.get(name=str(self.id)).delete()
+        super(PracticeCalendar, self).delete()
 
     class Meta(object):
         unique_together = (('goal', 'weekday_time'),)

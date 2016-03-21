@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block title %}Identify problems{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/radios-to-slider.min.css' %}">
 {% endblock %}
@@ -29,9 +30,11 @@
                 </div>
             </div>
         {% endif %}
-        <progress class="progress progress-striped" value="10" max="100">10%</progress>
-        <h5 class="alert alert-info">Select an aspect of your life that is being negatively impacted by depression or
+        <progress class="progress progress-striped" value="14" max="100">14%</progress>
+        <div class="jumbotron">
+            <h5>Select an aspect of your life that is being negatively impacted by depression or
             feel free to add your own.</h5>
+        </div>
         {% if errors %}
             <div class="row">
                 <div class="alert alert-warning">
