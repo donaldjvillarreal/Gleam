@@ -16,9 +16,6 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
-        password = request.POST['password']
-        password2 = request.POST['password2']
-
         # If the two forms are valid...
         if user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
@@ -51,7 +48,12 @@ def register(request):
             # Now we save the UserProfile model instance.
             profile.save()
 
-            return HttpResponseRedirect(request.GET.get('next', 'authenticate:login'))
+            username = request.POST['username']
+            password = request.POST['password']
+            userlogin = authenticate(username=username, password=password)
+            login(request, userlogin)
+
+            return HttpResponseRedirect(request.GET.get('next', reverse('authenticate:login')))
 
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
@@ -69,7 +71,6 @@ def register(request):
     return render(request,
                   'authenticate/register.html',
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-
 
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
