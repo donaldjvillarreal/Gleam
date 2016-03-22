@@ -102,43 +102,41 @@ class ProblemGoalRanking(models.Model):
 
 
 class PracticeCalendar(models.Model):
-    # This line is required. Links UserProfile to a User model instance.
-    user = models.ForeignKey(User)
     goal = models.ForeignKey(ProblemGoal)
 
-    weekday_time = models.CharField(max_length=5)
+    day = models.SmallIntegerField()
+    hour = models.SmallIntegerField()
+    minute = models.SmallIntegerField()
 
     created = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
-        return '%s, %s' % (self.user.username, self.weekday_time)
+    class Meta(object):
+        get_latest_by = 'created'
+        unique_together = (('goal', 'day', 'hour', 'minute'),)
 
     def weekday_time_verbose(self):
         """
         Returns the time in a human readable format: Day, 24-Hr Time
         :return:
         """
-        return weekday_time_verbose[int(self.weekday_time[0])] + ' ' + self.weekday_time[1:]
+        return weekday_time_verbose[self.day], self.hour, self.minute
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super(PracticeCalendar, self).save()
-        if int(self.weekday_time[1:3]) == 0:
+        if self.hour == 0:
             hour = 24
         else:
-            hour = int(self.weekday_time[1:3]) - 1
-        cron_tab_schedule, created = CrontabSchedule.objects.get_or_create(day_of_week=int(self.weekday_time[0]) - 1,
+            # Send notifications an hour earlier
+            hour = self.hour - 1
+        cron_tab_schedule, created = CrontabSchedule.objects.get_or_create(day_of_week=self.day,
                                                                            hour=hour,
-                                                                           minute=int(self.weekday_time[3:5]))
+                                                                           minute=self.minute)
 
         PeriodicTask.objects.get_or_create(name=str(self.id),
                                            task='caseconcept.tasks.send_notifications',
-                                           kwargs=json.dumps({'user_id': self.user.id}),
+                                           kwargs=json.dumps({'user_id': self.goal.user.id}),
                                            crontab=cron_tab_schedule)
 
     def delete(self, using=None):
         PeriodicTask.objects.get(name=str(self.id)).delete()
         super(PracticeCalendar, self).delete()
-
-    class Meta(object):
-        unique_together = (('goal', 'weekday_time'),)
-        get_latest_by = 'created'

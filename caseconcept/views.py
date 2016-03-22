@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from caseconcept import forms
 
+from caseconcept import forms
 from caseconcept.case_options import FREQUENCY_CHOICES, SEVERITY_CHOICES, goal_frequencies, DEFAULT_PROBLEMS
 from caseconcept import models
 
@@ -235,14 +235,11 @@ def calendar(request):
         goal = models.ProblemGoalRanking.objects.filter(user=user).order_by('-created')[0]
     if request.method == 'POST':
         for slot in request.POST.getlist('weekday_time'):
-            planner_form = forms.PlannerForm({'weekday_time': slot})
+            planner_form = forms.PlannerForm({'day': int(slot[0]),
+                                              'hour': int(slot[1:3]),
+                                              'minute': int(slot[3:5])})
             if planner_form.is_valid():
                 planner = planner_form.save(commit=False)
-                # Delete if instance of practice calendar exists (good for updating weekday_time)
-                if models.PracticeCalendar.objects.filter(goal=goal.current_goal).exists():
-                    for practice_calendar in models.PracticeCalendar.objects.filter(goal=goal.current_goal):
-                        practice_calendar.delete()
-                planner.user = request.user
                 planner.goal = goal.current_goal
                 planner.save()
             else:
@@ -253,6 +250,10 @@ def calendar(request):
             return HttpResponseRedirect(u'%s?courses=True' % reverse('core:progress_check'))
 
     else:
+        # Delete if instance of practice calendar exists (good for updating weekday_time)
+        if models.PracticeCalendar.objects.filter(goal=goal.current_goal).exists():
+            for practice_calendar in models.PracticeCalendar.objects.filter(goal=goal.current_goal):
+                practice_calendar.delete()
         planner_form = forms.PlannerForm()
 
     return render(request, 'caseconcept/planner.html', {'planner_form': planner_form,
@@ -262,4 +263,4 @@ def calendar(request):
 @login_required()
 def start_course(request):
     return render(request, 'caseconcept/start-course.html',
-                  {'slots': models.PracticeCalendar.objects.filter(user=User.objects.get(id=request.user.id))})
+                  {'slots': models.PracticeCalendar.objects.filter(goal__user=User.objects.get(id=request.user.id))})
