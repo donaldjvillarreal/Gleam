@@ -42,9 +42,9 @@ class ProblemAspectSituation(models.Model):
     """
     DISTRESS_LEVEL_CHOICES = ((i, i) for i in range(0, 11))
     problem = models.ForeignKey(ProblemAspect)
+    summary = models.CharField(max_length=500)
     situation = models.CharField(max_length=300)
-    thought = models.CharField(max_length=300)
-    feeling = models.CharField(max_length=300)
+    thoughts_and_feelings = models.CharField(max_length=600)
     reaction = models.CharField(max_length=300)
     distress_level = models.SmallIntegerField(choices=DISTRESS_LEVEL_CHOICES)
 
@@ -55,6 +55,7 @@ class ProblemAspectSituation(models.Model):
 
     class Meta(object):
         get_latest_by = 'created'
+        unique_together = (('problem', 'summary', 'situation', 'thoughts_and_feelings', 'reaction', 'distress_level'),)
 
 
 class ProblemGoal(models.Model):

@@ -64,9 +64,9 @@ def case_problem_description(request):
         problem_id = request.POST['problem']
         problem_aspect = models.ProblemAspect.objects.get(id=problem_id)
         problem_description_form = forms.ProblemAspectSituationForm({
+            'summary': request.POST['summary'],
             'situation': request.POST['situationInput1'],
-            'thought': request.POST['thoughtInput1'],
-            'feeling': request.POST['feelingInput1'],
+            'thoughts_and_feelings': request.POST['thoughtFeelingInput1'],
             'reaction': request.POST['reactionInput1'],
             'distress_level': request.POST['distressInput1']})
         if problem_description_form.is_valid():
@@ -78,10 +78,10 @@ def case_problem_description(request):
 
         if request.POST['situationInput2']:
             problem_description_form_2 = forms.ProblemAspectSituationForm({
+                'summary': request.POST['summary'],
                 'problem': problem_aspect,
                 'situation': request.POST['situationInput2'],
-                'thought': request.POST['thoughtInput2'],
-                'feeling': request.POST['feelingInput2'],
+                'thoughts_and_feelings': request.POST['thoughtFeelingInput1'],
                 'reaction': request.POST['reactionInput2'],
                 'distress_level': request.POST['distressInput2']})
             if problem_description_form_2.is_valid():
@@ -120,11 +120,7 @@ def case_problem_summary(request):
             problem = models.ProblemAspect.objects.get(id=int(problem_id))
             problem.improve = True
             problem.save()
-        print request.POST.getlist('problems[]')
-        # if len(request.POST.getlist('problems[]')) >= 1:
         return HttpResponseRedirect(reverse('case:goals'))
-        # else:
-        #     return HttpResponseRedirect(reverse('case:calendar'))
     else:
         problems = models.ProblemAspect.objects.filter(user=User.objects.get(id=request.user.id))
         if len(problems) > 1:
@@ -233,8 +229,8 @@ def calendar(request):
     user = User.objects.get(id=request.user.id)
     if 'goal' in request.GET:
         # Check if updating calendar weekday_time
-        goal = models.ProblemGoalRanking.objects.filter(user=user,
-                                                        first=models.ProblemGoal.objects.get(id=request.GET['goal']))
+        goal = models.ProblemGoalRanking.objects.get(user=user,
+                                                     first=models.ProblemGoal.objects.get(id=request.GET['goal']))
     else:
         goal = models.ProblemGoalRanking.objects.filter(user=user).order_by('-created')[0]
     if request.method == 'POST':
@@ -243,11 +239,11 @@ def calendar(request):
             if planner_form.is_valid():
                 planner = planner_form.save(commit=False)
                 # Delete if instance of practice calendar exists (good for updating weekday_time)
-                if models.PracticeCalendar.objects.filter(goal=goal.first().current_goal).exists():
-                    for practice_calendar in models.PracticeCalendar.objects.filter(goal=goal.first().current_goal):
+                if models.PracticeCalendar.objects.filter(goal=goal.current_goal).exists():
+                    for practice_calendar in models.PracticeCalendar.objects.filter(goal=goal.current_goal):
                         practice_calendar.delete()
                 planner.user = request.user
-                planner.goal = goal.first().current_goal
+                planner.goal = goal.current_goal
                 planner.save()
             else:
                 print planner_form.errors
