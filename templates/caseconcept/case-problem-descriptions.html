@@ -26,7 +26,7 @@
                 <span class="label label-info">Tell us a little bit more about your problem</span>
                 <div>
                     <label>
-                        <textarea class="form-control" cols="1000" id="problemSummary"></textarea>
+                        <textarea class="form-control" cols="1000" id="problemSummary" class="check-filled"></textarea>
                     </label>
                 </div>
             </div>
@@ -54,8 +54,7 @@
                 <thead>
                 <tr>
                     <th>Situation</th>
-                    <th>Thought</th>
-                    <th>Feeling</th>
+                    <th>Thoughts and Feelings</th>
                     <th>Reaction</th>
                     <th>Distress Level <span class="text-muted small">5 is high</span></th>
                 </tr>
@@ -67,10 +66,7 @@
                         <textarea class="form-control" maxlength="300" disabled>I have not been able to meet expectations at work. At our last meeting, my boss told me to improve my performance.</textarea>
                     </td>
                     <td>
-                        <textarea class="form-control" maxlength="300" disabled>If I don’t fix this now, I am definitely going to get fired.</textarea>
-                    </td>
-                    <td>
-                        <textarea class="form-control" maxlength="300" disabled>No matter how hard I try, I can’t seem to keep up. I am scared that I will be fired. I feel overwhelmed and worthless.</textarea>
+                        <textarea class="form-control" maxlength="600" disabled>If I don’t fix this now, I am definitely going to get fired. No matter how hard I try, I can’t seem to keep up. I am scared that I will be fired. I feel overwhelmed and worthless.</textarea>
                     </td>
                     <td>
                         <textarea class="form-control" maxlength="300" disabled>I have not been sleeping well and I have lost my appetite. I can’t concentrate at work.</textarea>
@@ -87,7 +83,7 @@
                               required></textarea>
                     </td>
                     <td>
-                        <textarea id="thoughtInput1" class="form-control check-filled" maxlength="300"
+                        <textarea id="thoughtFeelingInput1" class="form-control check-filled" maxlength="600"
                                   required></textarea>
                     </td>
                     <td>
@@ -111,10 +107,7 @@
                         <textarea id="situationInput2" class="form-control" maxlength="300"></textarea>
                     </td>
                     <td>
-                        <textarea id="thoughtInput2" class="form-control" maxlength="300"></textarea>
-                    </td>
-                    <td>
-                        <textarea id="feelingInput2" class="form-control" maxlength="300"></textarea>
+                        <textarea id="thoughtFeelingInput2" class="form-control" maxlength="600"></textarea>
                     </td>
                     <td>
                         <textarea id="reactionInput2" class="form-control" maxlength="300"></textarea>
@@ -153,7 +146,8 @@
                     <div class="col-md-12">
                         <br>
                         <p class="modal-body">
-                            At least one row must be filled in (situation, thought, feeling, reaction, and distress
+                            Please ensure that you tell us more about your problem and at least one row must be filled
+                            in (situation, thought, feeling, reaction, and distress
                             level).
                         </p>
                     </div>
@@ -171,15 +165,14 @@
 
             var payload = function () {
                 return {
+                    'summary': $('#problemSummary').val(),
                     'situationInput1': $('#situationInput1').val(),
-                    'thoughtInput1': $('#thoughtInput1').val(),
-                    'feelingInput1': $('#feelingInput1').val(),
+                    'thoughtFeelingInput1': $('#thoughtFeelingInput1').val(),
                     'reactionInput1': $('#reactionInput1').val(),
                     'distressInput1': $('#distressInput1').val(),
 
                     'situationInput2': $('#situationInput2').val(),
-                    'thoughtInput2': $('#thoughtInput2').val(),
-                    'feelingInput2': $('#feelingInput2').val(),
+                    'thoughtFeelingInput2': $('#thoughtFeelingInput2').val(),
                     'reactionInput2': $('#reactionInput2').val(),
                     'distressInput2': $('#distressInput2').val(),
                     'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value,

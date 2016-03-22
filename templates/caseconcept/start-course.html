@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}Start course{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
@@ -9,13 +10,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="card card-block">
-                <h5>You have subscribed to the following training schedule</h5>
-                <ul class="collection">
-                    {% for slot in slots %}
-                        <li class="collection-item">{{ slot }}</li>
-                    {% endfor %}
-                </ul>
+            <div>
+                <h5 class="alert alert-info">You have subscribed to the following training schedule</h5>
+                {% for slot in slots %}
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card card-block">
+                            {{ slot.goal.action }}
+                            <hr>
+                            <strong>{{ slot.weekday_time_verbose }}</strong>
+                            <br>
+                            <a href="{% url 'case:calendar' %}?goal={{ slot.goal.id }}" class="btn btn-info">Update</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

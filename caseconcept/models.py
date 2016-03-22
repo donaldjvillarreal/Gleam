@@ -2,6 +2,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from caseconcept.case_options import weekday_time_verbose
+
 from djcelery.models import PeriodicTask, CrontabSchedule
 import json
 
@@ -110,16 +112,23 @@ class PracticeCalendar(models.Model):
     def __unicode__(self):
         return '%s, %s' % (self.user.username, self.weekday_time)
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
+    def weekday_time_verbose(self):
+        """
+        Returns the time in a human readable format: Day, 24-Hr Time
+        :return:
+        """
+        return weekday_time_verbose[int(self.weekday_time[0])] + ' ' + self.weekday_time[1:]
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super(PracticeCalendar, self).save()
         if int(self.weekday_time[1:3]) == 0:
             hour = 24
         else:
-            hour = int(self.weekday_time[1:3])
+            hour = int(self.weekday_time[1:3]) - 1
         cron_tab_schedule, created = CrontabSchedule.objects.get_or_create(day_of_week=int(self.weekday_time[0]) - 1,
                                                                            hour=hour,
                                                                            minute=int(self.weekday_time[3:5]))
+
         PeriodicTask.objects.get_or_create(name=str(self.id),
                                            task='caseconcept.tasks.send_notifications',
                                            kwargs=json.dumps({'user_id': self.user.id}),

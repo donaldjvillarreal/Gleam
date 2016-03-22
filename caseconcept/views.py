@@ -230,18 +230,31 @@ def case_goal_rank_confirm(request):
 
 @login_required
 def calendar(request):
-    goal = models.ProblemGoalRanking.objects.filter(user=User.objects.get(id=request.user.id)).order_by('-created')[0]
+    user = User.objects.get(id=request.user.id)
+    if 'goal' in request.GET:
+        # Check if updating calendar weekday_time
+        goal = models.ProblemGoalRanking.objects.filter(user=user,
+                                                        first=models.ProblemGoal.objects.get(id=request.GET['goal']))
+    else:
+        goal = models.ProblemGoalRanking.objects.filter(user=user).order_by('-created')[0]
     if request.method == 'POST':
         for slot in request.POST.getlist('weekday_time'):
             planner_form = forms.PlannerForm({'weekday_time': slot})
             if planner_form.is_valid():
                 planner = planner_form.save(commit=False)
+                # Delete if instance of practice calendar exists (good for updating weekday_time)
+                if models.PracticeCalendar.objects.filter(goal=goal.first().current_goal).exists():
+                    for practice_calendar in models.PracticeCalendar.objects.filter(goal=goal.first().current_goal):
+                        practice_calendar.delete()
                 planner.user = request.user
-                planner.goal = goal.current_goal
+                planner.goal = goal.first().current_goal
                 planner.save()
             else:
                 print planner_form.errors
-        return HttpResponseRedirect(u'%s?courses=True' % reverse('core:progress_check'))
+        if 'goal' in request.GET:
+            return HttpResponseRedirect(reverse('case:start_course'))
+        else:
+            return HttpResponseRedirect(u'%s?courses=True' % reverse('core:progress_check'))
 
     else:
         planner_form = forms.PlannerForm()
