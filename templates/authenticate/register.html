@@ -36,9 +36,24 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <label for="emailInput" class="col-md-2">Email</label>
+                <label for="email" class="col-md-2">Email</label>
                 <div class="col-md-5">
-                    <input id="emailInput" name="email" class="form-control" type="text" placeholder="optional; example@example.com">
+                    <input id="email" name="email" class="form-control" type="text" placeholder="optional; example@example.com" onblur="checkEmail()">
+                    <div id="feedbackEmail"></div>
+                    {% if user_form.email.errors %}
+                    <div>{{ user_form.email.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="phone" class="col-md-2">Phone</label>
+                <div class="col-md-5">
+                    <input id="phone" name="phone" class="form-control" type="text" placeholder="optional; 5551234567" onblur="checkPhone()">
+                    <div id="feedbackPhone"></div>
+                    {% if profile_form.phone.errors %}
+                    <div>{{ profile_form.phone.errors }}</div>
+                    {% endif %}
                 </div>
             </fieldset>
 
@@ -48,7 +63,7 @@
                     <input id="password" name="password" type="password" class="form-control" onblur="passwordConstraints()">
                     <div id="feedbackPW"></div>
                     <div>
-                        Must contain an uppercase and lowercase letter, a number and a special character: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+                        Must contain an uppercase and lowercase letter, a number and a special character: ~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?
                     </div>
                     {% if user_form.password.errors %}
                         <div>{{ user_form.password.errors }}</div>
@@ -133,11 +148,20 @@
                 </div>
             </fieldset>
 
+
             <fieldset class="form-group">
                 <label for="pictureInput" class="col-md-2">Upload Image</label>
                 <div class="col-md-5">
                     <input id="PictureInput" name="picture" type="file" class="form-control">
                 </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="subscribed" class="col-md-2"></label>
+                <dif class="col-md-5">
+                    <input id="subscribed" type="checkbox" name="subscribed" checked>
+                    I'd like to recieve emails from Gleam
+                </dif>
             </fieldset>
 
             <fieldset class="form-group">
@@ -176,11 +200,35 @@
             } else if (username.length > 20) {
                 UserMsg.className = 'warning';
                 UserMsg.textContent = 'Username must be less than 20 characters';
-                valid = false;
-            } else {
+            } else
                 UserMsg.textContent = '';
-                valid = true;
-            }
+        }
+
+        function checkEmail() {
+            var elEmail = document.getElementById('email');
+            var emailMsg = document.getElementById('feedbackEmail');
+            var email = elEmail.value;
+            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) && email.length != 0) {
+                emailMsg.className = 'warning';
+                emailMsg.textContent = 'Please enter a valid email';
+            } else
+                emailMsg.textContent = '';
+        }
+
+        function checkPhone() {
+            var elPhone = document.getElementById('phone');
+            var phoneMsg = document.getElementById('feedbackPhone');
+            var phone = elPhone.value;
+            var alphas = /[A-z]/g;
+            var special = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g;
+            if (alphas.test(phone) || special.test(phone)) {
+                phoneMsg.className = 'warning';
+                phoneMsg.textContent = 'Phone number can only contain digits';
+            } else if (phone.length != 0 && phone.length != 10) {
+                phoneMsg.className = 'warning';
+                phoneMsg.textContent = 'Phone number must be 10 digits long';
+            } else
+                phoneMsg.textContent = '';
         }
 
         function passwordConstraints() {
@@ -197,36 +245,31 @@
             } else if (password.length > 30) {
                 passMsg.className = 'warning';
                 passMsg.textContent = 'Password must be less thean 30 characters';
-            } else if (lowerCase.test(password)==false) {
+            } else if (!lowerCase.test(password)) {
                 passMsg.className = 'warning';
                 passMsg.textContent = 'Password must contain at least 1 lowercase letter';
-            } else if (upperCase.test(password)==false) {
+            } else if (!upperCase.test(password)) {
                 passMsg.className = 'warning';
                 passMsg.textContent = 'Password must contain at least 1 uppercase letter';
-            } else if (digits.test(password)==false) {
+            } else if (!digits.test(password)) {
                 passMsg.className = 'warning';
                 passMsg.textContent = 'Password must contain at least 1 digit';
-            } else if (special.test(password)==false) {
+            } else if (!special.test(password)) {
                 passMsg.className = 'warning';
                 passMsg.textContent = 'Password must contain at least 1 special character';
-            } else {
+            } else
                 passMsg.textContent = '';
-                valid = true;
-            }
         }
 
         function checkPassMatch() {
             var password = document.getElementById('password');
             var confirm = document.getElementById('password2');
             var PWMsg = document.getElementById('feedbackPW2');
-            if (password.value == confirm.value) {
+            if (password.value == confirm.value)
                 PWMsg.textContent = '';
-                valid = true;
-            }
             else {
                 PWMsg.className = 'warning';
                 PWMsg.textContent = 'Passwords Do Not Match';
-                valid = false;
             }
         }
 
@@ -237,39 +280,15 @@
             if (elCheck.length < 1) {
                 CheckedMsg.className = 'warning';
                 CheckedMsg.textContent = 'Required Field';
-                valid = false;
-            } else {
+            } else
                 CheckedMsg.textContent = '';
-                valid = true;
-            }
         }
 
-        function checkAll() {
-            window.onload
-            if (valid) document.getElementById("submit").disabled = true;
-            else document.getElementById("submit").disabled = true;
-        }
-
-
-        $(function () {
-            $("#monthSelectDOB").on("change", function () {
-                BindDays();
-                changeDOB();
-            });
-            $("#yearSelectDOB").on("change", function () {
-                BindDays();
-                changeDOB();
-            });
-            $("#daySelectDOB").on("change", function () {
-                changeDOB();
-            });
-            BindDays();
-            addYears();
-        });
 
         function BindDays() {
-            var month = $("#monthSelectDOB").val();
-            var dayDropDown = $("#daySelectDOB");
+            var month = $("#monthSelectDOB").val(),
+                dayDropDown = $("#daySelectDOB");
+
             dayDropDown.empty();
             if (month == 1) {
                 for (var i = 1; i <= 28; i++) {
@@ -301,10 +320,6 @@
                 yearDropDown.append("<option value=" + j + " " + select + ">" + j + "</option>");
             }
         }
-
-        var date = new Date();
-        document.getElementById('timezone').value = date.getTimezoneOffset();
-
         function changeDOB() {
             var dobDate = new Date();
             yearDOB = document.getElementById('yearSelectDOB').value;
@@ -314,6 +329,24 @@
             document.getElementById('dob').value = dobDate.toISOString().substring(0, 10);
         }
 
+        $(function () {
+            $("#monthSelectDOB").on("change", function () {
+                BindDays();
+                changeDOB();
+            });
+            $("#yearSelectDOB").on("change", function () {
+                BindDays();
+                changeDOB();
+            });
+            $("#daySelectDOB").on("change", function () {
+                changeDOB();
+            });
+            BindDays();
+            addYears();
+        });
 
-            </script>
+        var date = new Date();
+        document.getElementById('timezone').value = date.getTimezoneOffset();
+
+    </script>
 {% endblock %}
