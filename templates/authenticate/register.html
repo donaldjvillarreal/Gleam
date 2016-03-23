@@ -1,330 +1,319 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {% extends "base.html" %}
-
-
+{% load staticfiles %}
+{% block title %}Registration{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
 {% block body %}
 
 
-<div class="container jumbotron">
+    <div class="container jumbotron">
 
 
-    <form role="form" method="post" action="">
-        {% csrf_token %}
-        <style type="text/css"> 
-            ul {
-                list-style-type: none;
-                color: red;
-            } 
-            .warning {
-                color: red;
-            }
-        </style> 
-
-        <fieldset class="form-group">
-            <label for="username" class="col-md-2">Username<font color=red>*</font></label>
-            <div class="col-md-5">
-                <input id="username" name="username" class="form-control" type="text" placeholder="between 5 and 30 characters" onblur="checkUsername()">
-            </div>
-            <div id="feedbackUser"></div>
-        </fieldset>
-
-        {% if user_form.username.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"></div>
-            <div class="col-md-5">
-                {{ user_form.username.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-
-        <fieldset class="form-group">
-            <label for="emailInput" class="col-md-2">Email</label>
-            <div class="col-md-5">
-                <input id="emailInput" name="email" class="form-control" type="text" placeholder="optional; example@example.com">
-            </div>
-        </fieldset>
- 
-        <fieldset class="form-group">
-            <label for="password" class="col-md-2">Password<font color=red>*</font></label>
-            <div class="col-md-5">
-                <input id="password" name="password" type="password" class="form-control">
-            </div>
-            
-        </fieldset>
-
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                Must contain an uppercase and lowercase letter, a number and a special character: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
-            </div>
-        </fieldset>
-
-        {% if user_form.password.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                {{ user_form.password.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-        <fieldset class="form-group">
-            <label for="password2" class="col-md-2">Confirm Password<font color=red>*</font></label>
-            <div class="col-md-5">
-                <input id="password2" name="password2" type="password" class="form-control" onblur="checkPassMatch()">
-            </div>
-            <div id="feedbackPW2"></div>
-        </fieldset>
-
-        {% if user_form.password2.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                {{ user_form.password2.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-        <fieldset class="form-group">
-            <label for="first_name" class="col-md-2">First Name<font color=red>*</font></label>
-            <div class="col-md-5">
-                <input id="first_name" name="first_name" type="text" class="form-control" onblur="checkElement('first_name', 'feedbackFirst')">
-            </div>
-            <div id="feedbackFirst"></div>
-        </fieldset>
-
-        {% if user_form.first_name.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                {{ user_form.first_name.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-        <fieldset class="form-group">
-            <label for="last_name" class="col-md-2">Last Name<font color=red>*</font></label>
-            <div class="col-md-5">
-                <input id="last_name" name="last_name" type="text" class="form-control" onblur="checkElement('last_name', 'feedbackLast')">
-            </div>
-            <div id="feedbackLast"></div>
-        </fieldset>
-
-        {% if user_form.last_name.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                {{ user_form.last_name.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-        <fieldset class="form-group">
-            <label for="dobInput" class="col-md-2">Date of Birth<font color=red>*</font></label>
-            <div class="col-md-5">
-                <select id="yearSelectDOB"></select>
-                <select id="monthSelectDOB">
-                    <option value="0" selected>January</option>
-                    <option value="1">February</option>
-                    <option value="2">March</option>
-                    <option value="3">April</option>
-                    <option value="4">May</option>
-                    <option value="5">June</option>
-                    <option value="6">July</option>
-                    <option value="7">August</option>
-                    <option value="8">September</option>
-                    <option value="9">October</option>
-                    <option value="10">November</option>
-                    <option value="11">December</option>
-                </select>
-                <select id="daySelectDOB"></select>
-            </div>
-        </fieldset>
-
-        {% if profile_form.dob.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                {{ profile_form.dob.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-        <fieldset class="form-group">
-            <label for="genderInput" class="col-md-2">Gender</label>
-            <div class="col-md-5">
-                <label class="radio">
-                    <input type="radio" name="gender" value="M">
-                    Male
-                </label>
-                <label class="radio">
-                    <input type="radio" name="gender" value="F">
-                    Female
-                </label>
-                <label class="radio">
-                    <input type="radio" name="gender" value="U" checked>
-                    Prefer Not to Answer
-                </label>
-            </div>
-        </fieldset>
-
-        {% if profile_form.gender.errors %}
-        <fieldset class="form-group">
-            <div class="col-md-2"> </div>
-            <div class="col-md-5">
-                {{ profile_form.gender.errors }}
-            </div>
-        </fieldset>
-        {% endif %}
-
-        <fieldset class="form-group">
-            <label for="pictureInput" class="col-md-2">Upload Image</label>
-            <div class="col-md-5">
-                <input id="PictureInput" name="picture" type="file" class="form-control">
-            </div>
-        </fieldset>
-
-        <fieldset class="form-group">
-            <div class="col-md-5">
-                <input id="timezone" name="timezone" type="hidden" class="form-control">
-            </div>
-        </fieldset>
-
-        <fieldset class="form-group">
-            <div class="col-md-5">
-                <input id="dob" name="dob" type="hidden" class="form-control">
-            </div>
-        </fieldset>
-
-        <fieldset class="form-group">
-            <div class="col-md-2">
-                <input type="submit" name="submit" id="submit" value="Register" class="btn btn-primary"/>
-            </div>
-            <div class="col-md-5"><font color=red>*</font> Denotes required field</div>
-        </fieldset>
-
-        <script type="text/javascript">
-
-            function checkUsername() {
-                var elUser = document.getElementById('username');
-                var UserMsg = document.getElementById('feedbackUser');
-                var username = elUser.value;
-                if (username.length < 5) {
-                    UserMsg.className = 'warning';
-                    UserMsg.textContent = 'Username must be at least 5 characters';
-                } else if (username.length > 20) {
-                    UserMsg.className = 'warning';
-                    UserMsg.textContent = 'Username must be less than 20 characters';
-                    valid = false;
-                } else {
-                    UserMsg.textContent = '';
-                    valid = true;
+        <form role="form" method="post" action="">
+            {% csrf_token %}
+            <style type="text/css">
+                ul {
+                    padding: 0;
+                    list-style-type: none;
+                    color: red;
+                    list-style-type: none;
                 }
-            }
-
-            function checkPassMatch() {
-                var password = document.getElementById('password');
-                var confirm = document.getElementById('password2');
-                var PWMsg = document.getElementById('feedbackPW2');
-                if (password.value == confirm.value) {
-                    PWMsg.textContent = '';
-                    valid = true;
+                .warning {
+                    color: red;
                 }
-                else {
-                    PWMsg.className = 'warning';
-                    PWMsg.textContent = 'Passwords Do Not Match';
-                    valid = false;
-                }
-            }
+            </style>
 
-            function checkElement(element, feedback) {
-                var elChecked = document.getElementById(element);
-                var CheckedMsg = document.getElementById(feedback);
-                var elCheck = elChecked.value;
-                if (elCheck.length < 1) {
-                    CheckedMsg.className = 'warning';
-                    CheckedMsg.textContent = 'Required Field';
-                    valid = false;
-                } else {
-                    CheckedMsg.textContent = '';
-                    valid = true;
-                }
-            }
+            <fieldset class="form-group">
+                <label for="username" class="col-md-2">Username<font color=red>*</font></label>
+                <div class="col-md-5">
+                    <input id="username" name="username" class="form-control" type="text" placeholder="between 5 and 30 characters" onblur="checkUsername()">
+                    <div id="feedbackUser"></div>
+                    {% if user_form.username.errors %}
+                    <div>{{ user_form.username.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
 
-            function checkAll() {
-                window.onload
-                if (valid) document.getElementById("submit").disabled = true;
-                else document.getElementById("submit").disabled = true;
-            }
-  
+            <fieldset class="form-group">
+                <label for="emailInput" class="col-md-2">Email</label>
+                <div class="col-md-5">
+                    <input id="emailInput" name="email" class="form-control" type="text" placeholder="optional; example@example.com">
+                </div>
+            </fieldset>
 
-            $(function () {
-                $("#monthSelectDOB").on("change", function () {
-                    BindDays();
-                    changeDOB();
-                });
-                $("#yearSelectDOB").on("change", function () {
-                    BindDays();
-                    changeDOB();
-                });
-                $("#daySelectDOB").on("change", function () {
-                    changeDOB();
-                });
-                BindDays();
-                addYears();
-            });
+            <fieldset class="form-group">
+                <label for="password" class="col-md-2">Password<font color=red>*</font></label>
+                <div class="col-md-5">
+                    <input id="password" name="password" type="password" class="form-control" onblur="passwordConstraints()">
+                    <div id="feedbackPW"></div>
+                    <div>
+                        Must contain an uppercase and lowercase letter, a number and a special character: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+                    </div>
+                    {% if user_form.password.errors %}
+                        <div>{{ user_form.password.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
 
-            function BindDays() {
-                var month = $("#monthSelectDOB").val();
-                var dayDropDown = $("#daySelectDOB");
-                dayDropDown.empty();
-                if (month == 2) {
-                    for (var i = 1; i <= 28; i++) {
-                        dayDropDown.append("<option value=" + i + ">" + i + "</option>");
-                    }
-                    var year = $("#yearSelectDOB").val();
-                    if (parseInt(year) % 4 == 0) {
-                        dayDropDown.append("<option value='29'>29</option>");
-                    }
-                }
-                else if (month == 4 || month == 6 || month == 9 || month == 11) {
-                    for (var i = 1; i <= 30; i++) {
-                        dayDropDown.append("<option value=" + i + ">" + i + "</option>");
-                    }
-                }
-                else {
-                    for (var i = 1; i <= 31; i++) {
-                        dayDropDown.append("<option value=" + i + ">" + i + "</option>");
-                    }
-                }
-            }
+            <fieldset class="form-group">
+                <label for="password2" class="col-md-2">Confirm Password<font color=red>*</font></label>
+                <div class="col-md-5">
+                    <input id="password2" name="password2" type="password" class="form-control" onblur="checkPassMatch()">
+                    <div id="feedbackPW2"></div>
+                    {% if user_form.password2.errors %}
+                        <div>{{ user_form.password2.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
 
-            function addYears() {
-                var yearDropDown = $("#yearSelectDOB");
-                for(var j = 1900; j<=date.getFullYear(); j++) {
-                    var select = ""
-                    if (j==date.getFullYear())
-                        select = "selected"
-                    yearDropDown.append("<option value=" + j + " " + select + ">" + j + "</option>");
-                }
-            }
+            <fieldset class="form-group">
+                <label for="first_name" class="col-md-2">First Name<font color=red>*</font></label>
+                <div class="col-md-5">
+                    <input id="first_name" name="first_name" type="text" class="form-control" onblur="checkElement('first_name', 'feedbackFirst')">
+                    <div id="feedbackFirst"></div>
+                    {% if user_form.first_name.errors %}
+                        <div>{{ user_form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
 
-            var date = new Date();
-            document.getElementById('timezone').value = date.getTimezoneOffset();
+            <fieldset class="form-group">
+                <label for="last_name" class="col-md-2">Last Name<font color=red>*</font></label>
+                <div class="col-md-5">
+                    <input id="last_name" name="last_name" type="text" class="form-control" onblur="checkElement('last_name', 'feedbackLast')">
+                    <div id="feedbackLast"></div>
+                    {% if user_form.last_name.errors %}
+                        <div>{{ user_form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
 
-            function changeDOB() {
-                var dobDate = new Date();
-                yearDOB = document.getElementById('yearSelectDOB').value;
-                monthDOB = document.getElementById('monthSelectDOB').value;
-                dayDOB = document.getElementById('daySelectDOB').value;
-                dobDate.setFullYear(yearDOB, monthDOB, dayDOB);
-                document.getElementById('dob').value = dobDate.toISOString().substring(0, 10);
-            }
+            <fieldset class="form-group">
+                <label for="dobInput" class="col-md-2">Date of Birth<font color=red>*</font></label>
+                <div class="col-md-5">
+                    <select id="yearSelectDOB"></select>
+                    <select id="monthSelectDOB">
+                        <option value="0" selected>January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                    <select id="daySelectDOB"></select>
 
+                </div>
+            </fieldset>
 
-        </script>
-    </form>
-</div>
+            <fieldset class="form-group">
+                <label for="genderInput" class="col-md-2">Gender</label>
+                <div class="col-md-5">
+                    <label class="radio">
+                        <input type="radio" name="gender" value="M">
+                        Male
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="gender" value="F">
+                        Female
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="gender" value="U" checked>
+                        Prefer Not to Answer
+                    </label>
+                    {% if profile_form.gender.errors %}
+                        <div>{{ profile_form.gender.errors }}</div>
+                    {% endif %}
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="pictureInput" class="col-md-2">Upload Image</label>
+                <div class="col-md-5">
+                    <input id="PictureInput" name="picture" type="file" class="form-control">
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="col-md-5">
+                    <input id="timezone" name="timezone" type="hidden" class="form-control">
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="col-md-5">
+                    <input id="dob" name="dob" type="hidden" class="form-control">
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="col-md-2">
+                    <input type="submit" name="submit" id="submit" value="Register" class="btn btn-primary"/>
+                </div>
+                <div class="col-md-5"><font color=red>*</font> Denotes required field</div>
+            </fieldset>
+
+        </form>
+    </div>
 {% endblock %}
 
+{% block js_scripts %}
+    <script type="text/javascript">
+
+        function checkUsername() {
+            var elUser = document.getElementById('username');
+            var UserMsg = document.getElementById('feedbackUser');
+            var username = elUser.value;
+            if (username.length < 5) {
+                UserMsg.className = 'warning';
+                UserMsg.textContent = 'Username must be at least 5 characters';
+            } else if (username.length > 20) {
+                UserMsg.className = 'warning';
+                UserMsg.textContent = 'Username must be less than 20 characters';
+                valid = false;
+            } else {
+                UserMsg.textContent = '';
+                valid = true;
+            }
+        }
+
+        function passwordConstraints() {
+            var elPassword = document.getElementById('password');
+            var passMsg = document.getElementById('feedbackPW');
+            var password = elPassword.value;
+            var upperCase = /[A-Z]/g;
+            var lowerCase = /[a-z]/g;
+            var digits = /\d/g;
+            var special = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g;
+            if (password.length < 6) {
+                passMsg.className = 'warning';
+                passMsg.textContent = 'Password must be at least 6 characters';
+            } else if (password.length > 30) {
+                passMsg.className = 'warning';
+                passMsg.textContent = 'Password must be less thean 30 characters';
+            } else if (lowerCase.test(password)==false) {
+                passMsg.className = 'warning';
+                passMsg.textContent = 'Password must contain at least 1 lowercase letter';
+            } else if (upperCase.test(password)==false) {
+                passMsg.className = 'warning';
+                passMsg.textContent = 'Password must contain at least 1 uppercase letter';
+            } else if (digits.test(password)==false) {
+                passMsg.className = 'warning';
+                passMsg.textContent = 'Password must contain at least 1 digit';
+            } else if (special.test(password)==false) {
+                passMsg.className = 'warning';
+                passMsg.textContent = 'Password must contain at least 1 special character';
+            } else {
+                passMsg.textContent = '';
+                valid = true;
+            }
+        }
+
+        function checkPassMatch() {
+            var password = document.getElementById('password');
+            var confirm = document.getElementById('password2');
+            var PWMsg = document.getElementById('feedbackPW2');
+            if (password.value == confirm.value) {
+                PWMsg.textContent = '';
+                valid = true;
+            }
+            else {
+                PWMsg.className = 'warning';
+                PWMsg.textContent = 'Passwords Do Not Match';
+                valid = false;
+            }
+        }
+
+        function checkElement(element, feedback) {
+            var elChecked = document.getElementById(element);
+            var CheckedMsg = document.getElementById(feedback);
+            var elCheck = elChecked.value;
+            if (elCheck.length < 1) {
+                CheckedMsg.className = 'warning';
+                CheckedMsg.textContent = 'Required Field';
+                valid = false;
+            } else {
+                CheckedMsg.textContent = '';
+                valid = true;
+            }
+        }
+
+        function checkAll() {
+            window.onload
+            if (valid) document.getElementById("submit").disabled = true;
+            else document.getElementById("submit").disabled = true;
+        }
+
+
+        $(function () {
+            $("#monthSelectDOB").on("change", function () {
+                BindDays();
+                changeDOB();
+            });
+            $("#yearSelectDOB").on("change", function () {
+                BindDays();
+                changeDOB();
+            });
+            $("#daySelectDOB").on("change", function () {
+                changeDOB();
+            });
+            BindDays();
+            addYears();
+        });
+
+        function BindDays() {
+            var month = $("#monthSelectDOB").val();
+            var dayDropDown = $("#daySelectDOB");
+            dayDropDown.empty();
+            if (month == 1) {
+                for (var i = 1; i <= 28; i++) {
+                    dayDropDown.append("<option value=" + i + ">" + i + "</option>");
+                }
+                var year = $("#yearSelectDOB").val();
+                if (parseInt(year) % 4 == 0) {
+                    dayDropDown.append("<option value='29'>29</option>");
+                }
+            }
+            else if (month == 3 || month == 5 || month == 8 || month == 10) {
+                for (var i = 1; i <= 30; i++) {
+                    dayDropDown.append("<option value=" + i + ">" + i + "</option>");
+                }
+            }
+            else {
+                for (var i = 1; i <= 31; i++) {
+                    dayDropDown.append("<option value=" + i + ">" + i + "</option>");
+                }
+            }
+        }
+
+        function addYears() {
+            var yearDropDown = $("#yearSelectDOB");
+            for(var j = 1900; j<=date.getFullYear(); j++) {
+                var select = ""
+                if (j==date.getFullYear())
+                    select = "selected"
+                yearDropDown.append("<option value=" + j + " " + select + ">" + j + "</option>");
+            }
+        }
+
+        var date = new Date();
+        document.getElementById('timezone').value = date.getTimezoneOffset();
+
+        function changeDOB() {
+            var dobDate = new Date();
+            yearDOB = document.getElementById('yearSelectDOB').value;
+            monthDOB = document.getElementById('monthSelectDOB').value;
+            dayDOB = document.getElementById('daySelectDOB').value;
+            dobDate.setFullYear(yearDOB, monthDOB, dayDOB);
+            document.getElementById('dob').value = dobDate.toISOString().substring(0, 10);
+        }
+
+
+            </script>
+{% endblock %}
