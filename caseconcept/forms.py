@@ -31,4 +31,4 @@ class ProblemGoalRankingForm(forms.ModelForm):
 class PlannerForm(forms.ModelForm):
     class Meta(object):
         model = models.PracticeCalendar
-        fields = ('weekday_time',)
+        fields = ('day', 'hour', 'minute',)
