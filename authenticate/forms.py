@@ -9,6 +9,7 @@ class UserForm(forms.ModelForm):
 	    						label='Password',
 	    						required=True
 	)
+
 	password2 = forms.CharField(widget=forms.PasswordInput(),
 	    						label='Password Confirmation',
 	    						required=True
@@ -36,7 +37,15 @@ class UserProfileForm(forms.ModelForm):
 	dob = forms.DateField(required=True)
 	timezone = forms.IntegerField(widget=forms.HiddenInput())
 
+	def clean_phone(self):
+	    phone = self.cleaned_data.get('phone')
+	    if len(phone) !=0 and len(phone) != 10:
+	        raise forms.ValidationError("Phone number must be 10 digits long")
+	    if len(phone) !=0 and not phone.isdigit():
+	        raise forms.ValidationError("Phone number can only contain numbers")
+	    return phone
+
 	class Meta:
 		model = UserProfile
 		gender = forms.ChoiceField(choices=UserProfile.GENDER, widget=forms.RadioSelect)
-		fields = ('picture', 'gender', 'dob','timezone')
+		fields = ('picture','gender','phone','dob','timezone','subscribed',)
