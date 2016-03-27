@@ -14,7 +14,7 @@
             <div class="col-sm-12">
                 <h3>
                     Let’s dig a little deeper. Can you think of two specific situations where
-                    depression affected <strong class="strongText">{{ problem.text|lower }}</strong>? <br>
+                    <strong class="strongText">{{ problem.text|lower }}</strong> has been affected? <br>
                     What happened? What were you thinking when it happened? How did it make you feel? How did you react?
                 </h3>
                 <p><strong class="strongText">Example</strong> Amelia, a 34 year old, has been working at her current
@@ -24,6 +24,7 @@
 
             </div>
         </div>
+        <hr>
         <div id="mainContent">
             {% if errors_1 %}
                 <div class="row">
@@ -49,7 +50,10 @@
                     <th>Situation</th>
                     <th>Thoughts and Feelings</th>
                     <th>Reaction</th>
-                    <th>Distress Level <span class="text-muted small">5 is high</span></th>
+                    <th>Distress Level <i class="fa fa-info-circle"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="0 is low, 5 is high"></i></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,18 +77,31 @@
                 <tr>
                     <td>
                     <textarea id="situationInput1" class="form-control check-filled" maxlength="300"
-                              required></textarea>
+                              required
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Explain a situation that caused negative thoughts or feelings."></textarea>
                     </td>
                     <td>
                         <textarea id="thoughtFeelingInput1" class="form-control check-filled" maxlength="500"
-                                  required cols="50"></textarea>
+                                  required
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="What did  you think and feel when the situation happened?"
+                                  cols="50"></textarea>
                     </td>
                     <td>
                         <textarea id="reactionInput1" class="form-control check-filled" maxlength="300"
-                                  required></textarea>
+                                  required
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="How did you react to the situation?"></textarea>
                     </td>
                     <td>
-                        <select class="form-control" id="distressInput1">
+                        <select class="form-control" id="distressInput1"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title=" Rate how distressing this was. 0 means you weren’t distressed at all. 5 means you were very distressed.">
                             {% for i in distressLevels %}
                                 <option value="{{ i }}">{{ i }}</option>
                             {% endfor %}
