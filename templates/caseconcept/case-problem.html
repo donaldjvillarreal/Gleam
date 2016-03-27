@@ -33,7 +33,7 @@
         <progress class="progress progress-striped" value="14" max="100">14%</progress>
         <h3>Select an aspect of your life that is being negatively impacted by depression or
             feel free to add your own.</h3>
-        <br>
+        <hr>
         {% if errors %}
             <div class="row">
                 <div class="alert alert-warning">
@@ -41,26 +41,6 @@
                 </div>
             </div>
         {% endif %}
-
-        <div class="modal fade" id="frequencyWarningModal" tabindex="-1" role="dialog"
-             aria-labelledby="frequencyWarningModal"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <br>
-                            <p class="modal-body">
-                                Please select a frequency.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div id="aspect-list">
@@ -81,23 +61,25 @@
 
         <div class="row" id="addAspectDiv">
             <div class="col-sm-12">
-                <div class="card card-block">
+                <hr>
                     <fieldset class="form-group">
                         <label for="addAspectInput">Provide a short problem description.</label>
-                        <input type="text" id="addAspectInput" class="form-control">
+                        <input type="text" id="addAspectInput" class="form-control"
+                               data-toggle="tooltip" data-placement="bottom" title="More information">
                         <br>
                         <a href="#" class="btn btn-primary pull-xs-right" data-dismiss="modal" id="addAspectConfirm">Confirm</a>
                     </fieldset>
-                </div>
             </div>
         </div>
 
         <div class="row" id="frequencySeverityOptions">
             <div class="col-md-12">
-                <form>
+                <hr>
+                <form action="{% url 'case:problem' %}" method="post" id="problemAspectForm">
                     <div>
-                        <label>Enter a little more about <span class="selectedProblem"></span>.
-                            <textarea class="form-control" cols="1000" name="summary" id="problemSummary" required></textarea>
+                        <label>Please expand on how depression has impacted <span class="selectedProblem"></span>.
+                            <textarea class="form-control" cols="1000" rows="5" name="summary"
+                                      id="problemSummary" maxlength="500" required></textarea>
                         </label>
                     </div>
                     <fieldset class="form-group">
@@ -106,7 +88,7 @@
                         <br>
                         {% for option in frequencyOptions %}
                             <label class="c-input c-radio">
-                                <input type="radio" value="{{ option.0 }}" name="frequency" class="radio"/>
+                                <input type="radio" value="{{ option.0 }}" name="frequency" class="radio" required/>
                                 <span class="c-indicator"></span>
                                 {{ option.1 }}
                             </label>
@@ -114,20 +96,24 @@
 
                     </fieldset>
                     <fieldset>
-                        <span>How significantly has depression affected your <span class="selectedProblem"></span>?</span>
+                        <div class="alert alert-warning" id="severityWarning">Please select a severity level.</div>
+                        <span>How significantly has depression affected your <span
+                                class="selectedProblem"></span>?</span>
                         <div id="radios">
                             {% for option in severityOptions %}
                                 <label for="{{ option.1 }}">{{ option.1 }}</label>
-                                <input type="radio" value="{{ option.0 }}" name="severity" id="{{ option.1 }}">
+                                <input type="radio" value="{{ option.0 }}" name="severity" id="{{ option.1 }}"
+                                       class="severity" required>
                             {% endfor %}
                         </div>
                     </fieldset>
                     {% csrf_token %}
+                    <input type="hidden" name="text" id="textInput">
+                    <div class="row">
+                        <button type="submit" class="btn btn-primary pull-right" id="nextButton">Next <i
+                                class="fa fa-arrow-right"></i></button>
+                    </div>
                 </form>
-                <div class="row">
-                    <a href="#" class="btn btn-primary pull-right" id="nextButton">Next <i
-                            class="fa fa-arrow-right"></i> </a>
-                </div>
             </div>
         </div>
     </div>
@@ -147,17 +133,23 @@
             var fsOptions = $('#frequencySeverityOptions');
             $('#radios').radiosToSlider();
             fsOptions.hide();
+            {##}
+            {#            var summaryWarning = $('#summaryWarning'),#}
+            {#                    frequencyWarning = $('#frequencyWarning'),#}
+            {#                    severityWarning = $('#severityWarning');#}
+            {#        summaryWarning.hide()#}
+            var severityWarning = $('#severityWarning');
+            severityWarning.hide();
 
 
             $('body').on('hide', '#frequencySeverityOptions', function () {
                 $('#aspect-list').find('>div').removeClass('active');
             });
 
-
+            var selectedAspect;
+            var textToDisplay;
             $('body').on('click', '.aspects', function () {
                 // Hide the custom input
-                var selectedAspect;
-                var textToDisplay;
                 addAspectDiv.hide();
                 selectedAspect = $(this);
                 if ($(this).hasClass('active')) {
@@ -170,20 +162,15 @@
                     $('#addAspect').removeClass('active');
                     fsOptions.show();
                 }
-                textToDisplay = '<strong>' + selectedAspect.html().toLowerCase() + '</strong>';
+                textToDisplay = '<strong class="strongText">' + selectedAspect.html().toLowerCase() + '</strong>';
                 $('.selectedProblem').html(textToDisplay);
 
-                $('#nextButton').on('click', function () {
-                    var payload = {
-                        'text': selectedAspect.html(),
-                        'frequency': $('input[name=frequency]:checked').val(),
-                        'severity': $('input[name=severity]:checked').val(),
-                        'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
-                    };
-                    if (payload.frequency == undefined) {
-                        $('#frequencyWarningModal').modal('show');
-                    } else {
-                        $.redirect('{% url 'case:problem' %}', payload);
+                $('#nextButton').on('click', function (e) {
+                    severityWarning.hide();
+                    $('#textInput').val(selectedAspect.html());
+                    if ($('input[name=severity]:checked').length === 0) {
+                        severityWarning.show();
+                        e.preventDefault();
                     }
                 });
             });

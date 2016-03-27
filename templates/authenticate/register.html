@@ -19,6 +19,7 @@
                     color: red;
                     list-style-type: none;
                 }
+
                 .warning {
                     color: red;
                 }
@@ -27,10 +28,11 @@
             <fieldset class="form-group">
                 <label for="username" class="col-md-2">Username<font color=red>*</font></label>
                 <div class="col-md-5">
-                    <input id="username" name="username" class="form-control" type="text" placeholder="between 5 and 30 characters" onblur="checkUsername()">
+                    <input id="username" name="username" class="form-control" type="text"
+                           placeholder="between 5 and 30 characters" onblur="checkUsername()">
                     <div id="feedbackUser"></div>
                     {% if user_form.username.errors %}
-                    <div>{{ user_form.username.errors }}</div>
+                        <div>{{ user_form.username.errors }}</div>
                     {% endif %}
                 </div>
             </fieldset>
@@ -38,10 +40,11 @@
             <fieldset class="form-group">
                 <label for="email" class="col-md-2">Email</label>
                 <div class="col-md-5">
-                    <input id="email" name="email" class="form-control" type="text" placeholder="optional; example@example.com" onblur="checkEmail()">
+                    <input id="email" name="email" class="form-control" type="text"
+                           placeholder="optional; example@example.com" onblur="checkEmail()">
                     <div id="feedbackEmail"></div>
                     {% if user_form.email.errors %}
-                    <div>{{ user_form.email.errors }}</div>
+                        <div>{{ user_form.email.errors }}</div>
                     {% endif %}
                 </div>
             </fieldset>
@@ -49,10 +52,11 @@
             <fieldset class="form-group">
                 <label for="phone" class="col-md-2">Phone</label>
                 <div class="col-md-5">
-                    <input id="phone" name="phone" class="form-control" type="text" placeholder="optional; 5551234567" onblur="checkPhone()">
+                    <input id="phone" name="phone" class="form-control" type="text" placeholder="optional; 5551234567"
+                           onblur="checkPhone()">
                     <div id="feedbackPhone"></div>
                     {% if profile_form.phone.errors %}
-                    <div>{{ profile_form.phone.errors }}</div>
+                        <div>{{ profile_form.phone.errors }}</div>
                     {% endif %}
                 </div>
             </fieldset>
@@ -60,10 +64,12 @@
             <fieldset class="form-group">
                 <label for="password" class="col-md-2">Password<font color=red>*</font></label>
                 <div class="col-md-5">
-                    <input id="password" name="password" type="password" class="form-control" onblur="passwordConstraints()">
+                    <input id="password" name="password" type="password" class="form-control"
+                           onblur="passwordConstraints()">
                     <div id="feedbackPW"></div>
                     <div>
-                        Must contain an uppercase and lowercase letter, a number and a special character: ~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?
+                        Must contain an uppercase and lowercase letter, a number and a special character:
+                        ~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?
                     </div>
                     {% if user_form.password.errors %}
                         <div>{{ user_form.password.errors }}</div>
@@ -74,7 +80,8 @@
             <fieldset class="form-group">
                 <label for="password2" class="col-md-2">Confirm Password<font color=red>*</font></label>
                 <div class="col-md-5">
-                    <input id="password2" name="password2" type="password" class="form-control" onblur="checkPassMatch()">
+                    <input id="password2" name="password2" type="password" class="form-control"
+                           onblur="checkPassMatch()">
                     <div id="feedbackPW2"></div>
                     {% if user_form.password2.errors %}
                         <div>{{ user_form.password2.errors }}</div>
@@ -85,7 +92,8 @@
             <fieldset class="form-group">
                 <label for="first_name" class="col-md-2">First Name<font color=red>*</font></label>
                 <div class="col-md-5">
-                    <input id="first_name" name="first_name" type="text" class="form-control" onblur="checkElement('first_name', 'feedbackFirst')">
+                    <input id="first_name" name="first_name" type="text" class="form-control"
+                           onblur="checkElement('first_name', 'feedbackFirst')">
                     <div id="feedbackFirst"></div>
                     {% if user_form.first_name.errors %}
                         <div>{{ user_form.first_name.errors }}</div>
@@ -96,7 +104,8 @@
             <fieldset class="form-group">
                 <label for="last_name" class="col-md-2">Last Name<font color=red>*</font></label>
                 <div class="col-md-5">
-                    <input id="last_name" name="last_name" type="text" class="form-control" onblur="checkElement('last_name', 'feedbackLast')">
+                    <input id="last_name" name="last_name" type="text" class="form-control"
+                           onblur="checkElement('last_name', 'feedbackLast')">
                     <div id="feedbackLast"></div>
                     {% if user_form.last_name.errors %}
                         <div>{{ user_form.last_name.errors }}</div>
@@ -287,7 +296,7 @@
 
         function BindDays() {
             var month = $("#monthSelectDOB").val(),
-                dayDropDown = $("#daySelectDOB");
+                    dayDropDown = $("#daySelectDOB");
 
             dayDropDown.empty();
             if (month == 1) {
@@ -313,9 +322,9 @@
 
         function addYears() {
             var yearDropDown = $("#yearSelectDOB");
-            for(var j = 1900; j<=date.getFullYear(); j++) {
+            for (var j = 1900; j <= date.getFullYear(); j++) {
                 var select = ""
-                if (j==date.getFullYear())
+                if (j == date.getFullYear())
                     select = "selected"
                 yearDropDown.append("<option value=" + j + " " + select + ">" + j + "</option>");
             }

@@ -34,3 +34,7 @@ body {
 .push {
     height: 80px;
 }
+
+.strongText {
+    color: dodgerblue;
+}
