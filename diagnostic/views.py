@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 
 from django.shortcuts import render
 
-from diagnostic.bdi_survey import get_qa_set, store_bdi_response, calculate_bdi_score, BDI_QUESTIONS
+from diagnostic.bdi_survey import get_qa_set, store_bdi_response, calculate_bdi_score, BDI_QUESTIONS_LENGTH
 
 
 def index(request):
@@ -22,7 +22,7 @@ def bdi_survey_pagination(request):
         if qa_set is not None:
             return render(request, 'diagnostic/bdi-pagination.html',
                           {'qa_set': qa_set,
-                           'progress': (qa_set[0].order / float(BDI_QUESTIONS)) * 100})
+                           'progress': (qa_set[0].order / float(BDI_QUESTIONS_LENGTH)) * 100})
         else:
             return HttpResponseRedirect(reverse('diagnostic:bdi_score'))
     else:
@@ -30,7 +30,7 @@ def bdi_survey_pagination(request):
         if qa_set is not None:
             return render(request, 'diagnostic/bdi-pagination.html',
                           {'qa_set': qa_set,
-                           'progress': (qa_set[0].order / float(BDI_QUESTIONS)) * 100})
+                           'progress': (qa_set[0].order / float(BDI_QUESTIONS_LENGTH)) * 100})
         else:
             return HttpResponseRedirect(reverse('diagnostic:bdi_score'))
 
@@ -40,4 +40,4 @@ def bdi_score(request):
         return HttpResponseRedirect(reverse('diagnostic:bdi_survey'))
     session_key = request.session.session_key
     return render(request, 'diagnostic/bdi_score.html',
-                  {'score': calculate_bdi_score(session_key)})
+                  {'scores': calculate_bdi_score(session_key)})

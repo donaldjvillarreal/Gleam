@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 
-BDI_QUESTIONS = len(models.Question.objects.filter(survey__short_name='BDI'))
+BDI_QUESTIONS_LENGTH = len(models.Question.objects.filter(survey__short_name='BDI'))
 bdi_survey = models.Survey.objects.get(short_name='BDI')
 
 
@@ -26,7 +26,7 @@ def get_qa_set(session_key):
         question_set = []
         for answer in survey_set.answers.all():
             question_set.append(answer.question)
-        if len(question_set) == BDI_QUESTIONS:
+        if len(question_set) == BDI_QUESTIONS_LENGTH:
             # all questions answered
             survey_set.completed_on = timezone.localtime(timezone.now())
             survey_set.save()
@@ -46,7 +46,7 @@ def store_bdi_response(session_key, answer_id):
     answer = models.Answer.objects.get(id=int(answer_id))
     survey_set = models.SurveySet.objects.filter(session=session).order_by('-last_modified').first()
     models.QuestionAnswerSet.objects.create(survey_set=survey_set, answer=answer)
-    if len(survey_set.answers.all()) == BDI_QUESTIONS:
+    if len(survey_set.answers.all()) == BDI_QUESTIONS_LENGTH:
         survey_set.completed_on = timezone.localtime(timezone.now())
         survey_set.save()
         return None
@@ -58,7 +58,26 @@ def store_bdi_response(session_key, answer_id):
 def calculate_bdi_score(session_key):
     session = Session.objects.get(session_key=session_key)
     answers = models.SurveySet.objects.filter(session=session).order_by('-last_modified').first().answers.all()
-    score = 0
+    total_score, emotion_score, thought_score, behavior_score, physical_score = 0, 0, 0, 0, 0
+    # Since question 9 was replaced and not removed in the database, questions >= 9 in BDI Analysis doc is decremented
+    emotion_list = [1, 2, 3, 5, 6, 7, 8, 9, 10, 19]
+    thought_list = [2, 3, 7, 8, 12, 13, 19]
+    behavior_list = [4, 9, 11, 13, 14]
+    physical_list = [14, 15, 16, 17, 18, 19, 20]
     for answer in answers:
-        score += answer.value
-    return score
+        total_score += answer.value
+        # calculate course ratios
+        question_order = answer.question.order
+        if question_order in emotion_list:
+            emotion_score += 1
+        elif question_order in thought_list:
+            thought_score += 1
+        elif question_order in behavior_list:
+            behavior_score += 1
+        elif question_order in physical_list:
+            physical_score += 1
+    return {'total_score': total_score,
+            'emotion_score': emotion_score,
+            'thought_score': thought_score,
+            'behavior_score': behavior_score,
+            'physical_score': physical_score}

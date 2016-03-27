@@ -1,0 +1,1950 @@
+[
+  {
+    "fields": {
+      "name": "The Hamilton Rating Scale for Depression",
+      "short_name": "HAM-D"
+    },
+    "model": "diagnostic.survey",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "name": "Beck Depression Inventory",
+      "short_name": "BDI"
+    },
+    "model": "diagnostic.survey",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "text": "DEPRESSED MOOD",
+      "survey": 1,
+      "order": 1,
+      "label": "Sadness, hopeless, helpless, worthless"
+    },
+    "model": "diagnostic.question",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "text": "FEELINGS OF GUILT",
+      "survey": 1,
+      "order": 2,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "text": "SUICIDE",
+      "survey": 1,
+      "order": 3,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "text": "INSOMNIA EARLY",
+      "survey": 1,
+      "order": 4,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "text": "INSOMNIA MIDDLE",
+      "survey": 1,
+      "order": 5,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "text": "INSOMNIA LATE",
+      "survey": 1,
+      "order": 6,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "text": "WORK AND ACTIVITIES",
+      "survey": 1,
+      "order": 7,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "text": "RETARDATION: PSYCHOMOTOR",
+      "survey": 1,
+      "order": 8,
+      "label": "Slowness of though and speech; impaired ability to concentrate; decreased motor activity"
+    },
+    "model": "diagnostic.question",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "text": "AGITATION",
+      "survey": 1,
+      "order": 9,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "text": "ANXIETY (PSYCHOLOGICAL)",
+      "survey": 1,
+      "order": 10,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "text": "ANXIETY SOMATIC",
+      "survey": 1,
+      "order": 11,
+      "label": "Physiological concomitants of anxiety, avoid asking about possible medication side effects"
+    },
+    "model": "diagnostic.question",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "text": "SOMATIC SYMPTOMS (GASTROINTESTINAL)",
+      "survey": 1,
+      "order": 12,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "text": "SOMATIC SYMPTOMS GENERAL",
+      "survey": 1,
+      "order": 13,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "text": "GENITAL SYMPTOMS",
+      "survey": 1,
+      "order": 14,
+      "label": "Loss of libido; impaired sexual performance; menstrual disturbances"
+    },
+    "model": "diagnostic.question",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "text": "HYPOCHONDRIASIS",
+      "survey": 1,
+      "order": 15,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "text": "LOSS OF WEIGHT",
+      "survey": 1,
+      "order": 16,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "text": "INSIGHT",
+      "survey": 1,
+      "order": 17,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "text": "DIURNAL VARIATION - A",
+      "survey": 1,
+      "order": 18,
+      "label": "Note whether symptoms are worse in morning or evening. If NO diurnal variation, mark none"
+    },
+    "model": "diagnostic.question",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "text": "DEPERSONALIZATION AND DEREALIZATION",
+      "survey": 1,
+      "order": 19,
+      "label": "Feelings of unreality; Nihilistic ideas"
+    },
+    "model": "diagnostic.question",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "text": "PARANOID SYMPTOMS",
+      "survey": 1,
+      "order": 20,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "text": "OBSESSIONAL AND COMPULSIVE SYMPTOMS",
+      "survey": 1,
+      "order": 21,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "text": "DIURNAL VARIATION - B",
+      "survey": 1,
+      "order": 18,
+      "label": "When present, mark the severity of the variation. Mark \u201cNone\u201d if NO variation"
+    },
+    "model": "diagnostic.question",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "text": "Question 1",
+      "survey": 2,
+      "order": 1,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "text": "Question 2",
+      "survey": 2,
+      "order": 2,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "text": "Question 3",
+      "survey": 2,
+      "order": 3,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "text": "Question 4",
+      "survey": 2,
+      "order": 4,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "text": "Question 5",
+      "survey": 2,
+      "order": 5,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "text": "Question 6",
+      "survey": 2,
+      "order": 6,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "text": "Question 7",
+      "survey": 2,
+      "order": 7,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "text": "Question 8",
+      "survey": 2,
+      "order": 8,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "text": "Question 9",
+      "survey": 2,
+      "order": 9,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 32
+  },
+  {
+    "fields": {
+      "text": "Question 10",
+      "survey": 2,
+      "order": 10,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 33
+  },
+  {
+    "fields": {
+      "text": "Question 11",
+      "survey": 2,
+      "order": 11,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 34
+  },
+  {
+    "fields": {
+      "text": "Question 12",
+      "survey": 2,
+      "order": 12,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 35
+  },
+  {
+    "fields": {
+      "text": "Question 13",
+      "survey": 2,
+      "order": 13,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 36
+  },
+  {
+    "fields": {
+      "text": "Question 14",
+      "survey": 2,
+      "order": 14,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 37
+  },
+  {
+    "fields": {
+      "text": "Question 15",
+      "survey": 2,
+      "order": 15,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 38
+  },
+  {
+    "fields": {
+      "text": "Question 16",
+      "survey": 2,
+      "order": 16,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 39
+  },
+  {
+    "fields": {
+      "text": "Question 17",
+      "survey": 2,
+      "order": 17,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 40
+  },
+  {
+    "fields": {
+      "text": "Question 18",
+      "survey": 2,
+      "order": 18,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 41
+  },
+  {
+    "fields": {
+      "text": "Question 19",
+      "survey": 2,
+      "order": 19,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 42
+  },
+  {
+    "fields": {
+      "text": "Question 20",
+      "survey": 2,
+      "order": 20,
+      "label": ""
+    },
+    "model": "diagnostic.question",
+    "pk": 43
+  },
+  {
+    "fields": {
+      "question": 2,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "question": 3,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "question": 11,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "question": 14,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "question": 1,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "question": 1,
+      "response": "These feelings are spontaneously reported verbally",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "question": 1,
+      "response": "Communicates feelings non-verbally i.e., through facial expression, posture, voice, and tendency to weep",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "question": 1,
+      "response": "Patient reports VIRTUALLY ONLY these feelings in his spontaneous verbal and non-verbal communication",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "question": 2,
+      "response": "Self reproach, feels he has let people down",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "question": 2,
+      "response": "Ideas of guilt or rumination over past errors or sinful deed",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "question": 2,
+      "response": "Present illness is a punishmnent. Delusions of guilt",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "question": 2,
+      "response": "Hears accusatory or denunciatory voices and/or experiences threatening visual hallucinations",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "question": 4,
+      "response": "No difficulty falling asleep",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "question": 4,
+      "response": "Complains of occasional difficulty falling asleep - more than 1/2 hour",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "question": 4,
+      "response": "Complains of nightly difficulty falling asleep",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "question": 3,
+      "response": "Feels life is not worth living",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 38
+  },
+  {
+    "fields": {
+      "question": 3,
+      "response": "Wishes he were dead or any thoughts of possible death to self",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 39
+  },
+  {
+    "fields": {
+      "question": 3,
+      "response": "Suicide ideas or gesture",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 40
+  },
+  {
+    "fields": {
+      "question": 3,
+      "response": "Attempts at suicide (any serious attempt rates)",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 41
+  },
+  {
+    "fields": {
+      "question": 5,
+      "response": "No difficulty",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "question": 5,
+      "response": "Patient complains of being restless and disturbed during the night",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 46
+  },
+  {
+    "fields": {
+      "question": 5,
+      "response": "Waking during the night - any getting out of bed (except for purposes of voiding)",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 47
+  },
+  {
+    "fields": {
+      "question": 6,
+      "response": "No difficulty",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 48
+  },
+  {
+    "fields": {
+      "question": 6,
+      "response": "Waking in early hours of the morning but goes back to sleep",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 49
+  },
+  {
+    "fields": {
+      "question": 6,
+      "response": "Unable to fall asleep again if he gets out of bed",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 50
+  },
+  {
+    "fields": {
+      "question": 7,
+      "response": "No difficulty",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 51
+  },
+  {
+    "fields": {
+      "question": 7,
+      "response": "Thoughts and feelings of incapacity, fatigue or weakness related to activities (work or hobbies)",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 52
+  },
+  {
+    "fields": {
+      "question": 7,
+      "response": "Loss of interest in activities (hobbies or work) - either directly reported by patient, or indirectly in listlessness, indecision and vacillation (feels he has to push himself to work or do activities)",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 53
+  },
+  {
+    "fields": {
+      "question": 7,
+      "response": "Decrease in actual time spent in activities or decrease in productivity. In hospital, if patient does not spend at least three hours a day in activities (hospital job or hobbies) exclusive of ward chores",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 54
+  },
+  {
+    "fields": {
+      "question": 7,
+      "response": "Stopped working because of present illness. In hospital, if patient engages in no activities except ward chores, or if patient fails to perform ward chores unassisted",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 55
+  },
+  {
+    "fields": {
+      "question": 8,
+      "response": "Normal speech and thought",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 56
+  },
+  {
+    "fields": {
+      "question": 8,
+      "response": "Slight retardation at interview",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 57
+  },
+  {
+    "fields": {
+      "question": 8,
+      "response": "Obvious retardation at interview",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 58
+  },
+  {
+    "fields": {
+      "question": 8,
+      "response": "Interview difficult",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 59
+  },
+  {
+    "fields": {
+      "question": 8,
+      "response": "Complete stupor",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 60
+  },
+  {
+    "fields": {
+      "question": 9,
+      "response": "None",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 61
+  },
+  {
+    "fields": {
+      "question": 9,
+      "response": "Fidgetiness",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 62
+  },
+  {
+    "fields": {
+      "question": 9,
+      "response": "Playing with hands, hair, etc",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 63
+  },
+  {
+    "fields": {
+      "question": 9,
+      "response": "Moving about, can\u2019t sit still",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 64
+  },
+  {
+    "fields": {
+      "question": 9,
+      "response": "Hand wringing, nail biting, hair-pulling, biting of lips",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 65
+  },
+  {
+    "fields": {
+      "question": 10,
+      "response": "No difficulty",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 66
+  },
+  {
+    "fields": {
+      "question": 10,
+      "response": "Subjective tension and irritability",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 67
+  },
+  {
+    "fields": {
+      "question": 10,
+      "response": "Worrying about minor matters",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 68
+  },
+  {
+    "fields": {
+      "question": 10,
+      "response": "Apprehensive attitude apparent in face or speech",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 69
+  },
+  {
+    "fields": {
+      "question": 10,
+      "response": "Fears expressed without questioning",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 70
+  },
+  {
+    "fields": {
+      "question": 11,
+      "response": "Mild",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 73
+  },
+  {
+    "fields": {
+      "question": 11,
+      "response": "Moderate",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 74
+  },
+  {
+    "fields": {
+      "question": 11,
+      "response": "Severe",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 75
+  },
+  {
+    "fields": {
+      "question": 11,
+      "response": "Incapacitating",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 76
+  },
+  {
+    "fields": {
+      "question": 12,
+      "response": "None",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 78
+  },
+  {
+    "fields": {
+      "question": 12,
+      "response": "Loss of appetite but eating without encouragement from others. Food intake about normal",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 79
+  },
+  {
+    "fields": {
+      "question": 12,
+      "response": "Difficulty eating without urging from others. Marked reduction of appetite and food intake",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 80
+  },
+  {
+    "fields": {
+      "question": 13,
+      "response": "None",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 81
+  },
+  {
+    "fields": {
+      "question": 13,
+      "response": "Heaviness in limbs, back or head. Backaches, headache, muscle aches. Loss of energy and fatigability",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 82
+  },
+  {
+    "fields": {
+      "question": 13,
+      "response": "Any clear-cut symptom rates 2",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 83
+  },
+  {
+    "fields": {
+      "question": 14,
+      "response": "Mild",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 85
+  },
+  {
+    "fields": {
+      "question": 14,
+      "response": "Severe",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 86
+  },
+  {
+    "fields": {
+      "question": 15,
+      "response": "Not present",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 87
+  },
+  {
+    "fields": {
+      "question": 15,
+      "response": "Self-absorption (bodily)",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 88
+  },
+  {
+    "fields": {
+      "question": 15,
+      "response": "Preoccupation with health",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 89
+  },
+  {
+    "fields": {
+      "question": 15,
+      "response": "Frequent complaints, requests for help, etc.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 90
+  },
+  {
+    "fields": {
+      "question": 15,
+      "response": "Hypochondriacal delusions",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 91
+  },
+  {
+    "fields": {
+      "question": 16,
+      "response": "No weight loss",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 92
+  },
+  {
+    "fields": {
+      "question": 16,
+      "response": "Probably weight loss associated with present illness",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 93
+  },
+  {
+    "fields": {
+      "question": 16,
+      "response": "Definite (according to patient) weight loss",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 94
+  },
+  {
+    "fields": {
+      "question": 16,
+      "response": "Not assessed",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 95
+  },
+  {
+    "fields": {
+      "question": 17,
+      "response": "Acknowledges being depressed and ill",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 96
+  },
+  {
+    "fields": {
+      "question": 17,
+      "response": "Acknowledges illness but attributes cause to bad food, climate, overwork, virus, need for rest, etc.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 97
+  },
+  {
+    "fields": {
+      "question": 17,
+      "response": "Denies being ill at all",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 98
+  },
+  {
+    "fields": {
+      "question": 18,
+      "response": "No variation",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 99
+  },
+  {
+    "fields": {
+      "question": 18,
+      "response": "Worse in A.M.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 100
+  },
+  {
+    "fields": {
+      "question": 18,
+      "response": "Worse in P.M.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 101
+  },
+  {
+    "fields": {
+      "question": 22,
+      "response": "None",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 102
+  },
+  {
+    "fields": {
+      "question": 22,
+      "response": "Mild",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 103
+  },
+  {
+    "fields": {
+      "question": 22,
+      "response": "Severe",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 104
+  },
+  {
+    "fields": {
+      "question": 19,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 105
+  },
+  {
+    "fields": {
+      "question": 19,
+      "response": "Mild",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 106
+  },
+  {
+    "fields": {
+      "question": 19,
+      "response": "Moderate",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 107
+  },
+  {
+    "fields": {
+      "question": 19,
+      "response": "Severe",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 108
+  },
+  {
+    "fields": {
+      "question": 19,
+      "response": "Incapacitating",
+      "value": 4
+    },
+    "model": "diagnostic.answer",
+    "pk": 109
+  },
+  {
+    "fields": {
+      "question": 20,
+      "response": "None",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 110
+  },
+  {
+    "fields": {
+      "question": 20,
+      "response": "Suspicious",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 111
+  },
+  {
+    "fields": {
+      "question": 20,
+      "response": "Ideas of reference",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 112
+  },
+  {
+    "fields": {
+      "question": 20,
+      "response": "Delusions of reference and persecution",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 113
+  },
+  {
+    "fields": {
+      "question": 21,
+      "response": "Absent",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 114
+  },
+  {
+    "fields": {
+      "question": 21,
+      "response": "Mild",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 115
+  },
+  {
+    "fields": {
+      "question": 21,
+      "response": "Severe",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 116
+  },
+  {
+    "fields": {
+      "question": 1,
+      "response": "These feeling states indicated only on questioning",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 117
+  },
+  {
+    "fields": {
+      "question": 23,
+      "response": "I do not feel sad.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 118
+  },
+  {
+    "fields": {
+      "question": 23,
+      "response": "I feel sad.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 119
+  },
+  {
+    "fields": {
+      "question": 23,
+      "response": "I am sad all the time and I can't snap out of it.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 120
+  },
+  {
+    "fields": {
+      "question": 23,
+      "response": "I am so sad or unhappy that I can't stand it.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 121
+  },
+  {
+    "fields": {
+      "question": 24,
+      "response": "I am not particularly discouraged about the future.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 122
+  },
+  {
+    "fields": {
+      "question": 24,
+      "response": "I feel discouraged about the future.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 123
+  },
+  {
+    "fields": {
+      "question": 24,
+      "response": "I feel I have nothing to look forward to.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 124
+  },
+  {
+    "fields": {
+      "question": 24,
+      "response": "I feel that the future is hopeless and that things cannot improve.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 125
+  },
+  {
+    "fields": {
+      "question": 25,
+      "response": "I do not feel like a failure.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 126
+  },
+  {
+    "fields": {
+      "question": 25,
+      "response": "I feel I have failed more than the average person.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 127
+  },
+  {
+    "fields": {
+      "question": 25,
+      "response": "As I look back on my life, all I can see is a lot of failures.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 128
+  },
+  {
+    "fields": {
+      "question": 25,
+      "response": "I feel I am a complete failure as a person.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 129
+  },
+  {
+    "fields": {
+      "question": 26,
+      "response": "I get as much satisfaction out of things as I used to.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 130
+  },
+  {
+    "fields": {
+      "question": 26,
+      "response": "I don't enjoy things the way I used to.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 131
+  },
+  {
+    "fields": {
+      "question": 26,
+      "response": "I don't get real satisfaction out of anything anymore.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 132
+  },
+  {
+    "fields": {
+      "question": 26,
+      "response": "I am dissatisfied or bored with everything.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 133
+  },
+  {
+    "fields": {
+      "question": 27,
+      "response": "I don't feel particularly guilty.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 134
+  },
+  {
+    "fields": {
+      "question": 27,
+      "response": "I feel guilty a good part of the time.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 135
+  },
+  {
+    "fields": {
+      "question": 27,
+      "response": "I feel quite guilty most of the time.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 136
+  },
+  {
+    "fields": {
+      "question": 27,
+      "response": "I feel guilty all of the time.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 137
+  },
+  {
+    "fields": {
+      "question": 28,
+      "response": "I don't feel I am being punished.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 138
+  },
+  {
+    "fields": {
+      "question": 28,
+      "response": "I feel I may be punished.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 139
+  },
+  {
+    "fields": {
+      "question": 28,
+      "response": "I expect to be punished.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 140
+  },
+  {
+    "fields": {
+      "question": 28,
+      "response": "I feel I am being punished.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 141
+  },
+  {
+    "fields": {
+      "question": 29,
+      "response": "I don't feel disappointed in myself.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 142
+  },
+  {
+    "fields": {
+      "question": 29,
+      "response": "I am disappointed in myself.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 143
+  },
+  {
+    "fields": {
+      "question": 29,
+      "response": "I am disgusted with myself.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 144
+  },
+  {
+    "fields": {
+      "question": 29,
+      "response": "I hate myself.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 145
+  },
+  {
+    "fields": {
+      "question": 30,
+      "response": "I don't feel I am any worse than anybody else.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 146
+  },
+  {
+    "fields": {
+      "question": 30,
+      "response": "I am critical of myself for my weaknesses  or mistakes.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 147
+  },
+  {
+    "fields": {
+      "question": 30,
+      "response": "I blame myself all the time for my faults.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 148
+  },
+  {
+    "fields": {
+      "question": 30,
+      "response": "I blame myself for everything bad that happen.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 149
+  },
+  {
+    "fields": {
+      "question": 32,
+      "response": "I don't cry any more than usual.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 154
+  },
+  {
+    "fields": {
+      "question": 32,
+      "response": "I cry more now than I used to.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 155
+  },
+  {
+    "fields": {
+      "question": 32,
+      "response": "I cry all the time now.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 156
+  },
+  {
+    "fields": {
+      "question": 32,
+      "response": "I used to be able to cry, but now I can't cry even though I want to.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 157
+  },
+  {
+    "fields": {
+      "question": 33,
+      "response": "I am no more irritated now than I ever am.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 158
+  },
+  {
+    "fields": {
+      "question": 33,
+      "response": "I get annoyed or irritated more easily than I used to.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 159
+  },
+  {
+    "fields": {
+      "question": 33,
+      "response": "I feel irritated all the time now.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 160
+  },
+  {
+    "fields": {
+      "question": 33,
+      "response": "I don't get irritated at all by the things that used to irritate me.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 161
+  },
+  {
+    "fields": {
+      "question": 34,
+      "response": "I have not lost interest in other people.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 162
+  },
+  {
+    "fields": {
+      "question": 34,
+      "response": "I am less interested in other people than I used to be.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 163
+  },
+  {
+    "fields": {
+      "question": 34,
+      "response": "I have lost most of my interest in other people.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 164
+  },
+  {
+    "fields": {
+      "question": 34,
+      "response": "I have lost all of my interest in other people.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 165
+  },
+  {
+    "fields": {
+      "question": 35,
+      "response": "I make decisions about as well as I ever could.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 166
+  },
+  {
+    "fields": {
+      "question": 35,
+      "response": "I put off making decisions more than I used to.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 167
+  },
+  {
+    "fields": {
+      "question": 35,
+      "response": "I have greater difficulty in making decisions than before.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 168
+  },
+  {
+    "fields": {
+      "question": 35,
+      "response": "I can't make decisions at all anymore.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 169
+  },
+  {
+    "fields": {
+      "question": 36,
+      "response": "I don't feel I look any worse than I used to.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 170
+  },
+  {
+    "fields": {
+      "question": 36,
+      "response": "I am worried that i am looking old or unattractive",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 171
+  },
+  {
+    "fields": {
+      "question": 36,
+      "response": "I feel that there are permanent changes in my appearance that make me look unattractive.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 172
+  },
+  {
+    "fields": {
+      "question": 36,
+      "response": "I believe that I look ugly.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 173
+  },
+  {
+    "fields": {
+      "question": 37,
+      "response": "I can work about as well as before.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 174
+  },
+  {
+    "fields": {
+      "question": 37,
+      "response": "It takes an extra effort to get started at doing something",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 175
+  },
+  {
+    "fields": {
+      "question": 37,
+      "response": "I have to push myself very hard to do anything",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 176
+  },
+  {
+    "fields": {
+      "question": 37,
+      "response": "I can't do any work at all.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 177
+  },
+  {
+    "fields": {
+      "question": 38,
+      "response": "I can sleep as well as usual.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 178
+  },
+  {
+    "fields": {
+      "question": 38,
+      "response": "I don't sleep as well as I used to.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 179
+  },
+  {
+    "fields": {
+      "question": 38,
+      "response": "| wake up 1-2 hours earlier than usual and find it hard to get back to sleep.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 180
+  },
+  {
+    "fields": {
+      "question": 38,
+      "response": "I wake up several hours earlier than I used to and cannot get back to sleep.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 181
+  },
+  {
+    "fields": {
+      "question": 39,
+      "response": "I don't get more tired than usual.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 182
+  },
+  {
+    "fields": {
+      "question": 39,
+      "response": "I get tired more easily than I used to.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 183
+  },
+  {
+    "fields": {
+      "question": 39,
+      "response": "I get tired from doing almost anything.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 184
+  },
+  {
+    "fields": {
+      "question": 39,
+      "response": "I am too tired to do anything.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 185
+  },
+  {
+    "fields": {
+      "question": 40,
+      "response": "My appetite is no worse than usual.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 186
+  },
+  {
+    "fields": {
+      "question": 40,
+      "response": "My appetite is not as good as it used to be.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 187
+  },
+  {
+    "fields": {
+      "question": 40,
+      "response": "My appetite is much worse now.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 188
+  },
+  {
+    "fields": {
+      "question": 40,
+      "response": "I have no appetite at all anymore.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 189
+  },
+  {
+    "fields": {
+      "question": 41,
+      "response": "I haven't lost much weight, if any, lately.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 190
+  },
+  {
+    "fields": {
+      "question": 41,
+      "response": "I have lost more than 5 pounds.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 191
+  },
+  {
+    "fields": {
+      "question": 41,
+      "response": "I have lost more than 10 pounds.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 192
+  },
+  {
+    "fields": {
+      "question": 41,
+      "response": "I have lost more than 15 pounds.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 193
+  },
+  {
+    "fields": {
+      "question": 42,
+      "response": "I am no more worried about my health than usual.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 194
+  },
+  {
+    "fields": {
+      "question": 42,
+      "response": "I am worried about physical problems such as aches and pains; or upset stomach; or constipation.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 195
+  },
+  {
+    "fields": {
+      "question": 42,
+      "response": "I am very worried about physical problems and it's hard to think of much else.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 196
+  },
+  {
+    "fields": {
+      "question": 42,
+      "response": "I am so worried about my physical problems that I cannot think about anything else.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 197
+  },
+  {
+    "fields": {
+      "question": 43,
+      "response": "I have not noticed any recent change in my interest in sex.",
+      "value": 0
+    },
+    "model": "diagnostic.answer",
+    "pk": 198
+  },
+  {
+    "fields": {
+      "question": 43,
+      "response": "I am less interested in sex than I used to be.",
+      "value": 1
+    },
+    "model": "diagnostic.answer",
+    "pk": 199
+  },
+  {
+    "fields": {
+      "question": 43,
+      "response": "I am much less interested in sex now.",
+      "value": 2
+    },
+    "model": "diagnostic.answer",
+    "pk": 200
+  },
+  {
+    "fields": {
+      "question": 43,
+      "response": "I have lost interest in sex completely.",
+      "value": 3
+    },
+    "model": "diagnostic.answer",
+    "pk": 201
+  }
+]

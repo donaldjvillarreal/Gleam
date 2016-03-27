@@ -7,7 +7,7 @@
                 {% csrf_token %}
                     <h3><strong>{{ qa_set.0.text }}</strong> {% if qa_set.0.label %} {{ qa_set.0.label }} {% endif %}</h3>
                     <div class="row">
-                        <span class="label label-info pull-xs-right">{{ qa_set.0.order }}/21</span>
+                        <span class="label label-info pull-xs-right">{{ qa_set.0.order }}/20</span>
                         <progress class="progress progress-striped progress-info" value="{{ progress }}" max="100">{{ progress }}%</progress>
                     </div>
                     <fieldset class="form-control jumbotron">

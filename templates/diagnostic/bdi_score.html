@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %}Results{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
@@ -8,12 +8,16 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <h1 class="display-3">
-                                Score: <span class="label label-primary">{{ score }}</span>
+                                Score: <span class="label label-primary">{{ scores.total_score }}</span>
                             </h1>
+                            <h4>Emotion: <span class="label label-info">{{ scores.emotion_score }}</span></h4>
+                            <h4>Thought: <span class="label label-info">{{ scores.thought_score }}</span></h4>
+                            <h4>Behavior: <span class="label label-info">{{ scores.behavior_score }}</span></h4>
+                            <h4>Physical: <span class="label label-info">{{ scores.physical_score }}</span></h4>
                         </div>
                         <div class="col-sm-8">
                             <h2>What does my score mean?</h2>
-                            {% if score < 10 %}
+                            {% if scores.total_score < 10 %}
                                 indicates minimal depression
                                 <br>
                                 {% lorem %}
@@ -24,7 +28,7 @@
                                 <a href="{% url 'case:index' %}" class="btn btn-primary">Start course <i
                                         class="fa fa-arrow-right"></i> </a>
 
-                            {% elif score < 19 %}
+                            {% elif scores.total_score < 19 %}
                                 indicates mild depression
                                 <br>
                                 {% lorem %}
@@ -35,7 +39,7 @@
                                 <a href="{% url 'case:index' %}" class="btn btn-primary">Start course <i
                                         class="fa fa-arrow-right"></i> </a>
 
-                            {% elif score < 30 %}
+                            {% elif scores.total_score < 30 %}
                                 indicates moderate depression
                                 <br>
                                 {% lorem %}
@@ -46,9 +50,17 @@
                                 <a href="{% url 'case:index' %}" class="btn btn-primary">Start course <i
                                         class="fa fa-arrow-right"></i> </a>
 
-                            {% elif score > 29 %}
+                            {% elif scores.total_score > 29 %}
                                 indicates severe depression.
                             {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
