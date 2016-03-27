@@ -7,13 +7,14 @@
     <div class="container">
         <progress class="progress progress-striped" value="57" max="100">57%</progress>
 
-        <h5 class="alert alert-info">
+        <h3>
             Rank your goals from easiest to hardest by dragging and dropping.
-        </h5>
+        </h3>
 
+        <hr>
         <div class="row">
             <div class="col-sm-3 pull-left">
-                <h4 class="label label-pill label-info">Goal bank</h4>
+                <strong class="strongText">Goal bank</strong>
             </div>
         </div>
         <div id="sortable" class="row">
@@ -25,9 +26,9 @@
                             <i class="fa fa-hand-grab-o"></i> {{ goal.problem.text }}
                         </h5>
                         <div class="card-text">
-                            <span class="label label-primary">Action</span> {{ goal.action }}
+                            <strong class="strongText">Action</strong> {{ goal.action }}
                             <hr>
-                            <span class="label label-primary">Frequency</span> {{ goal.frequency_verbose }}
+                            <strong class="strongText">Frequency</strong> {{ goal.frequency_verbose }}
                         </div>
                     </div>
                 </div>
@@ -35,16 +36,16 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-2">
                 <h5 class="alert alert-success">Easiest</h5>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-2 pull-right">
                 <h5 class="alert alert-danger">Hardest</h5>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-3 pull-left">
-                <h4 class="label label-pill label-info">Ranked goals</h4>
+                <strong class="strongText">Ranked goals</strong>
             </div>
         </div>
         <span class="text-muted pull-left" id="dragDropText">Drag and drop goals here.</span>

@@ -2,20 +2,20 @@
 {% block body %}
     <div class="container">
         <progress class="progress progress-striped" value="5" max="100">80%</progress>
-        <div class="jumbotron">
-            <p>
-                It can be really overwhelming to be faced with a list of things you need to change about your life.
-                The best way to manage it is to focus on one goal at a time.
-                Let’s pick out the first goal for you to address.
-                <br>
-                You’re new to these skills and it might take a little bit of time to get comfortable using them.
-                It’s a good idea to start with the simpler goals when you’re still focusing on learning.
-                The more practice you get, the better equipped you’ll be for tackling your more difficult goals.
-            </p>
-        </div>
+        <h3>
+            It can be really overwhelming to be faced with a list of things you need to change about your life.
+            The best way to manage it is to focus on one goal at a time.
+            Let’s pick out the first goal for you to address.
+            <br>
+            You’re new to these skills and it might take a little bit of time to get comfortable using them.
+            It’s a good idea to start with the simpler goals when you’re still focusing on learning.
+            The more practice you get, the better equipped you’ll be for tackling your more difficult goals.
+        </h3>
+        <hr>
         <div class="row">
             <h5 class="alert alert-info">
-                That’s why we recommend you start with {{ ranking.first.action }}. <br>
+                That’s why we recommend you start with <strong class="strongText">{{ ranking.first.action }}</strong>.
+                <br>
                 If you feel more comfortable starting with another goal, then you may select that one instead.
             </h5>
             <h5 id="secondWarning" class="alert alert-warning">
@@ -54,7 +54,7 @@
                         to start with {{ ranking.third.action }}
                     </label>
                 {% endif %}
-                <input type="submit" value="Submit" class="btn btn-success pull-right">
+                <button type="submit" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-right"></i></button>
 
             </form>
         </div>

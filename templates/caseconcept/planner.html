@@ -2,24 +2,27 @@
 {% load staticfiles %}
 {% block title %}Case Conceptualization{% endblock %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}" xmlns="http://www.w3.org/1999/html">
 {% endblock %}
 {% block body %}
-    <div class="container jumbotron">
-        <p>The most important aspect of CBT is practice. If you're not using these skills in your daily life,
-            knowing the theory behind them won't help you. That's why it's a good idea to set aside specific times
-            for your CBT training. We recommend using the course at least 2 to 3 times a week.</p>
-        <p>Of course, this is just a guideline for you. If you find that your schedule isn't working, you can
-            revisit it.</p>
-    </div>
-
 
     <div class="container">
+        <h3>The most important aspect of CBT is practice. If you're not using these skills in your daily life,
+            knowing the theory behind them won't help you. That's why it's a good idea to set aside specific times
+            for your CBT training.
+            <br>
+            We recommend using the course at least 2 to 3 times a week.
+            <br>
+            Of course, this is just a guideline for you. If you find that your schedule isn't working, you can
+            revisit it.
+        </h3>
+        <hr>
         <form role="form" method="post" action="">
             {% csrf_token %}
             {% include "caseconcept/calendar.html" %}
             <br>
-            <input type="submit" name="submit" value="Next" class="btn btn-primary pull-right"/>
+            <button type="submit" name="submit" class="btn btn-primary pull-right"/>
+            Next <i class="fa fa-arrow-right"></i></button>
         </form>
     </div>
 
