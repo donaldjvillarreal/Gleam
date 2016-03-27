@@ -3,29 +3,27 @@
 {% block body %}
     <div class="container">
         <progress class="progress progress-striped" value="43" max="100">43%</progress>
-        <div class="jumbotron">
-            <h5>
+        <h3>
                 In order to make your fight more strategic, it is important to set goals that we can work towards. <br>
                 Your goals should be observable, measurable and achievable. We want you to pick goals that are
                 challenging,
                 but not overwhelming.
-            </h5>
-        </div>
+        </h3>
+        <hr>
         <div class="row">
             <div class="col-sm-12">
                 <div class="">
-                    <p><span class="label label-info">Example</span> The following relates to how Amelia would make a
+                    <p><strong class="strongText">Example</strong> The following relates to how Amelia would make a
                         goal.</p>
-                    <div class="card card-block">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="card-title"><span class="label label-info">Problem Description</span> Work
+                                <h4 class="card-title"><strong class="strongText">Problem:</strong> Work
                                 </h4>
                                 <div class="card-text">
-                                    <label for="exampleProblem"><span class="label label-info">Goal</span> </label>
+                                    <label for="exampleProblem"><strong class="strongText">Goal</strong> </label>
                                     <textarea type="text" class="form-control" id="exampleProblem" disabled>I will take an hour every morning at work to plan her day. She will write down all meetings and deadlines in her calendar, and she will schedule time to work on each task.</textarea>
                                     <label>
-                                        <span class="label label-info">Frequency</span>
+                                        <strong class="strongText">Frequency</strong>
                                         <select disabled class="form-control">
                                             <option>5 times a week</option>
                                         </select>
@@ -33,10 +31,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     <p>
-                        <span class="label label-info">Why is this a good goal?</span> <br>
+                        <strong class="strongText">Why is this a good goal?</strong> <br>
                         By planning out her time, Amelia can make sure everything gets accomplished.
                         She will know that her work will get done because there will be a specific time
                         for each task. This will keep her organized and she won’t be as overwhelmed. Meeting
@@ -60,16 +57,14 @@
         <form action="{% url 'case:goals' %}" method="post">
             {% csrf_token %}
             {% for problem in problems %}
-                <div class="card card-block">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h4 class="card-title"><span
-                                    class="label label-info">Problem Description</span> {{ problem.text }}</h4>
+                            <h4 class="card-title"><strong class="strongText">Problem:</strong> {{ problem.text }}</h4>
                             <div class="card-text">
-                                <label for="{{ problem.id }}"></label><span class="label label-info">Goal</span>
+                                <label for="{{ problem.id }}"></label><strong class="strongText">Goal</strong>
                                 <textarea type="text" class="form-control" id="{{ problem.id }}"
                                           name="{{ problem.id }}-action" maxlength="300" required></textarea>
-                                <label><span class="label label-info">Frequency</span>
+                                <label><strong class="strongText">Frequency</strong>
                                     <select class="form-control pull-left" name="{{ problem.id }}-frequency">
                                         {% for freq in frequencies %}
                                             <option value="{{ freq.1 }}"
@@ -80,7 +75,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             {% endfor %}
             <input type="submit" class="btn btn-primary pull-right" value="Next">
         </form>
