@@ -11,9 +11,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     points = models.IntegerField(default=0)
 
-    GENDER = (('M','Male'),
-              ('F','Female'),
-              ('U','Prefer Not to Answer'))
+    GENDER = (('M', 'Male'),
+              ('F', 'Female'),
+              ('U', 'Prefer Not to Answer'))
 
     gender = models.CharField(max_length=1,
                               choices=GENDER,

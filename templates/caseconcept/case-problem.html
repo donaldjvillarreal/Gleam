@@ -97,7 +97,8 @@
                 <form>
                     <div>
                         <label>Enter a little more about <span class="selectedProblem"></span>.
-                            <textarea class="form-control" cols="1000" name="summary" id="problemSummary" required></textarea>
+                            <textarea class="form-control" cols="1000" name="summary" id="problemSummary"
+                                      required></textarea>
                         </label>
                     </div>
                     <fieldset class="form-group">
@@ -114,7 +115,8 @@
 
                     </fieldset>
                     <fieldset>
-                        <span>How significantly has depression affected your <span class="selectedProblem"></span>?</span>
+                        <span>How significantly has depression affected your <span
+                                class="selectedProblem"></span>?</span>
                         <div id="radios">
                             {% for option in severityOptions %}
                                 <label for="{{ option.1 }}">{{ option.1 }}</label>
