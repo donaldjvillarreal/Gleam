@@ -12,23 +12,18 @@
         <progress class="progress progress-striped" value="14" max="100">14%</progress>
         <div class="row">
             <div class="col-sm-12">
-                <div class="jumbotron"><h5>
+                <h3>
                     Let’s dig a little deeper. Can you think of two specific situations where
                     depression affected <strong>{{ problem.text|lower }}</strong>? <br>
                     What happened? What were you thinking when it happened? How did it make you feel? How did you react?
-                </h5>
-                </div>
+                </h3>
                 <p><span class="label label-info">Example</span> Amelia, a 34 year old, has been working at her current
                     job
                     for the past 8 years.
                     Lately, she has been feeling overwhelmed and has not been keeping up with all of her tasks</p>
 
                 <span class="label label-info">Tell us a little bit more about your problem</span>
-                <div>
-                    <label>
-                        <textarea class="form-control" cols="1000" id="problemSummary" class="check-filled"></textarea>
-                    </label>
-                </div>
+
             </div>
         </div>
         <div id="mainContent">
@@ -161,7 +156,6 @@
 
             var payload = function () {
                 return {
-                    'summary': $('#problemSummary').val(),
                     'situationInput1': $('#situationInput1').val(),
                     'thoughtFeelingInput1': $('#thoughtFeelingInput1').val(),
                     'reactionInput1': $('#reactionInput1').val(),

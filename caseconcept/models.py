@@ -16,6 +16,7 @@ class ProblemAspect(models.Model):
     Negative aspects affected by depression
     """
     user = models.ForeignKey(User)  # Lets us set some pre-defined aspects
+    summary = models.CharField(max_length=500)
     text = models.CharField(max_length=50, unique=True)
     frequency = models.SmallIntegerField(choices=FREQUENCY_CHOICES)
     severity = models.SmallIntegerField(choices=SEVERITY_CHOICES)
@@ -42,7 +43,6 @@ class ProblemAspectSituation(models.Model):
     """
     DISTRESS_LEVEL_CHOICES = ((i, i) for i in range(0, 11))
     problem = models.ForeignKey(ProblemAspect)
-    summary = models.CharField(max_length=500)
     situation = models.CharField(max_length=300)
     thoughts_and_feelings = models.CharField(max_length=600)
     reaction = models.CharField(max_length=300)
@@ -55,7 +55,7 @@ class ProblemAspectSituation(models.Model):
 
     class Meta(object):
         get_latest_by = 'created'
-        unique_together = (('problem', 'summary', 'situation', 'thoughts_and_feelings', 'reaction', 'distress_level'),)
+        unique_together = (('problem', 'situation', 'thoughts_and_feelings', 'reaction', 'distress_level'),)
 
 
 class ProblemGoal(models.Model):

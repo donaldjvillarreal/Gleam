@@ -18,12 +18,13 @@ from authenticate.models import UserProfile
 def send_notifications(user_id=None):
     print 'HELLO!!!'
     subject = 'Gleam: You have an upcoming goal/activity scheduled!'
-    user_profile = UserProfile.objects.get(user=User.objects.get(id=user_id))
-    if user_profile.email:
+    user = User.objects.get(id=user_id)
+    user_profile = UserProfile.objects.get(user=user)
+    if user.email:
         send_mail(subject=subject,
                   message=render_to_string('notifications/reminder_email.txt', {'user_profile': user_profile}),
                   from_email=EMAIL_HOST_USER,
-                  recipient_list=[user_profile.email],
+                  recipient_list=[user.email],
                   html_message=render_to_string('notifications/reminder_email.html', {'user_profile': user_profile}))
     if user_profile.phone:
         send_text(user_profile.phone,

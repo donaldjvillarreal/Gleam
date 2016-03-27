@@ -31,14 +31,13 @@
             </div>
         {% endif %}
         <progress class="progress progress-striped" value="14" max="100">14%</progress>
-        <div class="jumbotron">
-            <h5>Select an aspect of your life that is being negatively impacted by depression or
-            feel free to add your own.</h5>
-        </div>
+        <h3>Select an aspect of your life that is being negatively impacted by depression or
+            feel free to add your own.</h3>
+        <br>
         {% if errors %}
             <div class="row">
                 <div class="alert alert-warning">
-                    An error occured, please try again.
+                    An error occurred, please try again.
                 </div>
             </div>
         {% endif %}
@@ -96,9 +95,14 @@
         <div class="row" id="frequencySeverityOptions">
             <div class="col-md-12">
                 <form>
+                    <div>
+                        <label>Enter a little more about <span class="selectedProblem"></span>.
+                            <textarea class="form-control" cols="1000" name="summary" id="problemSummary" required></textarea>
+                        </label>
+                    </div>
                     <fieldset class="form-group">
                         <span>How frequently does depression affect your
-                            <span id="fProblem"></span>?</span>
+                            <span class="selectedProblem"></span>?</span>
                         <br>
                         {% for option in frequencyOptions %}
                             <label class="c-input c-radio">
@@ -110,7 +114,7 @@
 
                     </fieldset>
                     <fieldset>
-                        <span>How significantly has depression affected your <span id="sProblem"></span>?</span>
+                        <span>How significantly has depression affected your <span class="selectedProblem"></span>?</span>
                         <div id="radios">
                             {% for option in severityOptions %}
                                 <label for="{{ option.1 }}">{{ option.1 }}</label>
@@ -166,9 +170,8 @@
                     $('#addAspect').removeClass('active');
                     fsOptions.show();
                 }
-                textToDisplay = '<span class="label label-info">' + selectedAspect.html().toLowerCase() + '</span>';
-                $('#fProblem').html(textToDisplay);
-                $('#sProblem').html(textToDisplay);
+                textToDisplay = '<strong>' + selectedAspect.html().toLowerCase() + '</strong>';
+                $('.selectedProblem').html(textToDisplay);
 
                 $('#nextButton').on('click', function () {
                     var payload = {

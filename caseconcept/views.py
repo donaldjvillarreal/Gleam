@@ -43,7 +43,8 @@ def case_problem(request):
     if request.method == 'POST':
         problem_form = forms.ProblemAspectForm({'text': request.POST['text'],
                                                 'frequency': int(request.POST['frequency']),
-                                                'severity': int(request.POST['severity'])})
+                                                'severity': int(request.POST['severity']),
+                                                'summary': request.POST['summary']})
         if problem_form.is_valid():
             problem = problem_form.save(commit=False)
             problem.user = User.objects.get(id=request.user.id)
@@ -63,12 +64,11 @@ def case_problem_description(request):
         errors_1, errors_2 = None, None
         problem_id = request.POST['problem']
         problem_aspect = models.ProblemAspect.objects.get(id=problem_id)
-        problem_description_form = forms.ProblemAspectSituationForm({
-            'summary': request.POST['summary'],
-            'situation': request.POST['situationInput1'],
-            'thoughts_and_feelings': request.POST['thoughtFeelingInput1'],
-            'reaction': request.POST['reactionInput1'],
-            'distress_level': request.POST['distressInput1']})
+        problem_description_form = forms.ProblemAspectSituationForm({'situation': request.POST['situationInput1'],
+                                                                     'thoughts_and_feelings': request.POST[
+                                                                         'thoughtFeelingInput1'],
+                                                                     'reaction': request.POST['reactionInput1'],
+                                                                     'distress_level': request.POST['distressInput1']})
         if problem_description_form.is_valid():
             problem_description = problem_description_form.save(commit=False)
             problem_description.problem = problem_aspect
@@ -77,13 +77,13 @@ def case_problem_description(request):
             errors_1 = problem_description_form.errors
 
         if request.POST['situationInput2']:
-            problem_description_form_2 = forms.ProblemAspectSituationForm({
-                'summary': request.POST['summary'],
-                'problem': problem_aspect,
-                'situation': request.POST['situationInput2'],
-                'thoughts_and_feelings': request.POST['thoughtFeelingInput1'],
-                'reaction': request.POST['reactionInput2'],
-                'distress_level': request.POST['distressInput2']})
+            problem_description_form_2 = forms.ProblemAspectSituationForm({'problem': problem_aspect,
+                                                                           'situation': request.POST['situationInput2'],
+                                                                           'thoughts_and_feelings': request.POST[
+                                                                               'thoughtFeelingInput1'],
+                                                                           'reaction': request.POST['reactionInput2'],
+                                                                           'distress_level': request.POST[
+                                                                               'distressInput2']})
             if problem_description_form_2.is_valid():
                 problem_description = problem_description_form_2.save(commit=False)
                 problem_description.problem = problem_aspect
