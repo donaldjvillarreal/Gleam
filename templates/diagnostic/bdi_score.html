@@ -10,10 +10,16 @@
                             <h1 class="display-3">
                                 Score: <span class="label label-primary">{{ scores.total_score }}</span>
                             </h1>
-                            <h4>Emotion: <span class="label label-info">{{ scores.emotion_score }}</span></h4>
-                            <h4>Thought: <span class="label label-info">{{ scores.thought_score }}</span></h4>
-                            <h4>Behavior: <span class="label label-info">{{ scores.behavior_score }}</span></h4>
-                            <h4>Physical: <span class="label label-info">{{ scores.physical_score }}</span></h4>
+                            <h4>Emotion: <span class="label label-info">{{ scores.emotion_score|floatformat:2 }}</span>
+                            </h4>
+                            <h4>Thought: <span class="label label-info">{{ scores.thought_score|floatformat:2 }}</span>
+                            </h4>
+                            <h4>Behavior: <span
+                                    class="label label-info">{{ scores.behavior_score|floatformat:2 }}</span></h4>
+                            <h4>Physical: <span
+                                    class="label label-info">{{ scores.physical_score|floatformat:2 }}</span></h4>
+                            <hr>
+                            <h4>Recommend course: <span class="label label-primary">{{ scores.course }}</span></h4>
                         </div>
                         <div class="col-sm-8">
                             <h2>What does my score mean?</h2>

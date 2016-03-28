@@ -76,8 +76,24 @@ def calculate_bdi_score(session_key):
             behavior_score += 1
         elif question_order in physical_list:
             physical_score += 1
+    # get the highest ratio
+    emotion_score /= float(len(emotion_list) * 3)
+    thought_score /= float(len(thought_list) * 3)
+    behavior_score /= float(len(behavior_list) * 3)
+    physical_score /= float(len(physical_list) * 3)
+
+    if emotion_score > thought_score and emotion_score > behavior_score and emotion_score > physical_score:
+        course = 'emotion'
+    elif thought_score > emotion_score and thought_score > behavior_score and thought_score > physical_score:
+        course = 'thought'
+    elif behavior_score > emotion_score and behavior_score > thought_score and behavior_score > physical_score:
+        course = 'behavior'
+    else:
+        course = 'physical'
+
     return {'total_score': total_score,
             'emotion_score': emotion_score,
             'thought_score': thought_score,
             'behavior_score': behavior_score,
-            'physical_score': physical_score}
+            'physical_score': physical_score,
+            'course': course}
