@@ -72,6 +72,13 @@ def case_problem_description(request):
         if problem_description_form.is_valid():
             problem_description = problem_description_form.save(commit=False)
             problem_description.problem = problem_aspect
+            old_problem_description = models.ProblemAspectSituation.objects.filter(problem=problem_description.problem,
+                                                                                   situation=problem_description.situation,
+                                                                                   thoughts_and_feelings=problem_description.thoughts_and_feelings,
+                                                                                   reaction=problem_description.reaction,
+                                                                                   distress_level=problem_description.distress_level)
+            if old_problem_description.exists():
+                old_problem_description.delete()
             problem_description.save()
         else:
             errors_1 = problem_description_form.errors
@@ -87,6 +94,14 @@ def case_problem_description(request):
             if problem_description_form_2.is_valid():
                 problem_description = problem_description_form_2.save(commit=False)
                 problem_description.problem = problem_aspect
+                old_problem_description = models.ProblemAspectSituation.objects.filter(
+                    problem=problem_description.problem,
+                    situation=problem_description.situation,
+                    thoughts_and_feelings=problem_description.thoughts_and_feelings,
+                    reaction=problem_description.reaction,
+                    distress_level=problem_description.distress_level)
+                if old_problem_description.exists():
+                    old_problem_description.delete()
                 problem_description.save()
             else:
                 errors_2 = problem_description_form_2.errors
