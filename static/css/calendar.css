@@ -58,7 +58,7 @@ table.calendar > tbody > tr > td.has-events > div > span.title {
 
 table.calendar > tbody > tr > td {
 	text-align: center;
-	vertical-align: middle;
+    vertical-align: middle;
 }
 /*
 table.calendar > tbody > tr > td > input {

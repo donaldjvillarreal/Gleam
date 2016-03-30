@@ -26,7 +26,7 @@
         </form>
     </div>
 
-
+<!--
     <div id="myModal" class="modal fade" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -58,22 +58,8 @@
             </div>
         </div>
     </div>
+-->
 {% endblock %}
-
-<div id="newInput" style="display:none">
-    <div class="form-group">
-        <input id="eventName" name="eventName" class="form-control" type="text" placeholder="Name of Event" style="width: 200px;">
-    </div>
-    <div class="form-group">
-        <select id="eventDay" class="form-control"></select>
-    </div>
-    <div class="form-group">
-        <select id="eventTime" class="form-control"></select>
-    </div>
-    <div class="form-group">
-        <select id="eventLength" class="form-control"></select>
-    </div>
-</div>
 
 {% block js_scripts %}
     <script type="text/javascript">
@@ -107,15 +93,20 @@
                 var time12 = hour + " " + meridiem,
                     timeval = ("0000" + i).slice(-4);
                 daterow.append("<tr>");
-                daterow.append("<td ROWSPAN='3' width='10%' class='timedisplay' style='text-align: right; vertical vertical-align: middle; font-size: 0.75em; padding: 0;'>" + time12 + "</td>");
+                daterow.append("<td ROWSPAN='3' width='10%' class='timedisplay' style='text-align: right;" +
+                               "vertical vertical-align: middle; font-size: 0.75em; padding: 0;'>" + time12 +"</td>");
                 for (var j = 1; j<=7; j++)
-                    daterow.append("<td width='12%' id='" + j + timeval + "'></td>");
+                    daterow.append("<td width='12%' style='text-align: center; vertical-align: middle; padding: 0px;'><input type='checkbox' name='weekday_time' value='" +
+                                    j + timeval + "'></td>");
+                    //daterow.append("<td width='12%' id='" + j + timeval + "'></td>");
                 daterow.append("</tr>");
                 daterow.append("<tr>");
                 time12 = hour + ":" + 30 + " " + meridiem;
                 halfval = timeval.substring(0,2) + 30;
                 for (var j = 1; j<=7; j++)
-                    daterow.append("<td width='12%' id='" + j + halfval + "'></td>");
+                    daterow.append("<td width='12%' style='text-align: center; vertical-align: middle; padding: 0px;'><input type='checkbox' name='weekday_time' value='" +
+                                    j + halfval + "'></td>");
+                    //daterow.append("<td width='12%' id='" + j + halfval + "'></td>");
                 daterow.append("</tr>");
             }
         }
@@ -194,7 +185,7 @@
         $(function () {
             addRows();
             $("input[name=weekday_time]").change(function () {
-                var max = 3;
+                var max = {{ goal.current_goal.frequency }};
                 if ($("input[name=weekday_time]:checked").length == max) {
                     $("input[name=weekday_time]").attr('disabled', 'disabled');
                     $("input[name=weekday_time]:checked").removeAttr('disabled');
