@@ -264,3 +264,24 @@ def calendar(request):
 def start_course(request):
     return render(request, 'caseconcept/start-course.html',
                   {'slots': models.PracticeCalendar.objects.filter(goal__user=User.objects.get(id=request.user.id))})
+
+@login_required
+def calendar_upd(request):
+    user = User.objects.get(id=request.user.id)
+
+    if request.method == 'POST':
+        for slot in request.POST.getlist('weekday_time'):
+            planner_form = forms.PlannerForm({'day': int(slot[0]),
+                                              'hour': int(slot[1:3]),
+                                              'minute': int(slot[3:5])})
+            if planner_form.is_valid():
+                planner = planner_form.save(commit=False)
+                planner.goal = goal.current_goal
+                planner.save()
+            else:
+                print planner_form.errors
+
+    else:
+        planner_form = forms.PlannerForm()
+
+    return render(request, 'caseconcept/planner.html', {'planner_form': planner_form})
