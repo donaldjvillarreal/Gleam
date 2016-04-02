@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^problem/goals/rank/confirm/$', views.case_goal_rank_confirm, name='goal_rank_confirm'),
     url(r'^calendar/$', views.calendar, name='calendar'),
     url(r'^course/start/$', views.start_course, name='start_course'),
+    url(r'^calendar_upd/$', views.calendar_upd, name='calendar_upd')
 ]

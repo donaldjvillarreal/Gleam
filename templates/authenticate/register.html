@@ -27,7 +27,7 @@
 
             <fieldset class="form-group">
                 <label for="username" class="col-md-2">Username<font color=red>*</font></label>
-                <div class="col-md-5">
+                <div class="col-md-5" has-feedback>
                     <input id="username" name="username" class="form-control" type="text"
                            placeholder="between 5 and 30 characters" onblur="checkUsername()">
                     <div id="feedbackUser"></div>
@@ -206,6 +206,7 @@
             if (username.length < 5) {
                 UserMsg.className = 'warning';
                 UserMsg.textContent = 'Username must be at least 5 characters';
+                elUser.setAttribute("aria-describedby", "inputWarning2Status");
             } else if (username.length > 20) {
                 UserMsg.className = 'warning';
                 UserMsg.textContent = 'Username must be less than 20 characters';
