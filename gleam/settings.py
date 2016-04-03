@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'diagnostic',
     'core',
     'caseconcept',
+    'journal',
 
     # Spirit apps
     'spirit.core',
@@ -117,6 +118,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # Celery
     'djcelery',
+    #alcheny
+    'alchemyapi',
 ]
 
 # python manage.py createcachetable

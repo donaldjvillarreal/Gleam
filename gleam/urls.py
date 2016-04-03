@@ -23,6 +23,7 @@ from spirit import urls as spirit_urls
 from qa import urls as qa_urls
 from caseconcept import urls as cc_urls
 from core import urls as core_urls
+from journal import urls as journal_urls
 
 urlpatterns = [
     url(r'', include(core_urls, namespace='core')),
@@ -32,4 +33,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^qa/', include(qa_urls, namespace='qa')),
     url(r'^case/', include(cc_urls, namespace='case')),
+    url(r'^journal/', include(journal_urls, namespace='journal'))
 ]
