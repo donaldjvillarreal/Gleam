@@ -6,4 +6,4 @@ from journal import models
 class entryForm(forms.ModelForm):
     class Meta(object):
         model = models.journalEntry
-        fields = ('entry', )
+        fields = ('entry',)
