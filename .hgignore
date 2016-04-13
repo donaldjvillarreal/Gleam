@@ -11,6 +11,7 @@ db.sqlite3
 
 # Other
 *.rdb
+*.orig
 
 # Py
 *.py-tpl
