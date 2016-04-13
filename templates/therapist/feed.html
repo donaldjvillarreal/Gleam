@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <h4>Feed</h4>
+                <div class="list-group">
+                    {% for person in people %}
+                        <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">{{ person }}<span
+                                    class="fa fa-warning pull-right"></span></h4>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <h4>Upcoming Events</h4>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">List group item heading</h4>
+                                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.
+                                    Maecenas sed diam eget risus varius blandit.</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">List group item heading</h4>
+                                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.
+                                    Maecenas sed diam eget risus varius blandit.</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">List group item heading</h4>
+                                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.
+                                    Maecenas sed diam eget risus varius blandit.</p>
+                            </a>
+                        </div>
+                        <br>
+                        <a class="btn btn-primary pull-right">Schedule an event</a>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <h4>Notes</h4>
+                        <textarea class="form-control" rows="10">{% lorem %}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

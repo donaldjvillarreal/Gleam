@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'core',
     'caseconcept',
     'journal',
+    'therapist',
 
     # Spirit apps
     'spirit.core',
@@ -113,12 +114,10 @@ INSTALLED_APPS = [
     #    Simple QA
     #############################
     'qa',
-    #'bootstrap3',
     'django_markdown',
     'rest_framework',
     # Celery
     'djcelery',
-    #alcheny
     'alchemyapi',
 ]
 
