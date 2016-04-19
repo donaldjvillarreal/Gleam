@@ -32,3 +32,21 @@ class UserProfile(models.Model):
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username
+
+class Therapist(models.Model):
+    user = models.OneToOneField(User)
+    practice = models.CharField(max_length=60, null=False, blank=False)
+    address = models.CharField(max_length=60, null=False, blank=False)
+    city = models.CharField(max_length=60, null=False, blank=False)
+    state = models.CharField(max_length=2, null=False, blank=False)
+    zip = models.CharField(max_length=5, null=False, blank=False)
+
+    def __unicode__(self):
+        return self.user.username
+
+class Clients(models.Model):
+    therapist = models.ForeignKey(Therapist)
+    client - models.ForeignKey(User)
+
+    def __unicode__(self):
+        return self.therapist.user.username + ":" + self.user.username
