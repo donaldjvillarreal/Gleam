@@ -72,6 +72,7 @@ def register(request):
                   'authenticate/register.html',
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
+
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
