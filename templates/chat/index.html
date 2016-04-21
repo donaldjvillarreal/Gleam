@@ -14,17 +14,18 @@
             var message = $('#message');
             // Note that the path doesn't matter right now; any WebSocket
             // connection gets bumped over to WebSocket consumers
-            socket = new WebSocket("ws://127.0.0.1:8000/{{ room }}/");
+            socket = new WebSocket("ws://127.0.0.1:8000/chat/stream");
             socket.onmessage = function (e) {
                 console.log(e);
                 $('#messages').append('<li>' + e.data + '</li>');
             };
             $('#send').on('click', function (e) {
+                var d = new Date();
                 socket.send(JSON.stringify(
                         {
                             'message': message.val(),
                             'room': {{ room }},
-                            'timestamp': new Date({{ value|date:"c" }})
+                            'timestamp': d.getTime()
                         }
                 ));
             });
