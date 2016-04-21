@@ -33,6 +33,7 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+
 class Therapist(models.Model):
     user = models.OneToOneField(User)
     practice = models.CharField(max_length=60, null=False, blank=False)
@@ -44,9 +45,10 @@ class Therapist(models.Model):
     def __unicode__(self):
         return self.user.username
 
-class Clients(models.Model):
+
+class Client(models.Model):
     therapist = models.ForeignKey(Therapist)
-    client - models.ForeignKey(User)
+    client = models.OneToOneField(UserProfile)
 
     def __unicode__(self):
-        return self.therapist.user.username + ":" + self.user.username
+        return self.therapist.user.username + "->" + self.client.user.username
