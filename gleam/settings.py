@@ -27,7 +27,7 @@ SECRET_KEY = '$-@3#bhbj9@p_n-gdsqk%h6zqw+74l4lq=yzsw-0f*q5cxq+-b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '*.herokuapp.com']
 
 # Spirit Settings
 
@@ -228,7 +228,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
