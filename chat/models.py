@@ -6,6 +6,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+import json
+from channels import Group
+
 
 class Room(models.Model):
     label = models.SlugField(unique=True)
@@ -14,6 +17,27 @@ class Room(models.Model):
 
     def __unicode__(self):
         return self.label
+
+    @property
+    def websocket_group(self):
+        """
+        Returns the Channels Group that sockets should subscribe to to get sent
+        messages as they are generated.
+        """
+        return Group("room-%s" % self.id)
+
+    def send_message(self, message, user):
+        """
+        Called to send a message to the room on behalf of a user.
+        """
+        # Send out the message to everyone in the room
+        self.websocket_group.send({
+            "text": json.dumps({
+                "room": str(self.id),
+                "message": message,
+                "username": user.username,
+            }),
+        })
 
 
 class Message(models.Model):
