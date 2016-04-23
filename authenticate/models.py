@@ -18,6 +18,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1,
                               choices=GENDER,
                               default='U')
+    # TODO: Change to STATIC_URL
     picture = models.ImageField(upload_to='static/profile_images', null=True, blank=True)
 
     dob = models.DateField(null=False, blank=False)

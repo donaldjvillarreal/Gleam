@@ -60,6 +60,8 @@ def chat_join(message):
         "text": json.dumps({
             "join": str(room.id),
             "title": title,
+            "therapist": room.therapist_as_dict(),
+            "patient": room.patient_as_dict(),
             'old_messages': old_messages
         }),
     })

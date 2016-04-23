@@ -39,6 +39,18 @@ class Room(models.Model):
             }),
         })
 
+    def patient_as_dict(self):
+        return {'firstName': self.patient.first_name,
+                'lastName': self.patient.last_name,
+                'fullName': self.patient.first_name + ' ' + self.patient.last_name,
+                'username': self.patient.username}
+
+    def therapist_as_dict(self):
+        return {'firstName': self.therapist.first_name,
+                'lastName': self.therapist.last_name,
+                'fullName': self.therapist.first_name + ' ' + self.patient.last_name,
+                'username': self.therapist.username}
+
 
 class Message(models.Model):
     room = models.ForeignKey(Room, related_name='messages')

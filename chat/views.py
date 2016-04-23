@@ -31,7 +31,9 @@ class MultiChatView(View):
             rooms = Room.objects.filter(therapist=user)
             for room in rooms:
                 messages.append((room, reversed(room.messages.order_by('-timestamp')[:30])))
+            return render(request, 'chat/therapist-multichat.html', {'messages': messages})
+
         else:
             room = Room.objects.get(patient=user)
             messages.append((room, reversed(room.messages.order_by('-timestamp')[:30])))
-        return render(request, 'chat/multichat.html', {'messages': messages})
+            return render(request, 'chat/patient-chat.html', {'messages': messages})

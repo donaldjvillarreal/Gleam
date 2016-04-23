@@ -38,3 +38,12 @@ body {
 .strongText {
     color: dodgerblue;
 }
+
+.default-face {
+    border-radius: 100%;
+    background-image: url("/static/images/user.png");
+}
+
+.face {
+    border-radius: 100%;
+}
