@@ -20,11 +20,12 @@ from django.contrib import admin
 from diagnostic import urls as diagnostic_urls
 from authenticate import urls as auth_urls
 # from spirit import urls as spirit_urls
-from qa import urls as qa_urls
-from caseconcept import urls as cc_urls
+# from qa import urls as qa_urls
+# from caseconcept import urls as cc_urls
 from core import urls as core_urls
 from journal import urls as journal_urls
 from therapist import urls as therapist_urls
+from chat import urls as chat_urls
 
 urlpatterns = [
     url(r'', include(core_urls, namespace='core')),
@@ -36,4 +37,5 @@ urlpatterns = [
     # url(r'^case/', include(cc_urls, namespace='case')),
     url(r'^journal/', include(journal_urls, namespace='journal')),
     url(r'^therapist/', include(therapist_urls, namespace='therapist')),
+    url(r'^chat/', include(chat_urls, namespace='chat')),
 ]

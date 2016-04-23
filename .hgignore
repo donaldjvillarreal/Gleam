@@ -9,6 +9,12 @@ syntax: glob
 # Database
 db.sqlite3
 
+# collect static
+staticfiles
+
+# git
+*.git*
+
 # Other
 *.rdb
 *.orig

@@ -8,26 +8,26 @@
     <div style="width: 580px;">
         <table>
             <thead>
-                <tr>
-                    <th width="20%">Text</th>
-                    <th width="10%">Relevance</th>
-                    <th width="10%">Type</th>
-                    <th width="10%">Score</th>
-                </tr>
+            <tr>
+                <th width="20%">Text</th>
+                <th width="10%">Relevance</th>
+                <th width="10%">Type</th>
+                <th width="10%">Score</th>
+            </tr>
             </thead>
         </table>
     </div>
     <div style="height: 135px; width: 600px; overflow: scroll;" id="keyDiv">
         <table class="table-striped table-bordered table-hover table-condensed">
             <tbody>
-            {%  for words in wordlist %}
+            {% for words in wordlist %}
                 <tr>
                     <td width="20%">{{ words.text }}</td>
                     <td width="10%">{{ words.relevance }}</td>
                     <td width="10%">{{ words.sentimentType }}</td>
                     <td width="10%">{{ words.sentimentScore }}</td>
                 </tr>
-            {%  endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>
@@ -50,7 +50,7 @@
             {% for val in entryvalues %}
                 cDate = new Date('{{ val.created|date:"c" }}');
                 newDate = new Date(cDate.getFullYear(), cDate.getMonth(), cDate.getDate());
-                data.addRows([[ newDate, {{ val.sentimentScore }}]]);
+                data.addRows([[newDate, {{ val.sentimentScore }}]]);
             {%  endfor %}
 
             var options = {
@@ -64,7 +64,7 @@
                         min: -1
                     },
                 },
-                legend: { position: 'none'},
+                legend: {position: 'none'},
                 width: 600
             };
 

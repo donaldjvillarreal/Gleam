@@ -27,8 +27,7 @@ SECRET_KEY = '$-@3#bhbj9@p_n-gdsqk%h6zqw+74l4lq=yzsw-0f*q5cxq+-b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '*.herokuapp.com']
 
 # Spirit Settings
 
@@ -79,7 +78,12 @@ INSTALLED_APPS = [
     # 'caseconcept',
     'journal',
     'therapist',
-
+    # Celery
+    'djcelery',
+    'alchemyapi',
+    # Chat
+    'channels',
+    'chat',
     # # Spirit apps
     # 'spirit.core',
     # 'spirit.admin',
@@ -116,9 +120,6 @@ INSTALLED_APPS = [
     # 'qa',
     # 'django_markdown',
     # 'rest_framework',
-    # Celery
-    'djcelery',
-    'alchemyapi',
 ]
 
 # python manage.py createcachetable
@@ -137,7 +138,6 @@ INSTALLED_APPS = [
 
 LOGIN_URL = 'authenticate:login'
 LOGIN_REDIRECT_URL = '/'
-
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -185,7 +185,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gleam.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -195,7 +194,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -215,7 +213,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -229,25 +226,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATIC_PATH = os.path.join(BASE_DIR,'static')
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
-
-######################################
-#       Simple QA
-######################################
-
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'username'
-# EMAIL_HOST_PASSWORD = 'your-password'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -294,5 +280,16 @@ PASSWORD_COMPLEXITY = {  # You can omit any or all of these for no limit for tha
     "LETTERS": 1,  # Either uppercase or lowercase letters
     "DIGITS": 1,  # Digits
     "SPECIAL": 1,  # Not alphanumeric, space or punctuation character
-    #"WORDS": 1         # Words (alphanumeric sequences separated by a whitespace or punctuation character)
+    # "WORDS": 1         # Words (alphanumeric sequences separated by a whitespace or punctuation character)
+}
+
+# Chat with Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+        "ROUTING": "gleam.routing.channel_routing",
+    },
 }

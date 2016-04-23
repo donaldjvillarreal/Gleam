@@ -43,23 +43,23 @@ def journalEntry(request):
                                                sentimentType=keyword['sentiment']['type'],
                                                sentimentScore=keyScore)
 
-            # Entity Extraction
-            # edata = requests.get(entityExtraction, {'apikey': key, 'text': myText, 'outputMode': 'json', 'sentiment': 1})
-            # eresponse = edata.json()
-            # print eresponse
-            # for entitylist in eresponse['entities']:
-            #    for entity in entitylist:
-            #        if entity['sentiment']['type'] == 'neutral':
-            #            entScore = 0
-            #        else:
-            #             entScore = entity['sentiment']['type']
-            #         models.entities.objects.create(entry = journal_entry,
-            #                                       type = entity['entityType'],
-            #                                       relevance = entity['relevance'],
-            #                                       count = entity['count'],
-            #                                       text = entity['text'],
-            #                                       sentimentType = entity['sentiment']['type'],
-            #                                       sentimentScore = entScore)
+                # Entity Extraction
+                # edata = requests.get(entityExtraction, {'apikey': key, 'text': myText, 'outputMode': 'json', 'sentiment': 1})
+                # eresponse = edata.json()
+                # print eresponse
+                # for entitylist in eresponse['entities']:
+                #    for entity in entitylist:
+                #        if entity['sentiment']['type'] == 'neutral':
+                #            entScore = 0
+                #        else:
+                #             entScore = entity['sentiment']['type']
+                #         models.entities.objects.create(entry = journal_entry,
+                #                                       type = entity['entityType'],
+                #                                       relevance = entity['relevance'],
+                #                                       count = entity['count'],
+                #                                       text = entity['text'],
+                #                                       sentimentType = entity['sentiment']['type'],
+                #                                       sentimentScore = entScore)
                 # HttpResponseRedirect(reverse('course:start_course'))
         else:
             print entry_form.errors
@@ -67,6 +67,7 @@ def journalEntry(request):
     else:
         entry_form = forms.entryForm()
     return render(request, 'journal/entry.html', {'entry_form': entry_form})
+
 
 @login_required
 def wordListView(request):
@@ -82,7 +83,7 @@ def wordListView(request):
             wordlist.append(words)
         for words in entity:
             wordlist.append(words)
-        wordlist = sorted(keywords, key = lambda x: x.relevance, reverse=True)
+        wordlist = sorted(keywords, key=lambda x: x.relevance, reverse=True)
 
         # list of journal entry scores for plot
         entryvalues = jEntry.order_by('created')
