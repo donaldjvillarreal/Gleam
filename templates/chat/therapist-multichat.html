@@ -7,14 +7,16 @@
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <div class="list-group" id="chat-list">
                     {% for room, messages in messages %}
-                        <a class="room-link list-group-item" data-room-id="{{ room.id }}">
+                        <a class="room-link list-group-item" data-room-id="{{ room.id }}" href="#">
                             {% if room.patient.userprofile.picture %}
                                 <div class="face"
                                      style="background-image: url('{{ room.patient.userprofile.picture }}')"></div>
                             {% else %}
                                 <div class="default-face pull-right chat-list-icon"></div>
                             {% endif %}
-                            <span id="name-{{ room.id }}">{{ room.patient.first_name }} {{ room.patient.last_name }}</span></a>
+                            <span id="name-{{ room.id }}">{{ room.patient.first_name }} {{ room.patient.last_name }}</span>
+                            <span class="label label-info" id="new-{{ room.id }}">New</span>
+                        </a>
                     {% endfor %}
                 </div>
             </div>
@@ -42,6 +44,7 @@
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
             var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
             var chatTitle = $('#chat-title');
+            var roomIds = [];
             var gotMessageHTML = '<div class="card">' +
                     '<div class="card-header text-xs-center">{0}</div>' +
                     '<div class="card-block">' +
@@ -83,6 +86,7 @@
                 var msgdiv;
                 console.log("Got websocket message " + message.data);
                 data = JSON.parse(message.data);
+                $('#new-' + data.join).hide();
                 // Handle errors
                 if (data.error) {
                     alert(data.error);
@@ -93,6 +97,7 @@
                     therapistUsername = data.therapist.username;
                     // old_messages exist
                     console.log("Joining room " + data.join);
+                    roomIds.push(data.join);
                     // Hook up send button to send a message
                     $("#chat-body").append(roomDiv.format(data.join));
                     $('#messageForm-' + data.join).on("submit", function (e) {
@@ -119,7 +124,7 @@
                     } else {
                         msgdiv.append(gotMessageHTML.format(data.urgency, data.message, data.timestamp));
                     }
-                    msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+                    $('#new-' + data.room).show();
                 } else {
                     console.log("Cannot handle message!");
                 }
@@ -144,7 +149,9 @@
                 $('.room').hide();
                 chatRoom.show();
                 $('#chatLog-' + roomId).scrollTop(1E10);
-                $('#chat-title').html($('#name-' + roomId).html());
+                chatTitle.html($('#name-' + roomId).html());
+                $('#new-' + roomId).hide();
+
             });
             // Helpful debugging
             socket.onopen = function () {
