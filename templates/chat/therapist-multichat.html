@@ -53,15 +53,15 @@
                     '</div></div></div>';
             var therapistUsername;
             var roomDiv = "<div class='room' id='room-{0}'>" +
-                    "<div class='messages' id='chatLog-{0}'  " +
+                    "<div class='messages' id='chatLog-{0}' " +
                     "style='overflow-y: auto; max-height: 500px; overflow-x: hidden;'></div>" +
-                    "<hr><form class='form' id='messageForm'>" +
+                    "<hr><form class='form' id='messageForm-{0}'>" +
                     "<div class='row'>" +
-                    "<div class='col-sm-10'><input type='text' class='form-control'></div>" +
+                    "<div class='col-sm-10'><input type='text' class='form-control' id='message-{0}'></div>" +
                     "<div class='col-sm-2'>" +
                     "<button class='btn btn-primary'>Send</button></form></div>" +
-                    "</div>" +
-                    "</div>";
+                    "</div></div>";
+
             contentBody.hide();
             if (!String.prototype.format) {
                 String.prototype.format = function () {
@@ -95,15 +95,19 @@
                     console.log("Joining room " + data.join);
                     // Hook up send button to send a message
                     $("#chat-body").append(roomDiv.format(data.join));
-                    $('#room-' + data.join).on("submit", function (e) {
+                    $('#messageForm-' + data.join).on("submit", function (e) {
                         socket.send(JSON.stringify({
                             "command": "send",
                             "room": data.join,
-                            "message": roomDiv.find("input").val()
+                            "message": $('#message-' + data.join).val()
                         }));
+                        $('#message-' + data.join).val('');
                         e.preventDefault();
+                        return;
                     });
                     // Handle leaving
+
+                    $('.room').hide();
                 } else if (data.leave) {
                     console.log("Leaving room " + data.leave);
                     $("#room-" + data.leave).remove();
@@ -130,7 +134,6 @@
                     }
 
                 }
-                $('.room').hide();
                 contentBody.show();
             };
             // Room join/leave
