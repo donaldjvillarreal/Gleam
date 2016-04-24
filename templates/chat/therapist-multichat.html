@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}Therapist Chat{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
 {% block body %}
     <div class="container">
         <div id="content">
@@ -8,12 +11,8 @@
                 <div class="list-group" id="chat-list">
                     {% for room, messages in messages %}
                         <a class="room-link list-group-item" data-room-id="{{ room.id }}" href="#">
-                            {% if room.patient.userprofile.picture %}
-                                <div class="face"
-                                     style="background-image: url('{{ room.patient.userprofile.picture.url }}')"></div>
-                            {% else %}
-                                <div class="default-face pull-right chat-list-icon"></div>
-                            {% endif %}
+                            <div class="chat-face pull-right"
+                                 style="background-image: url('/{{ room.patient.userprofile.picture.url }}');"></div>
                             <span id="name-{{ room.id }}">{{ room.patient.first_name }} {{ room.patient.last_name }}</span>
                             <span class="label label-info" id="new-{{ room.id }}">New</span>
                         </a>
@@ -45,15 +44,18 @@
             var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
             var chatTitle = $('#chat-title');
             var roomIds = [];
-            var gotMessageHTML = '<div class="card">' +
+            var gotMessageHTML = '<div class="row">' +
+                    '<div class="col-sm-1"><div class="chat-face patient-picture"></div></div>' +
+                    '<div class="col-sm-11"><div class="card">' +
                     '<div class="card-header text-xs-center">{0}</div>' +
                     '<div class="card-block">' +
                     '<div class="card-text">{1}<br><small class="text-muted pull-right">{2}</small></div></div>' +
-                    '</div>';
-            var sentMessageHTML = '<div class="card">' +
+                    '</div></div></div>';
+            var sentMessageHTML = '<div class="row"><div class="col-sm-11"><div class="card">' +
                     '<div class="card-block">' +
                     '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
-                    '</div></div></div>';
+                    '</div></div></div></div>' +
+                    '<div class="col-sm-1"><div class="chat-face therapist-picture"></div></div></div>';
             var therapistUsername;
             var roomDiv = "<div class='room' id='room-{0}'>" +
                     "<div class='messages' id='chatLog-{0}' " +
@@ -64,7 +66,8 @@
                     "<div class='col-sm-2'>" +
                     "<button class='btn btn-primary'>Send</button></form></div>" +
                     "</div></div>";
-
+            var patientPictures = {};
+            var therapistPicture;
             contentBody.hide();
             if (!String.prototype.format) {
                 String.prototype.format = function () {
@@ -82,6 +85,7 @@
             // Handle incoming messages
             socket.onmessage = function (message) {
                 // Decode the JSON
+                var i;
                 var data;
                 var msgdiv;
                 console.log("Got websocket message " + message.data);
@@ -98,8 +102,11 @@
                     // old_messages exist
                     console.log("Joining room " + data.join);
                     roomIds.push(data.join);
+                    therapistPicture = data.therapist_picture;
+                    patientPictures[data.join] = data.patient_picture;
                     // Hook up send button to send a message
                     $("#chat-body").append(roomDiv.format(data.join));
+                    $('.room').hide();
                     $('#messageForm-' + data.join).on("submit", function (e) {
                         socket.send(JSON.stringify({
                             "command": "send",
@@ -111,8 +118,6 @@
                         return;
                     });
                     // Handle leaving
-
-                    $('.room').hide();
                 } else if (data.leave) {
                     console.log("Leaving room " + data.leave);
                     $("#room-" + data.leave).remove();
@@ -125,21 +130,31 @@
                         msgdiv.append(gotMessageHTML.format(data.urgency, data.message, data.timestamp));
                         $('#new-' + data.room).show();
                     }
+                    $('#chatLog-' + data.room).scrollTop(1E10);
+                    $('#chatLog-' + data.room + ' .patient-picture').css('background-image', 'url(/' + patientPictures[data.room] + ')');
+                    $('#chatLog-' + data.room + ' .patient-picture').css('background-size', '30px 30px');
+                    $('.therapist-picture').css('background-image', 'url(/' + therapistPicture + ')');
+                    $('.therapist-picture').css('background-size', '30px 30px');
                 } else {
                     console.log("Cannot handle message!");
                 }
                 if (data.old_messages) {
                     console.log('loading old messages');
-                    for (var i = 0; i < data.old_messages.length; i++) {
+                    for (i = 0; i < data.old_messages.length; i++) {
                         if (data.old_messages[i].handle == therapistUsername) {
                             $('#chatLog-' + data.join).append(sentMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
                         } else {
                             $('#chatLog-' + data.join).append(gotMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
                         }
                     }
+                    $('#chatLog-' + data.join + ' .patient-picture').css('background-image', 'url(/' + patientPictures[data.join] + ')');
+                    $('#chatLog-' + data.join + ' .patient-picture').css('background-size', '30px 30px');
+                    $('.therapist-picture').css('background-image', 'url(/' + therapistPicture + ')');
+                    $('.therapist-picture').css('background-size', '30px 30px');
 
                 }
                 contentBody.show();
+
             };
             // Room join/leave
             $(".room-link").on('click', function () {

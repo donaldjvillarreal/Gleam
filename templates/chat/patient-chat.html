@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Patient Chat{% endblock %}
 {% load staticfiles %}
+{% block title %}Patient Chat{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
 {% endblock %}
@@ -139,9 +139,9 @@
                 therapistPictureClass = $('.therapist-picture');
                 patientPictureClass = $('.patient-picture');
                 therapistPictureClass.css('background-image', 'url(/' + therapistPicture + ')');
-                therapistPictureClass.css('background-size', '50px 50px');
+                therapistPictureClass.css('background-size', '30px 30px');
                 patientPictureClass.css('background-image', 'url(/' + patientPicture + ')');
-                patientPictureClass.css('background-size', '50px 50px');
+                patientPictureClass.css('background-size', '30px 30px');
 
             };
 
