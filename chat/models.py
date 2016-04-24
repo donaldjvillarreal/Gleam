@@ -26,7 +26,7 @@ class Room(models.Model):
         """
         return Group("room-%s" % self.id)
 
-    def send_message(self, message, user):
+    def send_message(self, message, user, timestamp, urgency=''):
         """
         Called to send a message to the room on behalf of a user.
         """
@@ -36,6 +36,8 @@ class Room(models.Model):
                 "room": str(self.id),
                 "message": message,
                 "username": user.username,
+                'timestamp': timestamp,
+                'urgency': urgency
             }),
         })
 
@@ -53,9 +55,15 @@ class Room(models.Model):
 
 
 class Message(models.Model):
+    URGENCY = (('minor', 'Minor'),
+               ('moderate', 'Moderate'),
+               ('important', 'Important'),
+               ('emergency', 'Emergency'))
     room = models.ForeignKey(Room, related_name='messages')
     handle = models.ForeignKey(User)
     message = models.TextField()
+    read = models.BooleanField(default=False)
+    urgency = models.CharField(max_length=50, blank=True, null=True, choices=URGENCY)
     timestamp = models.DateTimeField(default=timezone.now, db_index=True)
 
     def __unicode__(self):
@@ -66,4 +74,8 @@ class Message(models.Model):
         return self.timestamp.strftime('%m/%d/%y %H:%M:%S')
 
     def as_dict(self):
-        return {'handle': self.handle.username, 'message': self.message, 'timestamp': self.formatted_timestamp}
+        return {'handle': self.handle.username,
+                'message': self.message,
+                'timestamp': self.formatted_timestamp,
+                'read': self.read,
+                'urgency': self.urgency}

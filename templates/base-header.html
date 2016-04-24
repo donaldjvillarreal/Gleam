@@ -19,8 +19,14 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item pull-xs-right">
-                    <a class="nav-link" href="{% url 'authenticate:profile' request.user.id %}"><i
-                            class="fa fa-user"></i> </a>
+                    <a class="nav-link" href="{% url 'authenticate:profile' request.user.id %}">
+                        {% if request.user.userprofile.picture %}
+                            <div class="chat-list-icon"
+                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div>
+                        {% else %}
+                            <div class="default-face chat-list-icon"></div>
+                        {% endif %}
+                    </a>
                 </li>
                 <li class="nav-item pull-xs-right">
                     <a class="nav-link" href="{% url 'authenticate:logout' %}?next={{ request.path | urlencode }}">Logout</a>

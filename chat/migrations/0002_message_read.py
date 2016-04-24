@@ -6,13 +6,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('authenticate', '0007_auto_20160307_2333'),
+        ('chat', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='userprofile',
-            name='timezone',
-            field=models.IntegerField(default=0),
+            model_name='message',
+            name='read',
+            field=models.BooleanField(default=False),
         ),
     ]

@@ -3,41 +3,82 @@
 {% load staticfiles %}
 {% block body %}
     <div class="container">
-        <div class="col-sm-12 col-md-6 col-lg-6">
-            <div class="list-group" id="chat-list">
-                {% for room, messages in messages %}
-                    <a class="room-link list-group-item" data-room-id="{{ room.id }}">{{ room.label }}</a>
-                {% endfor %}
+        <div class="row">
+            <div class="" id="chatLog" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
             </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6">
-            <div class="card card-block">
-                <div class="card-title" id="chat-title"></div>
-                <div class="card-text">
-                    <div id="chats">
-                    </div>
+        <hr>
+        <form id="messageForm">
+            <div class="row">
+                <div class="col-sm-12">
+                    <fieldset class="form-group">
+                        <input type="text" name="message" id="message" class="form-control"
+                               placeholder="Enter a message">
+
+                    </fieldset>
                 </div>
             </div>
-        </div>
+            <fieldset class="form-group">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-8">
+                        <select class="form-control" name="urgency" id="urgency">
+                            <option value="minor" selected>Minor</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="important">Important</option>
+                            <option value="emergency">Emergency</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-8">
+                        <input type="submit" id="submit" class="btn btn-primary form-control" value="Submit">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
     </div>
 
 {% endblock %}
 {% block js_scripts %}
     <script type="application/javascript" src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
     <script>
-        $(function () {
+        $(document).ready(function () {
             // Correctly decide between ws:// and wss://
             var socket;
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
             var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
+            var chatLog = $('#chatLog');
+            var messageBox = $('#message');
+            var urgency = $('#urgency');
+            var roomId;
+            var patientUsername;
+            var sentMessageHTML = '<div class="card">' +
+                    '<div class="card-header text-xs-center">{0}</div>' +
+                    '<div class="card-block">' +
+                    '<div class="card-text">{1}<br><small class="text-muted pull-right">{2}</small></div></div>' +
+                    '</div>';
+            var gotMessageHTML = '<div class="col-sm-10"><div class="card">' +
+                    '<div class="card-block">' +
+                    '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
+                    '</div></div></div></div>' +
+                    '';
+            if (!String.prototype.format) {
+                String.prototype.format = function () {
+                    var args = arguments;
+                    return this.replace(/{(\d+)}/g, function (match, number) {
+                        return typeof args[number] != 'undefined'
+                                ? args[number]
+                                : match
+                                ;
+                    });
+                };
+            }
             console.log("Connecting to " + ws_path);
             socket = new ReconnectingWebSocket(ws_path);
             // Handle incoming messages
             socket.onmessage = function (message) {
                 // Decode the JSON
                 var data;
-                var msgdiv;
-                var roomdiv;
                 console.log("Got websocket message " + message.data);
                 data = JSON.parse(message.data);
                 // Handle errors
@@ -47,74 +88,49 @@
                 }
                 // Handle joining
                 if (data.join) {
-                    // old_messages exist
+                    // joins
+                    roomId = data.join;
+                    patientUsername = data.patient.username;
                     console.log("Joining room " + data.join);
-                    roomdiv = $(
-                            "<div class='room' id='room-" + data.join + "'>" +
-                            "<h2>" + data.title + "</h2>" +
-                            "<div class='messages'></div>" +
-                            "<form class='form'>" +
-                            "<div class='row'>" +
-                            "<div class='col-sm-10'><input type='text' class='form-control'></div>" +
-                            "<div class='col-sm-2'>" +
-                            "<button class='btn btn-primary'>Send</button></form></div>" +
-                            "</div>" +
-                            "</div>"
-                    );
-                    // Hook up send button to send a message
-                    roomdiv.find("form").on("submit", function () {
-                        socket.send(JSON.stringify({
-                            "command": "send",
-                            "room": data.join,
-                            "message": roomdiv.find("input").val()
-                        }));
-                        roomdiv.find("input").val("");
-                        return false;
-                    });
-                    $("#chats").html(roomdiv);
-                    // Handle leaving
-                } else if (data.leave) {
-                    console.log("Leaving room " + data.leave);
-                    $("#room-" + data.leave).remove();
-                    // Handle getting a message
                 } else if (data.message) {
-                    msgdiv = $("#room-" + data.room + " .messages");
-                    msgdiv.append(
-                            "<div class='message'>" +
-                            "<span class='username'>" + data.username + "</span>" +
-                            "<span class='body'>" + data.message + "</span>" +
-                            "</div>"
-                    );
-                    msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+                    if (data.handle == patientUsername) {
+                        chatLog.append(gotMessageHTML.format(data.message, data.timestamp))
+                    } else {
+                        chatLog.append(sentMessageHTML.format(data.urgency, data.message, data.timestamp))
+                    }
+
+                    chatLog.scrollTop(chatLog.prop("scrollHeight"));
                 } else {
                     console.log("Cannot handle message!");
                 }
-            };
-            // Says if we joined a room or not by if there's a div for it
-            inRoom = function (roomId) {
-                return $("#room-" + roomId).length > 0;
-            };
-            // Room join/leave
-            $(".room-link").on('click', function () {
-                roomId = $(this).attr("data-room-id");
-                console.log('clicked ' + roomId);
-                if (inRoom(roomId)) {
-                    // Leave room
-                    $('#chat-list a').removeClass("active");
-                    socket.send(JSON.stringify({
-                        "command": "leave",
-                        "room": roomId
-                    }));
-                } else {
-                    // Join room
-                    $('#chat-list a').removeClass("active");
-                    $(this).addClass("joined");
-                    socket.send(JSON.stringify({
-                        "command": "join",
-                        "room": roomId
-                    }));
-                    $(this).addClass("active");
+
+                if (data.old_messages) {
+                    console.log('loading old messages');
+                    for (var i = 0; i < data.old_messages.length; i++) {
+                        if (data.old_messages[i].handle == patientUsername) {
+                            chatLog.append(sentMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
+                        } else {
+                            chatLog.append(gotMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
+                        }
+                    }
+
                 }
+                chatLog.scrollTop(1E10);
+            };
+
+
+            $('#messageForm').on('submit', function (e) {
+                if (messageBox.val() != '') {
+                    socket.send(JSON.stringify({
+                        "command": "send",
+                        "room": roomId,
+                        "message": messageBox.val(),
+                        "urgency": urgency.val()
+                    }));
+                    messageBox.val('');
+                }
+
+                e.preventDefault();
             });
             // Helpful debugging
             socket.onopen = function () {
