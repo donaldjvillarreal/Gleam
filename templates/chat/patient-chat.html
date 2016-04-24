@@ -87,18 +87,6 @@
                     alert(data.error);
                     return;
                 }
-                if (data.old_messages) {
-                    for (var i = 0; i < data.old_messages.length; i++) {
-                        if (data.old_messages[i].handle == patientUsername) {
-                            chatLog.append(sentMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
-                        } else {
-                            chatLog.append(gotMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
-                        }
-                    }
-
-                    // Handle getting a message
-                    console.log('loading old messages');
-                }
                 // Handle joining
                 if (data.join) {
                     // joins
@@ -115,19 +103,34 @@
                 } else {
                     console.log("Cannot handle message!");
                 }
+
+                if (data.old_messages) {
+                    console.log('loading old messages');
+                    for (var i = 0; i < data.old_messages.length; i++) {
+                        if (data.old_messages[i].handle == patientUsername) {
+                            chatLog.append(sentMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
+                        } else {
+                            chatLog.append(gotMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
+                        }
+                    }
+
+                }
+                chatLog.scrollTop(1E10);
             };
 
 
             $('#messageForm').on('submit', function (e) {
-                socket.send(JSON.stringify({
-                    "command": "send",
-                    "room": roomId,
-                    "message": messageBox.val(),
-                    "urgency": urgency.val()
-                }));
-                messageBox.val('');
-                e.preventDefault();
+                if (messageBox.val() != '') {
+                    socket.send(JSON.stringify({
+                        "command": "send",
+                        "room": roomId,
+                        "message": messageBox.val(),
+                        "urgency": urgency.val()
+                    }));
+                    messageBox.val('');
+                }
 
+                e.preventDefault();
             });
             // Helpful debugging
             socket.onopen = function () {

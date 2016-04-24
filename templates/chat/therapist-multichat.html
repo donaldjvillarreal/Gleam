@@ -3,26 +3,28 @@
 {% block title %}Therapist Chat{% endblock %}
 {% block body %}
     <div class="container">
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <div class="list-group" id="chat-list">
-                {% for room, messages in messages %}
-                    <a class="room-link list-group-item" data-room-id="{{ room.id }}">
-                        {% if room.patient.userprofile.picture %}
-                            <div class="face"
-                                 style="background-image: url('{{ room.patient.userprofile.picture }}')"></div>
-                        {% else %}
-                            <div class="default-face"></div>
-                        {% endif %}
-                        {{ room.patient.first_name }} {{ room.patient.last_name }}</a>
-                {% endfor %}
+        <div id="content">
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <div class="list-group" id="chat-list">
+                    {% for room, messages in messages %}
+                        <a class="room-link list-group-item" data-room-id="{{ room.id }}">
+                            {% if room.patient.userprofile.picture %}
+                                <div class="face"
+                                     style="background-image: url('{{ room.patient.userprofile.picture }}')"></div>
+                            {% else %}
+                                <div class="default-face pull-right chat-list-icon"></div>
+                            {% endif %}
+                            <span id="name-{{ room.id }}">{{ room.patient.first_name }} {{ room.patient.last_name }}</span></a>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-8 col-lg-8">
-            <div class="card card-block">
-                <div class="card-title" id="chat-title"></div>
-                <hr>
-                <div class="card-text" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
-                    <div id="chat-body">
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <div class="card card-block">
+                    <div class="card-title" id="chat-title">Select a client to start chatting</div>
+                    <hr>
+                    <div class="card-text">
+                        <div id="chat-body">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,8 +35,8 @@
 {% block js_scripts %}
     <script type="application/javascript" src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
     <script>
-        $(function () {
-
+        $(document).ready(function () {
+            var contentBody = $('#content');
             // Correctly decide between ws:// and wss://
             var socket;
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
@@ -43,13 +45,24 @@
             var gotMessageHTML = '<div class="card">' +
                     '<div class="card-header text-xs-center">{0}</div>' +
                     '<div class="card-block">' +
-                    '<div class="card-text">{1}<br><small class="text-muted pull-right">{1}</small></div></div>' +
+                    '<div class="card-text">{1}<br><small class="text-muted pull-right">{2}</small></div></div>' +
                     '</div>';
             var sentMessageHTML = '<div class="card">' +
                     '<div class="card-block">' +
                     '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
                     '</div></div></div>';
-            var therapistUsername = '{{ request.user.username }}';
+            var therapistUsername;
+            var roomDiv = "<div class='room' id='room-{0}'>" +
+                    "<div class='messages' id='chatLog-{0}'  " +
+                    "style='overflow-y: auto; max-height: 500px; overflow-x: hidden;'></div>" +
+                    "<hr><form class='form' id='messageForm'>" +
+                    "<div class='row'>" +
+                    "<div class='col-sm-10'><input type='text' class='form-control'></div>" +
+                    "<div class='col-sm-2'>" +
+                    "<button class='btn btn-primary'>Send</button></form></div>" +
+                    "</div>" +
+                    "</div>";
+            contentBody.hide();
             if (!String.prototype.format) {
                 String.prototype.format = function () {
                     var args = arguments;
@@ -68,7 +81,6 @@
                 // Decode the JSON
                 var data;
                 var msgdiv;
-                var roomdiv;
                 console.log("Got websocket message " + message.data);
                 data = JSON.parse(message.data);
                 // Handle errors
@@ -78,31 +90,19 @@
                 }
                 // Handle joining
                 if (data.join) {
+                    therapistUsername = data.therapist.username;
                     // old_messages exist
                     console.log("Joining room " + data.join);
-                    roomdiv = $(
-                            "<div class='room' id='room-" + data.join + "'>" +
-                            "<div class='messages' id='messages'></div>" +
-                            "<hr><form class='form'>" +
-                            "<div class='row'>" +
-                            "<div class='col-sm-10'><input type='text' class='form-control'></div>" +
-                            "<div class='col-sm-2'>" +
-                            "<button class='btn btn-primary'>Send</button></form></div>" +
-                            "</div>" +
-                            "</div>"
-                    );
                     // Hook up send button to send a message
-                    roomdiv.find("form").on("submit", function () {
+                    $("#chat-body").append(roomDiv.format(data.join));
+                    $('#room-' + data.join).on("submit", function (e) {
                         socket.send(JSON.stringify({
                             "command": "send",
                             "room": data.join,
-                            "message": roomdiv.find("input").val()
+                            "message": roomDiv.find("input").val()
                         }));
-                        roomdiv.find("input").val("");
-                        return false;
+                        e.preventDefault();
                     });
-                    $('#chat-title').html(data.patient.fullName);
-                    $("#chat-body").html(roomdiv);
                     // Handle leaving
                 } else if (data.leave) {
                     console.log("Leaving room " + data.leave);
@@ -119,38 +119,33 @@
                 } else {
                     console.log("Cannot handle message!");
                 }
+                if (data.old_messages) {
+                    console.log('loading old messages');
+                    for (var i = 0; i < data.old_messages.length; i++) {
+                        if (data.old_messages[i].handle == therapistUsername) {
+                            $('#chatLog-' + data.join).append(sentMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
+                        } else {
+                            $('#chatLog-' + data.join).append(gotMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
+                        }
+                    }
+
+                }
+                $('.room').hide();
+                contentBody.show();
             };
-            // Says if we joined a room or not by if there's a div for it
-            inRoom = function (roomId) {
-                return $("#room-" + roomId).length > 0;
-            }
             // Room join/leave
             $(".room-link").on('click', function () {
-                roomId = $(this).attr("data-room-id");
+                var roomId = $(this).attr("data-room-id");
+                var chatRoom = $('#room-' + roomId);
                 console.log('clicked ' + roomId);
-                if (inRoom(roomId)) {
-                    // Leave room
-                    {#                    $('#chat-list a').removeClass("active");#}
-                    {#                    socket.send(JSON.stringify({#}
-                    {#                        "command": "leave",#}
-                    {#                        "room": roomId#}
-                    {#                    }));#}
-                } else {
-                    // Join room
-                    $('#chat-list a').removeClass("active");
-                    $(this).addClass("joined");
-                    socket.send(JSON.stringify({
-                        "command": "join",
-                        "room": roomId
-                    }));
-                    $(this).addClass("active");
-                }
+                $('.room').hide();
+                chatRoom.show();
+                $('#chatLog-' + roomId).scrollTop(1E10);
+                $('#chat-title').html($('#name-' + roomId).html());
             });
             // Helpful debugging
             socket.onopen = function () {
                 console.log("Connected to chat socket");
-                // join all the rooms
-                {#                $('.room-link').click();#}
             }
             socket.onclose = function () {
                 console.log("Disconnected from chat socket");

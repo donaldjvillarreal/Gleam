@@ -44,6 +44,11 @@ body {
     background-image: url("/static/images/user.png");
 }
 
+.chat-list-icon {
+    width: 30px;
+    height: 30px;
+}
+
 .face {
     border-radius: 100%;
 }
