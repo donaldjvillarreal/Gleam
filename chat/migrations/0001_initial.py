@@ -7,6 +7,7 @@ from django.conf import settings
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
@@ -17,6 +18,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('message', models.TextField()),
+                ('read', models.BooleanField(default=False)),
+                ('urgency', models.CharField(blank=True, max_length=50, null=True, choices=[(b'minor', b'Minor'), (b'moderate', b'Moderate'), (b'important', b'Important'), (b'emergency', b'Emergency')])),
                 ('timestamp', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('handle', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],

@@ -2,11 +2,14 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 from django.conf import settings
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
+        ('sessions', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -51,8 +54,9 @@ class Migration(migrations.Migration):
                 ('last_modified', models.DateTimeField(auto_now=True)),
                 ('completed_on', models.DateTimeField(null=True, blank=True)),
                 ('answers', models.ManyToManyField(to='diagnostic.Answer', through='diagnostic.QuestionAnswerSet')),
+                ('session', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='sessions.Session', null=True)),
                 ('survey', models.ForeignKey(to='diagnostic.Survey')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
         ),
         migrations.AddField(

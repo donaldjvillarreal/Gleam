@@ -11,7 +11,12 @@
         <form role="form" method="post" action="">
             {% csrf_token %}
             <div class="col-md-10"><h3>Journal Entry</h3></div>
-            <div class="col-md-2" style="text-align: right;"><h5 id="tDate"></h5></div>
+            <div class="col-md-4">
+                <fieldset class="form-group">
+                    <input id="title" name="title" class="form-control" placeholder="Title Your Entry">
+                </fieldset>
+            </div>
+            <div class="col-md-8" style="text-align: right;"><h5 id="tDate"></h5></div>
             <div class="col-md-12">
                 Let’s take some time to check in with you. How have you been doing for the past week?
             </div>
@@ -32,6 +37,12 @@
                 </fieldset>
             </div>
 
+            <fieldset class="form-group">
+                <div class="col-md-5">
+                    <input id="created" name="created" type="hidden" class="form-control">
+                </div>
+            </fieldset>
+
         </form>
     </div>
 {% endblock %}
@@ -41,6 +52,14 @@
         var d = new Date()
         $(document).ready(function(){
             document.getElementById("tDate").innerHTML = d.toDateString();
+            document.getElementById("created").value = d.toISOString().replace("T"," ").substring(0, 16);
         });
+
+        $("form").submit(function(){
+            var $input = $(this).find("input[id=title]");
+            if (!$input.val()) {
+                $input.val(d.toDateString());
+   }
+});
     </script>
 {% endblock %}

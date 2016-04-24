@@ -7,6 +7,7 @@ import django.core.validators
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
@@ -34,14 +35,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('points', models.IntegerField(default=0)),
-                ('gender', models.CharField(default='U', max_length=1,
-                                            choices=[('M', 'Male'), ('F', 'Female'), ('U', 'Prefer Not to Answer')])),
+                ('gender', models.CharField(default='U', max_length=1, choices=[('M', 'Male'), ('F', 'Female'), ('U', 'Prefer Not to Answer')])),
                 ('picture', models.ImageField(null=True, upload_to='static/profile_images', blank=True)),
                 ('dob', models.DateField()),
                 ('timezone', models.IntegerField(default=0)),
-                ('phone', models.CharField(blank=True, max_length=10, null=True, validators=[
-                    django.core.validators.RegexValidator(regex='^\\+?1?\\d{9,15}$',
-                                                          message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])),
+                ('phone', models.CharField(blank=True, max_length=10, null=True, validators=[django.core.validators.RegexValidator(regex='^\\+?1?\\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])),
                 ('subscribed', models.BooleanField(default=False)),
                 ('is_therapist', models.BooleanField(default=False)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
