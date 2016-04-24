@@ -10,7 +10,7 @@
                         <a class="room-link list-group-item" data-room-id="{{ room.id }}" href="#">
                             {% if room.patient.userprofile.picture %}
                                 <div class="face"
-                                     style="background-image: url('{{ room.patient.userprofile.picture }}')"></div>
+                                     style="background-image: url('{{ room.patient.userprofile.picture.url }}')"></div>
                             {% else %}
                                 <div class="default-face pull-right chat-list-icon"></div>
                             {% endif %}
@@ -123,8 +123,8 @@
                         msgdiv.append(sentMessageHTML.format(data.message, data.timestamp));
                     } else {
                         msgdiv.append(gotMessageHTML.format(data.urgency, data.message, data.timestamp));
+                        $('#new-' + data.room).show();
                     }
-                    $('#new-' + data.room).show();
                 } else {
                     console.log("Cannot handle message!");
                 }

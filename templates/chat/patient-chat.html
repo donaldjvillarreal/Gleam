@@ -4,10 +4,8 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
                 <div class="" id="chatLog" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
                 </div>
-            </div>
         </div>
         <hr>
         <form id="messageForm">
@@ -44,7 +42,7 @@
 {% block js_scripts %}
     <script type="application/javascript" src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
     <script>
-        $(function () {
+        $(document).ready(function () {
             // Correctly decide between ws:// and wss://
             var socket;
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
@@ -53,16 +51,17 @@
             var messageBox = $('#message');
             var urgency = $('#urgency');
             var roomId;
-            var patientUsername = '{{ request.user.username }}';
+            var patientUsername;
             var sentMessageHTML = '<div class="card">' +
                     '<div class="card-header text-xs-center">{0}</div>' +
                     '<div class="card-block">' +
                     '<div class="card-text">{1}<br><small class="text-muted pull-right">{2}</small></div></div>' +
                     '</div>';
-            var gotMessageHTML = '<div class="card">' +
+            var gotMessageHTML = '<div class="col-sm-10"><div class="card">' +
                     '<div class="card-block">' +
                     '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
-                    '</div></div></div>';
+                    '</div></div></div></div>' +
+                    '';
             if (!String.prototype.format) {
                 String.prototype.format = function () {
                     var args = arguments;
@@ -91,6 +90,7 @@
                 if (data.join) {
                     // joins
                     roomId = data.join;
+                    patientUsername = data.patient.username;
                     console.log("Joining room " + data.join);
                 } else if (data.message) {
                     if (data.handle == patientUsername) {

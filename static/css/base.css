@@ -5,7 +5,7 @@ html {
     position: relative;
     min-height: 100%;
     /*clickjacking prevention*/
-    display : none;
+    display: none;
 }
 
 body {
@@ -24,7 +24,6 @@ body {
     background-color: #f5f5f5;
 }
 
-
 /**/
 
 * {
@@ -41,7 +40,7 @@ body {
 
 .default-face {
     border-radius: 100%;
-    background-image: url("/static/images/user.png");
+    background: url("/static/images/user_30px.png") orangered center no-repeat;
 }
 
 .chat-list-icon {
@@ -51,4 +50,5 @@ body {
 
 .face {
     border-radius: 100%;
+    background: no-repeat fixed center;
 }
