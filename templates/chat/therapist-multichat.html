@@ -13,7 +13,8 @@
                     {% for room, messages in messages %}
                         <a class="room-link list-group-item" data-room-id="{{ room.id }}" href="#">
                             <div class="chat-face pull-right"
-                                 style="background-image: url('/{{ room.patient.userprofile.picture.url }}');"></div>
+                                 style="background-image: url('/{{ room.patient.userprofile.picture.url }}');
+                                         background-size: 30px 30px;"></div>
                             <span id="name-{{ room.id }}">{{ room.patient.first_name }} {{ room.patient.last_name }}</span>
                             <span class="label label-info" id="new-{{ room.id }}">New</span>
                         </a>
