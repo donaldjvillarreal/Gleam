@@ -3,17 +3,29 @@
 https://github.com/jacobian/channels-example/blob/master/chat/consumers.py
 """
 from django.contrib.auth.models import User
-import logging
 import json
 from channels import Channel
 from channels.auth import channel_session_user_from_http, channel_session_user
-from models import Room, Message
+from models import Room
+
+from authenticate.models import UserProfile
 
 
 @channel_session_user_from_http
 def ws_connect(message):
     # Initialise their session
     message.channel_session['rooms'] = []
+    try:
+        user_profile = UserProfile.objects.get(user__username=message.user.username)
+        if user_profile.is_therapist:
+            for room in Room.objects.filter(therapist__username=message.user.username):
+                message['room'] = room.id
+                chat_join(message)
+        else:
+            message['room'] = Room.objects.get(patient__username=message.user.username).id
+            chat_join(message)
+    except UserProfile.DoesNotExist:
+        pass
 
 
 def ws_receive(message):
@@ -72,10 +84,15 @@ def chat_send(message):
     # Find the room they're sending to, check perms
     room = Room.objects.get(id=message["room"])
     # Send the message along and store it
-    room.send_message(message["message"], message.user)
-
-    room.messages.create(handle=User.objects.get(id=message.user.id),
-                         message=message['message'])
+    if 'urgency' in message:
+        stored_message = room.messages.create(handle=User.objects.get(id=message.user.id),
+                                              message=message['message'],
+                                              urgency=message['urgency'])
+        room.send_message(message["message"], message.user, stored_message.formatted_timestamp, message['urgency'])
+    else:
+        stored_message = room.messages.create(handle=User.objects.get(id=message.user.id),
+                                              message=message['message'])
+        room.send_message(message["message"], message.user, stored_message.formatted_timestamp)
 
 
 @channel_session_user

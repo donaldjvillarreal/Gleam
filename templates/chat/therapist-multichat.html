@@ -3,7 +3,7 @@
 {% block title %}Therapist Chat{% endblock %}
 {% block body %}
     <div class="container">
-        <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="col-sm-12 col-md-4 col-lg-4">
             <div class="list-group" id="chat-list">
                 {% for room, messages in messages %}
                     <a class="room-link list-group-item" data-room-id="{{ room.id }}">
@@ -17,11 +17,11 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="col-sm-12 col-md-8 col-lg-8">
             <div class="card card-block">
                 <div class="card-title" id="chat-title"></div>
                 <hr>
-                <div class="card-text">
+                <div class="card-text" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
                     <div id="chat-body">
                     </div>
                 </div>
@@ -34,11 +34,33 @@
     <script type="application/javascript" src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
     <script>
         $(function () {
+
             // Correctly decide between ws:// and wss://
             var socket;
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
             var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
             var chatTitle = $('#chat-title');
+            var gotMessageHTML = '<div class="card">' +
+                    '<div class="card-header text-xs-center">{0}</div>' +
+                    '<div class="card-block">' +
+                    '<div class="card-text">{1}<br><small class="text-muted pull-right">{1}</small></div></div>' +
+                    '</div>';
+            var sentMessageHTML = '<div class="card">' +
+                    '<div class="card-block">' +
+                    '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
+                    '</div></div></div>';
+            var therapistUsername = '{{ request.user.username }}';
+            if (!String.prototype.format) {
+                String.prototype.format = function () {
+                    var args = arguments;
+                    return this.replace(/{(\d+)}/g, function (match, number) {
+                        return typeof args[number] != 'undefined'
+                                ? args[number]
+                                : match
+                                ;
+                    });
+                };
+            }
             console.log("Connecting to " + ws_path);
             socket = new ReconnectingWebSocket(ws_path);
             // Handle incoming messages
@@ -88,12 +110,11 @@
                     // Handle getting a message
                 } else if (data.message) {
                     msgdiv = $("#room-" + data.room + " .messages");
-                    msgdiv.append(
-                            "<div class='message'>" +
-                            "<span class='username'>" + data.username + "</span>" +
-                            "<span class='body'>" + data.message + "</span>" +
-                            "</div>"
-                    );
+                    if (data.username == therapistUsername) {
+                        msgdiv.append(sentMessageHTML.format(data.message, data.timestamp));
+                    } else {
+                        msgdiv.append(gotMessageHTML.format(data.urgency, data.message, data.timestamp));
+                    }
                     msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
                 } else {
                     console.log("Cannot handle message!");
@@ -102,18 +123,18 @@
             // Says if we joined a room or not by if there's a div for it
             inRoom = function (roomId) {
                 return $("#room-" + roomId).length > 0;
-            };
+            }
             // Room join/leave
             $(".room-link").on('click', function () {
                 roomId = $(this).attr("data-room-id");
                 console.log('clicked ' + roomId);
                 if (inRoom(roomId)) {
                     // Leave room
-                    $('#chat-list a').removeClass("active");
-                    socket.send(JSON.stringify({
-                        "command": "leave",
-                        "room": roomId
-                    }));
+                    {#                    $('#chat-list a').removeClass("active");#}
+                    {#                    socket.send(JSON.stringify({#}
+                    {#                        "command": "leave",#}
+                    {#                        "room": roomId#}
+                    {#                    }));#}
                 } else {
                     // Join room
                     $('#chat-list a').removeClass("active");
@@ -128,6 +149,8 @@
             // Helpful debugging
             socket.onopen = function () {
                 console.log("Connected to chat socket");
+                // join all the rooms
+                {#                $('.room-link').click();#}
             }
             socket.onclose = function () {
                 console.log("Disconnected from chat socket");
