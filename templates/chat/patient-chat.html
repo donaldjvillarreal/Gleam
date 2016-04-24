@@ -58,7 +58,7 @@
             var patientPicture;
             var therapistPicture;
             var sentMessageHTML = '<div class="row"><div class="col-sm-11"><div class="card">' +
-                    '<div class="card-header text-xs-center">{0}</div>' +
+                    '<div class="card-header {3} text-white text-xs-center">{0}</div>' +
                     '<div class="card-block">' +
                     '<div class="card-text">{1}<br><small class="text-muted pull-right">{2}</small></div></div>' +
                     '</div></div>' +
@@ -71,6 +71,12 @@
                     '<div class="card-block">' +
                     '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
                     '</div></div></div></div></div>';
+            var colorHeaders = {
+                'minor': 'card-success',
+                'moderate': 'card-primary',
+                'important': 'card-warning',
+                'emergency': 'card-danger'
+            };
             if (!String.prototype.format) {
                 String.prototype.format = function () {
                     var args = arguments;
@@ -107,7 +113,10 @@
                     console.log("Joining room " + data.join);
                 } else if (data.message) {
                     if (data.username === patientUsername) {
-                        chatLog.append(sentMessageHTML.format(data.urgency, data.message, data.timestamp));
+                        chatLog.append(sentMessageHTML.format(data.urgency,
+                                data.message,
+                                data.timestamp,
+                                colorHeaders[data.urgency]));
                     } else {
                         chatLog.append(gotMessageHTML.format(data.message, data.timestamp));
                     }
@@ -127,7 +136,10 @@
                     console.log('loading old messages');
                     for (var i = 0; i < data.old_messages.length; i++) {
                         if (data.old_messages[i].handle == patientUsername) {
-                            chatLog.append(sentMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
+                            chatLog.append(sentMessageHTML.format(data.old_messages[i].urgency,
+                                    data.old_messages[i].message,
+                                    data.old_messages[i].timestamp,
+                                    colorHeaders[data.old_messages[i].urgency]));
                         } else {
                             chatLog.append(gotMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
                         }

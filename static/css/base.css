@@ -56,3 +56,7 @@ body {
     border-radius: 100%;
     background: no-repeat fixed center;
 }
+
+.text-white {
+    color: white;
+}

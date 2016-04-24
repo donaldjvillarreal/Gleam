@@ -47,9 +47,9 @@
             var gotMessageHTML = '<div class="row">' +
                     '<div class="col-sm-1"><div class="chat-face patient-picture"></div></div>' +
                     '<div class="col-sm-11"><div class="card">' +
-                    '<div class="card-header text-xs-center">{0}</div>' +
+                    '<div class="card-header {0} text-xs-center">{1}</div>' +
                     '<div class="card-block">' +
-                    '<div class="card-text">{1}<br><small class="text-muted pull-right">{2}</small></div></div>' +
+                    '<div class="card-text">{2}<br><small class="text-muted pull-right">{3}</small></div></div>' +
                     '</div></div></div>';
             var sentMessageHTML = '<div class="row"><div class="col-sm-11"><div class="card">' +
                     '<div class="card-block">' +
@@ -66,6 +66,12 @@
                     "<div class='col-sm-2'>" +
                     "<button class='btn btn-primary'>Send</button></form></div>" +
                     "</div></div>";
+            var colorHeaders = {
+                'minor': 'card-success',
+                'moderate': 'card-primary',
+                'important': 'card-warning',
+                'emergency': 'card-danger'
+            };
             var patientPictures = {};
             var therapistPicture;
             contentBody.hide();
@@ -127,7 +133,10 @@
                     if (data.username == therapistUsername) {
                         msgdiv.append(sentMessageHTML.format(data.message, data.timestamp));
                     } else {
-                        msgdiv.append(gotMessageHTML.format(data.urgency, data.message, data.timestamp));
+                        msgdiv.append(gotMessageHTML.format(colorHeaders[data.urgency],
+                                data.urgency,
+                                data.message,
+                                data.timestamp));
                         $('#new-' + data.room).show();
                     }
                     $('#chatLog-' + data.room).scrollTop(1E10);
@@ -144,7 +153,10 @@
                         if (data.old_messages[i].handle == therapistUsername) {
                             $('#chatLog-' + data.join).append(sentMessageHTML.format(data.old_messages[i].message, data.old_messages[i].timestamp));
                         } else {
-                            $('#chatLog-' + data.join).append(gotMessageHTML.format(data.old_messages[i].urgency, data.old_messages[i].message, data.old_messages[i].timestamp));
+                            $('#chatLog-' + data.join).append(gotMessageHTML.format(colorHeaders[data.old_messages[i].urgency],
+                                    data.old_messages[i].urgency,
+                                    data.old_messages[i].message,
+                                    data.old_messages[i].timestamp));
                         }
                     }
                     $('#chatLog-' + data.join + ' .patient-picture').css('background-image', 'url(/' + patientPictures[data.join] + ')');
