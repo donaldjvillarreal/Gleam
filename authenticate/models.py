@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class UserProfile(models.Model):
@@ -19,11 +20,12 @@ class UserProfile(models.Model):
                               choices=GENDER,
                               default='U')
     # TODO: Change to STATIC_URL, set default
-    picture = models.ImageField(upload_to='static/profile_images', null=True, blank=True)
+    picture = models.ImageField(upload_to='static/profile_images', null=True, blank=True,
+                                default=static('images/user.png'))
 
     dob = models.DateField(null=False, blank=False)
 
-    timezone = models.IntegerField(default=0, null=False, blank=False)
+    timezone = models.IntegerField(default=0)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: "
                                                                    "'+999999999'. Up to 15 digits allowed.")
     phone = models.CharField(validators=[phone_regex], blank=True, null=True, max_length=10)

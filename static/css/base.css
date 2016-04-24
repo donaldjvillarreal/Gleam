@@ -40,12 +40,16 @@ body {
 
 .default-face {
     border-radius: 100%;
-    background: url("/static/images/user_30px.png") orangered center no-repeat;
+    background: url("/static/images/user.png") orangered center no-repeat;
+    background-size: 30px 30px;
 }
 
 .chat-list-icon {
+    border-radius: 100%;
+    background: orangered center no-repeat;
     width: 30px;
     height: 30px;
+    background-size: 30px 30px;
 }
 
 .face {

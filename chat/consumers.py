@@ -74,7 +74,9 @@ def chat_join(message):
             "title": title,
             "therapist": room.therapist_as_dict(),
             "patient": room.patient_as_dict(),
-            'old_messages': old_messages
+            'old_messages': old_messages,
+            'therapist_picture': room.therapist.userprofile.picture.url,
+            'patient_picture': room.patient.userprofile.picture.url,
         }),
     })
 

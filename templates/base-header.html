@@ -22,9 +22,9 @@
                     <a class="nav-link" href="{% url 'authenticate:profile' request.user.id %}">
                         {% if request.user.userprofile.picture %}
                             <div class="chat-list-icon"
-                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div>
+                                 style="background-image: url('/{{ request.user.userprofile.picture.url }}');"></div>
                         {% else %}
-                            <div class="default-face chat-list-icon"></div>
+                            <div class="default-face"></div>
                         {% endif %}
                     </a>
                 </li>
