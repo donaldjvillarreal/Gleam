@@ -33,7 +33,7 @@ if 'DYNO' in os.environ:
 else:
     DEBUG = True
 
-DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '.herokuapp.com']
 
