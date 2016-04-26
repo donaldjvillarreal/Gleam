@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Create Homework{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/DateTimePicker.min.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <a class="btn btn-primary" href="#">Add task</a>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <form id="newTaskForm" method="post">
+                    {% csrf_token %}
+                    <div class="card card-block">
+                        <div class="card-title">
+                            <label for="titleInput">Enter a title for this task.</label>
+                            <input id="titleInput" type="text" name="title" class="form-control" required>
+                        </div>
+                        <p class="card-text">
+                            <label for="taskInput">Enter the task</label>
+                            <textarea id="taskInput" name="task" class="form-control" required></textarea>
+                        </p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="deadlineInput">Deadline</label>
+                                <input class="form-control" id="deadlineInput" name="deadline" type="text"
+                                       data-field="datetime"
+                                       readonly required>
+                                <div id="dtBox"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="submit" class="btn btn-success" value="Add">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="card card-block">
+                    <h3 class="card-title">A title for a task</h3>
+                    <p class="card-text">{% lorem %}</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_scripts %}
+    <script type="application/javascript" src="{% static 'js/DateTimePicker.min.js' %}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            var dtp = $('#dtBox').DateTimePicker({
+                settingValueOfElement: function () {
+                    $('#deadlineInput').val(this.getDateTimeStringInFormat());
+                }
+            });
+
+            {#            $.ajax({#}
+            {#                url: '{% url 'tasks:create' %}',#}
+            {#                method: 'post',#}
+            {#                data: {#}
+            {#                    #}
+            {#                },#}
+            {#                dataType: 'json',#}
+            {#                accept: function (msg) {#}
+            {#                    console.log(msg);#}
+            {#                },#}
+            {#                error: function(err){#}
+            {#                    console.log(err);#}
+            {#                }#}
+            {#            });#}
+        });
+    </script>
+{% endblock %}
