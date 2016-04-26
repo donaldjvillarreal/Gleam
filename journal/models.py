@@ -6,7 +6,7 @@ class journalEntry(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=60, null=False, blank=False)
     # created = models.DateTimeField(auto_now_add=True)
-    created = models.DateTimeField()
+    created = models.DateTimeField(null=False, blank=False)
     entry = models.TextField(null=False, blank=False)
     sentimentType = models.CharField(max_length=25, null=False, blank=False)
     sentimentScore = models.DecimalField(max_digits=10, decimal_places=6, null=False, blank=False)

@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     # 'caseconcept',
     'journal',
     'therapist',
+    'tasks',
     # Celery
     'djcelery',
     'alchemyapi',

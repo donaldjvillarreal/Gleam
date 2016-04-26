@@ -49,7 +49,7 @@
 
 {% block js_scripts %}
     <script type="text/javascript">
-        var d = new Date()
+        var d = new Date();
         $(document).ready(function(){
             document.getElementById("tDate").innerHTML = d.toDateString();
             document.getElementById("created").value = d.toISOString().replace("T"," ").substring(0, 16);
