@@ -22,7 +22,12 @@ class Migration(migrations.Migration):
                 ('motivation', models.BooleanField(default=False)),
                 ('forgetfulness', models.BooleanField(default=False)),
                 ('tired', models.BooleanField(default=False)),
+                ('created_on', models.DateTimeField(auto_now_add=True)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
+        ),
+        migrations.AlterUniqueTogether(
+            name='progressissue',
+            unique_together=set([('user', 'created_on')]),
         ),
     ]

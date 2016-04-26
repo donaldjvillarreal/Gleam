@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 import requests
+import datetime
 
 from journal import forms, models
 
@@ -18,6 +19,7 @@ def journalEntry(request):
     key = 'fe9480c1e35a7ade844fa82699c8d7e6792f14bb'
     if request.method == 'POST':
         entry_form = forms.entryForm(data=request.POST)
+
         if entry_form.is_valid():
             journal_entry = entry_form.save(commit=False)
             journal_entry.user = user
@@ -25,7 +27,10 @@ def journalEntry(request):
             tdata = requests.get(textSentiment, {'apikey': key, 'text': myText, 'outputMode': 'json'})
             tresponse = tdata.json()
             journal_entry.sentimentType = tresponse['docSentiment']['type']
-            journal_entry.sentimentScore = tresponse['docSentiment']['score']
+            if tresponse['docSentiment']['type'] == 'neutral':
+                journal_entry.sentimentScore = 0
+            else:
+                journal_entry.sentimentScore = tresponse['docSentiment']['score']
             journal_entry.save()
 
             # Keyword Extraction
