@@ -1,22 +1,25 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.views.generic import View
-from tasks import forms
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import datetime
-from authenticate.models import Client, Therapist, UserProfile
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
+from authenticate.models import Therapist, UserProfile
 from tasks.models import MainTask
+from tasks import forms
 
 
 class CreateHomework(View):
     @method_decorator(login_required)
     def get(self, request, patient_id):
-        return render(request, 'tasks/create-task.html', {})
+        return render(request, 'tasks/create-task.html',
+                      {'tasks': MainTask.objects.filter(patient__user_id=patient_id)})
 
     @method_decorator(login_required)
     def post(self, request, patient_id):
-        print request.POST
         task_form = forms.MainTaskForm(request.POST)
         if task_form.is_valid():
             task = task_form.save(commit=False)
@@ -26,4 +29,4 @@ class CreateHomework(View):
             task.save()
         else:
             print task_form.errors
-        return render(request, 'tasks/create-task.html', {})
+        return HttpResponseRedirect('')

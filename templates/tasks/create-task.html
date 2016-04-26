@@ -8,45 +8,55 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <a class="btn btn-primary" href="#">Add task</a>
+                <a class="btn btn-primary" href="" id="addTask">Add task</a>
                 <hr>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-8">
-                <form id="newTaskForm" method="post">
-                    {% csrf_token %}
-                    <div class="card card-block">
-                        <div class="card-title">
-                            <label for="titleInput">Enter a title for this task.</label>
-                            <input id="titleInput" type="text" name="title" class="form-control" required>
-                        </div>
-                        <p class="card-text">
-                            <label for="taskInput">Enter the task</label>
-                            <textarea id="taskInput" name="task" class="form-control" required></textarea>
-                        </p>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label for="deadlineInput">Deadline</label>
-                                <input class="form-control" id="deadlineInput" name="deadline" type="text"
-                                       data-field="datetime"
-                                       readonly required>
-                                <div id="dtBox"></div>
+                <div class="row">
+                    <form id="newTaskForm" method="post">
+                        {% csrf_token %}
+                        <div class="card card-block">
+                            <div class="card-title">
+                                <label for="titleInput">Enter a title for this task.</label>
+                                <input id="titleInput" type="text" name="title" class="form-control" required>
+                            </div>
+                            <p class="card-text">
+                                <label for="taskInput">Enter the task</label>
+                                <textarea id="taskInput" name="task" class="form-control" required></textarea>
+                            </p>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="deadlineInput">Deadline</label>
+                                    <input class="form-control" id="deadlineInput" name="deadline" type="text"
+                                           data-field="datetime"
+                                           readonly required>
+                                    <div id="dtBox"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input type="submit" class="btn btn-success" value="Add">
+                                </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <input type="submit" class="btn btn-success" value="Add">
-                            </div>
+                    </form>
+                </div>
+
+                {% for task in tasks %}
+                    <div class="row">
+                        <div class="card card-block">
+                            <h3 class="card-title">{{ task.title }}</h3>
+                            <p class="card-text">
+                                <span class="label label-info">Due {{ task.deadline }}</span>
+                                <br>
+                                {{ task.task }}
+                            </p>
                         </div>
                     </div>
-                </form>
-
-                <div class="card card-block">
-                    <h3 class="card-title">A title for a task</h3>
-                    <p class="card-text">{% lorem %}</p>
-                </div>
+                {% endfor %}
             </div>
             <div class="col-sm-4">
 
@@ -59,12 +69,22 @@
     <script type="application/javascript" src="{% static 'js/DateTimePicker.min.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
+            var newTaskForm = $('#newTaskForm');
             var dtp = $('#dtBox').DateTimePicker({
                 settingValueOfElement: function () {
                     $('#deadlineInput').val(this.getDateTimeStringInFormat());
                 }
             });
-
+            newTaskForm.hide();
+            $('#addTask').on('click', function (e) {
+                newTaskForm.toggle();
+                {#                if (newTaskForm.is(':visible')){#}
+                {#                    this.text('Hide task');#}
+                {#                } else {#}
+                {#                    this.text('Add task');#}
+                {#                }#}
+                e.preventDefault();
+            });
             {#            $.ajax({#}
             {#                url: '{% url 'tasks:create' %}',#}
             {#                method: 'post',#}
