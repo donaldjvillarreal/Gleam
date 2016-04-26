@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Create Homework{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+{% block body %}
+
+
+    <div class="container jumbotron">
+        <div class="col-md-14">
+            <h3>Homework</h3>
+        </div>
+        <form role="form" method="post" action="">
+            {% csrf_token %}
+
+            <fieldset class="form-group">
+                <div id="taskDiv">
+                    <table class="table table-striped table-bordered table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Homework Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for hw in prevhw %}
+                            <tr>
+                                <td width="20%">{{ hw.patient.user.first_name }} {{ hw.patient.user.last_name }}</td>
+                                <td width="80%">{{ hw.title }}</td>
+                            </tr>
+                        {% endfor %}
+                            <tr>
+                                <td><select id="patient" name="patient"></select></td>
+                                <td><input id="title" name="title" class="form-control" type="text"
+                                   placeholder="Title this group of tasks" class="pull-left"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="col-md-2">
+                    <input type="submit" name="submit" id="submit" value="Add" class="btn btn-primary"/>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="col-md-5">
+                    <input id="created" name="created" type="hidden" class="form-control">
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
+
+
+{% block js_scripts %}
+    <script type="text/javascript">
+
+        var d = new Date();
+
+        function PatientList() {
+            var PatientDropDown = $("#patient");
+
+            PatientDropDown.empty();
+
+            {% for patient in patients %}
+                PatientDropDown.append(
+                        "<option value={{ patient.user_profile.user_id }}> {{ patient.user_profile.user.first_name }} {{ patient.user_profile.user.last_name }}</option>");
+            {%  endfor %}
+        }
+
+        $(function () {
+            PatientList();
+            document.getElementById("created").value = d.toISOString().replace("T"," ").substring(0, 16);
+        });
+
+    </script>
+{% endblock %}

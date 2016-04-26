@@ -5,14 +5,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
-        ('chat', '0001_initial'),
+        ('tasks', '0001_initial'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='message',
-            name='read',
-            field=models.BooleanField(default=False),
+        migrations.AlterField(
+            model_name='taskgroup',
+            name='patient',
+            field=models.ForeignKey(to='authenticate.UserProfile'),
         ),
     ]
