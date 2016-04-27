@@ -29,3 +29,11 @@ def progress_delay(request):
             return render(request, 'core/progress-delay.html', {'errors': progress_issue.errors})
     else:
         return render(request, 'core/progress-delay.html', {})
+
+
+def therapist_home(request):
+    return render(request, 'core/therapist-dashboard/content-tp-dash.html', {})
+
+
+def landing(request):
+    return render(request, 'core/landing/landing.html', {})
