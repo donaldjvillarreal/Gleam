@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/therapist-dashboard/base-therapist-dash.html' %}
 {% load static from staticfiles %}
 {% block title %}Therapist Chat{% endblock %}
 {% block head %}
@@ -13,7 +13,7 @@
                     {% for room, messages in messages %}
                         <a class="room-link list-group-item" data-room-id="{{ room.id }}" href="#">
                             <div class="chat-face pull-right"
-                                 style="background-image: url('/{{ room.patient.userprofile.picture.url }}');
+                                 style="background-image: url('{{ room.patient.userprofile.picture.url }}');
                                          background-size: 30px 30px;"></div>
                             <span id="name-{{ room.id }}">{{ room.patient.first_name }} {{ room.patient.last_name }}</span>
                             <span class="label label-info" id="new-{{ room.id }}">New</span>
@@ -62,7 +62,7 @@
             var therapistUsername;
             var roomDiv = "<div class='room' id='room-{0}'>" +
                     "<div class='messages' id='chatLog-{0}' " +
-                    "style='height: 500px; position: relative;'></div>" +
+                    "style='height: 300px; position: relative;'></div>" +
                     "<hr><form class='form' id='messageForm-{0}'>" +
                     "<div class='row'>" +
                     "<div class='col-sm-10'><input type='text' class='form-control' id='message-{0}'></div>" +
@@ -147,9 +147,9 @@
                     }
                     chatLog = $('#chatLog-' + data.room);
                     chatLog.scrollTop(1E10);
-                    $('#chatLog-' + data.room + ' .patient-picture').css('background-image', 'url(/' + patientPictures[data.room] + ')');
+                    $('#chatLog-' + data.room + ' .patient-picture').css('background-image', 'url(' + patientPictures[data.room] + ')');
                     $('#chatLog-' + data.room + ' .patient-picture').css('background-size', '30px 30px');
-                    $('.therapist-picture').css('background-image', 'url(/' + therapistPicture + ')');
+                    $('.therapist-picture').css('background-image', 'url(' + therapistPicture + ')');
                     $('.therapist-picture').css('background-size', '30px 30px');
                 } else {
                     console.log("Cannot handle message!");
@@ -168,9 +168,9 @@
                                     data.old_messages[i].timestamp));
                         }
                     }
-                    $('#chatLog-' + data.join + ' .patient-picture').css('background-image', 'url(/' + patientPictures[data.join] + ')');
+                    $('#chatLog-' + data.join + ' .patient-picture').css('background-image', 'url(' + patientPictures[data.join] + ')');
                     $('#chatLog-' + data.join + ' .patient-picture').css('background-size', '30px 30px');
-                    $('.therapist-picture').css('background-image', 'url(/' + therapistPicture + ')');
+                    $('.therapist-picture').css('background-image', 'url(' + therapistPicture + ')');
                     $('.therapist-picture').css('background-size', '30px 30px');
 
                 }

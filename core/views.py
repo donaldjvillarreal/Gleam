@@ -29,3 +29,8 @@ def progress_delay(request):
             return render(request, 'core/progress-delay.html', {'errors': progress_issue.errors})
     else:
         return render(request, 'core/progress-delay.html', {})
+
+
+@login_required()
+def patient_home(request):
+    return render(request, 'core/dashboard/patient-home.html', {})
