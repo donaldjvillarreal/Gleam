@@ -7,26 +7,23 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12" id="task-feed">
                 {% for task in tasks %}
-                    <div class="row">
-                        <div class="card card-block">
-                            <h3 class="card-title">
-                                {{ task.title }}
-                                {% if task.completed %}
-                                    <span class="btn btn-primary task-toggle pull-right"
-                                          data-task-id="{{ task.id }}">Marked incomplete</span>
-                                {% else %}
+                    {% if not task.completed %}
+                        <div class="row" id="task-{{ task.id }}">
+                            <div class="card card-block">
+                                <h3 class="card-title">
+                                    {{ task.title }}
                                     <span class="btn btn-secondary task-toggle pull-right"
-                                          data-task-id="{{ task.id }}">Mark complete</span>
-                                {% endif %}</h3>
-                            <p class="card-text">
-                                <span class="label label-info">Due {{ task.deadline }}</span>
-                                <br>
-                                {{ task.task }}
-                            </p>
+                                          data-task-id="{{ task.id }}">Mark complete</span></h3>
+                                <p class="card-text">
+                                    <span class="label label-info">Due {{ task.deadline }}</span>
+                                    <br>
+                                    {{ task.task }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -37,6 +34,20 @@
     <script type="application/javascript" src="{% static 'js/DateTimePicker.min.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
+            var noTaskCard = '<div class="row" id="empty-task">' +
+                    '<div class="card card-block">' +
+                    ' <h3 class="card-title">All tasks complete!</h3>' +
+                    '<p class="card-text">Your therapist has not added any new tasks for you to complete.</p>' +
+                    '</div></div>';
+            var checkTaskFeed = function () {
+                var taskFeed = $('#task-feed').find('> div');
+                if (taskFeed.length === 0) {
+                    $('#task-feed').append(noTaskCard);
+                } else {
+                    $('#empty-task').hide();
+                }
+            };
+            checkTaskFeed();
             $('.task-toggle').on('click', function (e) {
                 var that = $(this);
                 $.ajax({
@@ -45,19 +56,14 @@
                     dataType: 'json',
                     data: {
                         'csrfmiddlewaretoken': '{{ csrf_token }}',
-                        'task': $(this).attr('data-task-id'),
+                        'task': that.attr('data-task-id'),
                         'toggle': true
                     },
                     success: function (data) {
                         if (data.state) {
-                            that.removeClass('btn-secondary');
-                            that.addClass('btn-primary');
-                            that.html('Mark incomplete');
-                        } else {
-                            that.removeClass('btn-primary');
-                            that.addClass('btn-secondary');
-                            that.html('Mark complete');
+                            $('#task-' + that.attr('data-task-id')).remove();
                         }
+                        checkTaskFeed();
                     },
                     error: function (err) {
                         console.log(err);
