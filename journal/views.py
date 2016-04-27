@@ -5,8 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 import requests
-import datetime
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from journal import forms, models
 
 
@@ -101,3 +100,24 @@ def word_list(request):
 
     return render(request, 'journal/wordlist.html', {'wordlist': wordlist,
                                                      'entryvalues': entryvalues})
+
+@login_required
+def list_view(request):
+    if request.method == 'GET':
+
+        user = User.objects.get(id=request.user.id)
+        entry_list = models.Entry.objects.filter(user=user).order_by('-created')
+        paginator = Paginator(entry_list, 5)
+
+        page = request.GET.get('page')
+        try:
+            entries = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            entries = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            entries = paginator.page(paginator.num_pages)
+
+
+    return render(request, 'journal/listview.html', {'entries': entries, 'paginator': paginator})
