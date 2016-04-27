@@ -48,7 +48,8 @@
                 {% for task in tasks %}
                     <div class="row">
                         <div class="card card-block">
-                            <h3 class="card-title">{{ task.title }}</h3>
+                            <h3 class="card-title"><span
+                                    class="fa fa-pencil-square-o text-muted"></span> {{ task.title }}</h3>
                             <p class="card-text">
                                 <span class="label label-info">Due {{ task.deadline }}</span>
                                 <br>

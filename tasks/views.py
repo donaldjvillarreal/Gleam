@@ -1,18 +1,18 @@
 # coding=utf-8
+import json
 from django.shortcuts import render
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import datetime
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse
 
 from authenticate.models import Therapist, UserProfile
 from tasks.models import MainTask
 from tasks import forms
 
 
-class CreateHomework(View):
+class TherapistTaskView(View):
     @method_decorator(login_required)
     def get(self, request, patient_id):
         return render(request, 'tasks/create-task.html',
@@ -30,3 +30,21 @@ class CreateHomework(View):
         else:
             print task_form.errors
         return HttpResponseRedirect('')
+
+
+class PatientTaskView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, 'tasks/complete-task.html',
+                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id)})
+
+    @method_decorator(login_required)
+    def post(self, request):
+        if 'toggle' in request.POST:
+            task = MainTask.objects.get(id=int(request.POST['task']), patient__user_id=request.user.id)
+            if task.completed:
+                task.completed = False
+            else:
+                task.completed = True
+            task.save()
+            return HttpResponse(json.dumps({'state': task.completed}))

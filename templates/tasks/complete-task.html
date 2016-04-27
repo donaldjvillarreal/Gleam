@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Create Homework{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/DateTimePicker.min.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                {% for task in tasks %}
+                    <div class="row">
+                        <div class="card card-block">
+                            <h3 class="card-title">
+                                {% if task.completed %}
+                                    <span class="fa fa-check text-primary task-toggle"
+                                          data-task-id="{{ task.id }}"></span>
+                                {% else %}
+                                    <span class="fa fa-check text-default task-toggle"
+                                          data-task-id="{{ task.id }}"></span>
+                                {% endif %}
+                                {{ task.title }}</h3>
+                            <p class="card-text">
+                                <span class="label label-info">Due {{ task.deadline }}</span>
+                                <br>
+                                {{ task.task }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_scripts %}
+    <script type="application/javascript" src="{% static 'js/DateTimePicker.min.js' %}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('.task-toggle').on('click', function (e) {
+                var that = $(this);
+                $.ajax({
+                    url: '{% url 'tasks:complete' %}',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'task': $(this).attr('data-task-id'),
+                        'toggle': true
+                    },
+                    success: function (data) {
+                        if (data.state) {
+                            that.removeClass('text-default');
+                            that.addClass('text-primary');
+                        } else {
+                            that.removeClass('text-primary');
+                            that.addClass('text-default');
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
