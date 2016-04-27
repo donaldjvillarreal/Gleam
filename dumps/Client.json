@@ -1,0 +1,1 @@
+[{"fields": {"therapist": 1, "user_profile": 2}, "model": "authenticate.client", "pk": 1}, {"fields": {"therapist": 1, "user_profile": 3}, "model": "authenticate.client", "pk": 2}, {"fields": {"therapist": 1, "user_profile": 4}, "model": "authenticate.client", "pk": 3}]

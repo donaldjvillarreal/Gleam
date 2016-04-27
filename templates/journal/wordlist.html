@@ -24,8 +24,8 @@
                 <tr>
                     <td width="20%">{{ words.text }}</td>
                     <td width="10%">{{ words.relevance }}</td>
-                    <td width="10%">{{ words.sentimentType }}</td>
-                    <td width="10%">{{ words.sentimentScore }}</td>
+                    <td width="10%">{{ words.sentiment_type }}</td>
+                    <td width="10%">{{ words.sentiment_score }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -50,7 +50,7 @@
             {% for val in entryvalues %}
                 cDate = new Date('{{ val.created|date:"c" }}');
                 newDate = new Date(cDate.getFullYear(), cDate.getMonth(), cDate.getDate());
-                data.addRows([[newDate, {{ val.sentimentScore }}]]);
+                data.addRows([[newDate, {{ val.sentiment_score }}]]);
             {%  endfor %}
 
             var options = {
