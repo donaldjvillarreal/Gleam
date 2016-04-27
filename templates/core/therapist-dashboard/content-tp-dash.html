@@ -237,3 +237,10 @@
     </div>
     {#    </section>#}
 {% endblock %}
+{% block js_scripts %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('#homeSidebar').addClass('active');
+        });
+    </script>
+{% endblock %}

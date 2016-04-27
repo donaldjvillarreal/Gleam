@@ -11,6 +11,7 @@ from journal import forms, models
 
 @login_required
 def entry(request):
+    # TODO: Entry for therapist, just add to DB, no analysis
     user = User.objects.get(id=request.user.id)
     textSentiment = 'http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment'
     keywordExtraction = 'http://gateway-a.watsonplatform.net/calls/text/TextGetRankedKeywords'
@@ -105,7 +106,20 @@ def word_list(request):
 def list_view(request):
     # TODO: have another route taking journal_id to show specific journal
     user = User.objects.get(id=request.user.id)
+    jEntry = models.Entry.objects.filter(user=user).order_by('-created')
 
+    # list of keywords and entities in order of relevance descending
+    keywords = models.Keywords.objects.filter(entry=jEntry[0])
+    entity = models.Entities.objects.filter(entry=jEntry[0])
+    wordlist = []
+    for words in keywords:
+        wordlist.append(words)
+    for words in entity:
+        wordlist.append(words)
+    wordlist = sorted(keywords, key=lambda x: x.relevance, reverse=True)
+
+    # list of journal entry scores for plot
+    entryvalues = jEntry.order_by('created')
     entry_list = models.Entry.objects.filter(user=user).order_by('-created')
     paginator = Paginator(entry_list, 5)
 
@@ -118,7 +132,8 @@ def list_view(request):
     except EmptyPage:
         entries = paginator.page(paginator.num_pages)
 
-    return render(request, 'journal/listview.html', {'entries': entries, 'paginator': paginator})
+    return render(request, 'journal/list-view.html', {'entries': entries, 'paginator': paginator, 'wordlist': wordlist,
+                                                      'entryvalues': entryvalues})
 
 
 def view_entry(request, entry_id):

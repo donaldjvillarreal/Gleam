@@ -65,22 +65,22 @@
                     <ul class="nav metismenu" id="sidebar-menu">
                         <li>
                             <div class="side-bar-profile"
-                                 style="background-image: url('/{{ request.user.userprofile.picture.url }}')"></div>
+                                 style="background-image: url('{{ request.user.userprofile.picture.url }}')"></div>
                         </li>
-                        <li>
-                            <a href="#"> <i class="fa fa-home"></i> Dashboard </a>
+                        <li id="homeSidebar">
+                            <a href="{% url 'core:therapist_home' %}"> <i class="fa fa-home"></i> Dashboard </a>
                         </li>
-                        <li>
+                        <li id="calendarSidebar">
                             <a href="#"> <i class="fa fa-calendar"></i> Appointments</a>
                         </li>
-                        <li id="chatSideBar">
-                            <a href="#"> <i class="fa fa-comment"></i> Chat</a>
+                        <li id="chatSidebar">
+                            <a href="{% url 'chat:chat_room' %}"> <i class="fa fa-comment"></i> Chat</a>
                         </li>
-                        <li id="tasksSideBar">
-                            <a href="{% url 'tasks:complete' %}"> <i class="fa fa-tasks"></i> Tasks</a>
+                        <li id="tasksSidebar">
+                            <a href=""> <i class="fa fa-group"></i> Patients</a>
                         </li>
-                        <li>
-                            <a href="#"> <i class="fa fa-book"></i> Journal</a>
+                        <li id="notesSidebar">
+                            <a href="#"> <i class="fa fa-sticky-note-o"></i> Notes</a>
                         </li>
                     </ul>
                 </nav>
@@ -89,8 +89,8 @@
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
         {#    main content #}
         <article class="content dashboard-page">{% block body %}{% endblock %}</article>
-        <footer class="footer">
-        </footer>
+        {#        <footer class="footer">#}
+        {#        </footer>#}
     </div>
 </div>
 

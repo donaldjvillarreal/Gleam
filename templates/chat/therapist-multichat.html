@@ -50,9 +50,8 @@
             var gotMessageHTML = '<div class="row">' +
                     '<div class="col-sm-1"><div class="chat-face patient-picture"></div></div>' +
                     '<div class="col-sm-11"><div class="card">' +
-                    '<div class="card-header {0} text-xs-center">{1}</div>' +
                     '<div class="card-block">' +
-                    '<div class="card-text">{2}<br><small class="text-muted pull-right">{3}</small></div></div>' +
+                    '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small></div></div>' +
                     '</div></div></div>';
             var sentMessageHTML = '<div class="row"><div class="col-sm-11"><div class="card">' +
                     '<div class="card-block">' +
@@ -78,6 +77,7 @@
             };
             var patientPictures = {};
             var therapistPicture;
+            $('#chatSidebar').addClass('active');
             contentBody.hide();
             if (!String.prototype.format) {
                 String.prototype.format = function () {
@@ -137,12 +137,9 @@
                     msgdiv = $("#room-" + data.room + " .messages");
                     if (data.username == therapistUsername) {
                         msgdiv.append(sentMessageHTML.format(
-                                escapeHtml(data.message, data.timestamp)));
+                                escapeHtml(data.message), data.timestamp));
                     } else {
-                        msgdiv.append(gotMessageHTML.format(colorHeaders[data.urgency],
-                                data.urgency,
-                                escapeHtml(data.message),
-                                data.timestamp));
+                        msgdiv.append(gotMessageHTML.format(escapeHtml(data.message), data.timestamp));
                         $('#new-' + data.room).show();
                     }
                     chatLog = $('#chatLog-' + data.room);
@@ -162,8 +159,7 @@
                                     escapeHtml(data.old_messages[i].message),
                                     data.old_messages[i].timestamp));
                         } else {
-                            $('#chatLog-' + data.join).append(gotMessageHTML.format(colorHeaders[data.old_messages[i].urgency],
-                                    data.old_messages[i].urgency,
+                            $('#chatLog-' + data.join).append(gotMessageHTML.format(
                                     escapeHtml(data.old_messages[i].message),
                                     data.old_messages[i].timestamp));
                         }
