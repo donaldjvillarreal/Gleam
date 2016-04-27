@@ -9,16 +9,17 @@ import datetime
 
 from journal import forms, models
 
+
 # Create your views here.
 @login_required
-def journalEntry(request):
+def entry(request):
     user = User.objects.get(id=request.user.id)
     textSentiment = 'http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment'
     keywordExtraction = 'http://gateway-a.watsonplatform.net/calls/text/TextGetRankedKeywords'
     # entityExtraction = 'http://access.alchemyapi.com/calls/text/TextGetRankedNamedEntities'
     key = 'fe9480c1e35a7ade844fa82699c8d7e6792f14bb'
     if request.method == 'POST':
-        entry_form = forms.entryForm(data=request.POST)
+        entry_form = forms.EntryForm(data=request.POST)
 
         if entry_form.is_valid():
             journal_entry = entry_form.save(commit=False)
@@ -26,15 +27,16 @@ def journalEntry(request):
             myText = request.POST.get('entry')
             tdata = requests.get(textSentiment, {'apikey': key, 'text': myText, 'outputMode': 'json'})
             tresponse = tdata.json()
-            journal_entry.sentimentType = tresponse['docSentiment']['type']
+            journal_entry.sentiment_type = tresponse['docSentiment']['type']
             if tresponse['docSentiment']['type'] == 'neutral':
-                journal_entry.sentimentScore = 0
+                journal_entry.sentiment_score = 0
             else:
-                journal_entry.sentimentScore = tresponse['docSentiment']['score']
+                journal_entry.sentiment_score = tresponse['docSentiment']['score']
             journal_entry.save()
 
             # Keyword Extraction
-            kdata = requests.get(keywordExtraction, {'apikey': key, 'text': myText, 'outputMode': 'json', 'sentiment': 1})
+            kdata = requests.get(keywordExtraction,
+                                 {'apikey': key, 'text': myText, 'outputMode': 'json', 'sentiment': 1})
             kresponse = kdata.json()
 
             for keyword in kresponse['keywords']:
@@ -42,11 +44,11 @@ def journalEntry(request):
                     keyScore = 0
                 else:
                     keyScore = keyword['sentiment']['score']
-                models.keywords.objects.create(entry=journal_entry,
+                models.Keywords.objects.create(entry=journal_entry,
                                                text=keyword['text'],
                                                relevance=keyword['relevance'],
-                                               sentimentType=keyword['sentiment']['type'],
-                                               sentimentScore=keyScore)
+                                               sentiment_type=keyword['sentiment']['type'],
+                                               sentiment_score=keyScore)
 
                 # Entity Extraction
                 # edata = requests.get(entityExtraction, {'apikey': key, 'text': myText, 'outputMode': 'json', 'sentiment': 1})
@@ -63,26 +65,26 @@ def journalEntry(request):
                 #                                       relevance = entity['relevance'],
                 #                                       count = entity['count'],
                 #                                       text = entity['text'],
-                #                                       sentimentType = entity['sentiment']['type'],
-                #                                       sentimentScore = entScore)
+                #                                       sentiment_type = entity['sentiment']['type'],
+                #                                       sentiment_score = entScore)
                 # HttpResponseRedirect(reverse('course:start_course'))
         else:
             print entry_form.errors
 
     else:
-        entry_form = forms.entryForm()
+        entry_form = forms.EntryForm()
     return render(request, 'journal/entry.html', {'entry_form': entry_form})
 
 
 @login_required
-def wordListView(request):
+def word_list(request):
     if request.method == 'GET':
         user = User.objects.get(id=request.user.id)
-        jEntry = models.journalEntry.objects.filter(user=user).order_by('-created')
+        jEntry = models.Entry.objects.filter(user=user).order_by('-created')
 
         # list of keywords and entities in order of relevance descending
-        keywords = models.keywords.objects.filter(entry=jEntry[0])
-        entity = models.entities.objects.filter(entry=jEntry[0])
+        keywords = models.Keywords.objects.filter(entry=jEntry[0])
+        entity = models.Entities.objects.filter(entry=jEntry[0])
         wordlist = []
         for words in keywords:
             wordlist.append(words)

@@ -2,7 +2,6 @@
 from django.contrib import admin
 from journal import models
 
-
-admin.site.register(models.journalEntry)
-admin.site.register(models.keywords)
-admin.site.register(models.entities)
+admin.site.register(models.Entry)
+admin.site.register(models.Keywords)
+admin.site.register(models.Entities)

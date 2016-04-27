@@ -4,6 +4,6 @@ from journal import views
 
 urlpatterns = [
     #url(r'^$', views.case_index, name='index'),
-    url(r'^entry/$', views.journalEntry, name='entry'),
-    url(r'^words/$', views.wordListView, name='words'),
+    url(r'^entry/$', views.entry, name='entry'),
+    url(r'^words/$', views.word_list, name='words'),
 ]

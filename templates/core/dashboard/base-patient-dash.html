@@ -66,18 +66,18 @@
                                  style="background-image: url('/{{ request.user.userprofile.picture.url }}')"></div>
                         </li>
                         <li>
-                            <a href="#"> <i class="fa fa-home"></i> Dashboard </a>
+                            <a href="#" id="homeSidebar"> <i class="fa fa-home"></i> Dashboard </a>
                         </li>
                         <li>
-                            <a href="#"> <i class="fa fa-calendar"></i> Appointments</a>
+                            <a href="#" id="appointmentsSidebar"> <i class="fa fa-calendar"></i> Appointments</a>
                         </li>
-                        <li id="chatSideBar">
-                            <a href="#"> <i class="fa fa-comment"></i> Chat</a>
+                        <li id="chatSidebar">
+                            <a href="{% url 'chat:chat_room' %}"> <i class="fa fa-comment"></i> Chat</a>
                         </li>
-                        <li id="tasksSideBar">
+                        <li id="tasksSidebar">
                             <a href="{% url 'tasks:complete' %}"> <i class="fa fa-tasks"></i> Tasks</a>
                         </li>
-                        <li>
+                        <li id="journalSidebar">
                             <a href="#"> <i class="fa fa-book"></i> Journal</a>
                         </li>
                     </ul>
