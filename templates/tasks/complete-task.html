@@ -12,14 +12,14 @@
                     <div class="row">
                         <div class="card card-block">
                             <h3 class="card-title">
+                                {{ task.title }}
                                 {% if task.completed %}
-                                    <span class="fa fa-check text-primary task-toggle"
-                                          data-task-id="{{ task.id }}"></span>
+                                    <span class="btn btn-primary task-toggle pull-right"
+                                          data-task-id="{{ task.id }}">Marked incomplete</span>
                                 {% else %}
-                                    <span class="fa fa-check text-default task-toggle"
-                                          data-task-id="{{ task.id }}"></span>
-                                {% endif %}
-                                {{ task.title }}</h3>
+                                    <span class="btn btn-secondary task-toggle pull-right"
+                                          data-task-id="{{ task.id }}">Mark complete</span>
+                                {% endif %}</h3>
                             <p class="card-text">
                                 <span class="label label-info">Due {{ task.deadline }}</span>
                                 <br>
@@ -50,11 +50,13 @@
                     },
                     success: function (data) {
                         if (data.state) {
-                            that.removeClass('text-default');
-                            that.addClass('text-primary');
+                            that.removeClass('btn-secondary');
+                            that.addClass('btn-primary');
+                            that.html('Mark incomplete');
                         } else {
-                            that.removeClass('text-primary');
-                            that.addClass('text-default');
+                            that.removeClass('btn-primary');
+                            that.addClass('btn-secondary');
+                            that.html('Mark complete');
                         }
                     },
                     error: function (err) {

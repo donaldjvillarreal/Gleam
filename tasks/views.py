@@ -46,5 +46,6 @@ class PatientTaskView(View):
                 task.completed = False
             else:
                 task.completed = True
+            task.completed_on = datetime.now()
             task.save()
             return HttpResponse(json.dumps({'state': task.completed}))
