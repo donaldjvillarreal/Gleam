@@ -66,11 +66,11 @@
                             <div class="side-bar-profile"
                                  style="background-image: url('{{ request.user.userprofile.picture.url }}')"></div>
                         </li>
-                        <li>
-                            <a href="#" id="homeSidebar"> <i class="fa fa-home"></i> Dashboard </a>
+                        <li id="homeSidebar">
+                            <a href="#"> <i class="fa fa-home"></i> Dashboard </a>
                         </li>
-                        <li>
-                            <a href="#" id="appointmentsSidebar"> <i class="fa fa-calendar"></i> Appointments</a>
+                        <li id="appointmentsSidebar">
+                            <a href="#"> <i class="fa fa-calendar"></i> Appointments</a>
                         </li>
                         <li id="chatSidebar">
                             <a href="{% url 'chat:chat_room' %}"> <i class="fa fa-comment"></i> Chat</a>

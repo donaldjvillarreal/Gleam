@@ -43,6 +43,76 @@
                     </div>
                 </div>
                 <div class="card-block">
+                    <ul class="item-list" id="task-feed">
+                        <li class="item" id="task-{{ task.id }}">
+                            <div class="item-row">
+                                <div class="item-col item-col-title">
+                                    Lauren
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">Journal</h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <ul class="item-list striped">
+                        <li class="item item-list-header hidden-sm-down">
+                            <div class="item-row">
+                                <div class="item-col item-col-header fixed item-col-img xs"></div>
+                                <div class="item-col item-col-header item-col-title">
+                                    <div><span>Name</span></div>
+                                </div>
+                                <div class="item-col item-col-header item-col-date">
+                                    <div><span>Published</span></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-row">
+                                <div class="item-col fixed xs">
+                                    <a href="">
+                                        <div class="item-img xs rounded"></div>
+                                    </a>
+                                </div>
+                                <div class="item-col item-col-title no-overflow">
+                                    <div>
+                                        <a href="" class="">
+                                            <h4 class="item-title no-wrap">
+                                                12 Myths Uncovered About IT &amp; Software
+                                            </h4></a>
+                                    </div>
+                                </div>
+                                <div class="item-col item-col-date">
+                                    <div class="item-heading">Published</div>
+                                    <div> 21 SEP 10:45</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">Progress</h3>
+                    </div>
+                </div>
+                <div class="card-block">
 
                 </div>
             </div>
@@ -67,7 +137,7 @@
                     $('#empty-task').hide();
                 }
             };
-            $('#tasksSidebar').addClass('active');
+            $('#homeSidebar').addClass('active');
             checkTaskFeed();
             $('.task-toggle').on('click', function (e) {
                 var that = $(this);
