@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gleam - {% block title %}{% endblock %}</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="application/javascript" src="{% static 'js/kill-iframe.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dashboard/reset.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     {% block head %}{% endblock %}
 
     <!-- HTML5 Shiv -->
@@ -18,78 +18,86 @@
 </head>
 <body>
 
-<header class="cd-main-header">
-    <a href="#0" class="cd-logo"><img src="{% static 'images/gleam-124.png' %}" alt="Logo"></a>
 
-    {#    <div class="cd-search">#}
-    {#        <form action="#0">#}
-    {#            <input type="search" placeholder="Search...">#}
-    {#        </form>#}
-    {#    </div> <!-- cd-search -->#}
-
-    <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
-
-    <nav class="cd-nav">
-        <ul class="cd-top-nav">
-            <li class="has-children account">
-                <a href="#0">
-                    <img src="/{{ request.user.userprofile.picture.url }}" alt="avatar">
-                    <span class="small">{{ request.user.first_name }}</span>
-                </a>
-
-                <ul>
-                    <li><a href="#0">Profile</a></li>
-                    <li><a href="#0">Settings</a></li>
-                    <li><a href="#0">Logout</a></li>
+<div class="main-wrapper">
+    <div class="app" id="app">
+        <header class="header">
+            <div class="header-block hidden-sm-down">
+                <div class="brand">
+                    <div class="logo-124"
+                         style="background-image: url('{% static 'images/gleam-124.png' %}')"></div>
+                </div>
+            </div>
+            <div class="header-block header-block-collapse hidden-lg-up">
+                <button class="collapse-btn" id="sidebar-collapse-btn"><i class="fa fa-bars"></i></button>
+            </div>
+            <div class="header-block header-block-nav">
+                <ul class="nav-profile">
+                    <li class="notifications">
+                        <a href="" data-toggle="dropdown"> <i class="fa fa-bell-o"></i></a>
+                    </li>
+                    <li class="profile dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <div class="img"
+                                 style="background-image: url('/{{ request.user.userprofile.picture.url }}');"></div><span
+                                class="name">{{ request.user.first_name }}</span> </a>
+                        <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <a class="dropdown-item" href="{% url 'authenticate:profile' request.user.id %}"> <i
+                                    class="fa fa-user icon"></i> Profile </a>
+                            <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </a>
+                            <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item"
+                               href="{% url 'authenticate:logout' %}?next={{ request.path | urlencode }}"> <i
+                                    class="fa fa-power-off icon"></i> Logout </a>
+                        </div>
+                    </li>
                 </ul>
-            </li>
-        </ul>
-    </nav>
-</header> <!-- .cd-main-header -->
-
-<main class="cd-main-content">
-    <nav class="cd-side-nav">
-        <ul>
-            <li class="cd-label">NAVIGATE</li>
-            <li class="has-children">
-                <a href="#">Home</a>
-                <ul>
-                    <li><a href="#">All Data</a></li>
-                    <!-- other list items here -->
-                </ul>
-            </li>
-            <li class="has-children">
-                <a href="#">Notifications</a>
-
-                <ul>
-                    <li><a href="#">All Notifications</a></li>
-                    <!-- other list items here -->
-                </ul>
-            </li>
-
-            <!-- other list items here -->
-        </ul>
-
-        <!-- other unordered lists here -->
-    </nav>
-
-    <div class="content-wrapper">
-        <br>
-        {% block body %}{% endblock %}
-        <!-- main content here -->
-    </div> <!-- .content-wrapper -->
-
-</main> <!-- .cd-main-content -->
-
+            </div>
+        </header>
+        <aside class="sidebar">
+            <div class="sidebar-container">
+                <div class="sidebar-header"></div>
+                <nav class="menu">
+                    <ul class="nav metismenu" id="sidebar-menu">
+                        <li>
+                            <div class="side-bar-profile"
+                                 style="background-image: url('/{{ request.user.userprofile.picture.url }}')"></div>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="fa fa-home"></i> Dashboard </a>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="fa fa-calendar"></i> Appointments</a>
+                        </li>
+                        <li id="chatSideBar">
+                            <a href="#"> <i class="fa fa-comment"></i> Chat</a>
+                        </li>
+                        <li id="tasksSideBar">
+                            <a href="{% url 'tasks:complete' %}"> <i class="fa fa-tasks"></i> Tasks</a>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="fa fa-book"></i> Journal</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        {#    main content #}
+        <article class="content dashboard-page">{% block body %}{% endblock %}</article>
+        <footer class="footer">
+        </footer>
+    </div>
+</div>
 
 <script type="application/javascript" src="{% static 'js/jquery-latest.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/tether.min.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/bootstrap.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/jq.redirect.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/escape-html.js' %}"></script>
-<script type="application/javascript" src="{% static 'js/dashboard/modernizr.js' %}"></script>
-<script type="application/javascript" src="{% static 'js/dashboard/jquery.menu-aim.js' %}"></script>
-<script type="application/javascript" src="{% static 'js/dashboard/main.js' %}"></script>
+<script type="application/javascript" src="{% static 'js/dashboard/metisMenu.min.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/base-init.js' %}"></script>
 {% block js_scripts %}
 {% endblock %}
