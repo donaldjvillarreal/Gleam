@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from core import forms
 from tasks.models import MainTask
+from journal.models import Entry
 
 
 def index(request):
@@ -41,7 +42,8 @@ class PatientHomeView(View):
     def get(self, request):
         # user = UserProfile.objects.
         return render(request, 'core/dashboard/patient-home.html',
-                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id)})
+                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id),
+                       'journals': Entry.objects.filter(user_id=request.user.id).order_by('-created')[:5]})
 
     @method_decorator(login_required)
     def post(self, request):

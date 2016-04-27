@@ -47,7 +47,7 @@
                         <li class="item" id="task-{{ task.id }}">
                             <div class="item-row">
                                 <div class="item-col item-col-title">
-                                    Lauren
+                                    <span>Lauren</span>
                                 </div>
 
                             </div>
@@ -79,6 +79,7 @@
                                 </div>
                             </div>
                         </li>
+                        {% for journal in journals %}
                         <li class="item">
                             <div class="item-row">
                                 <div class="item-col fixed xs">
@@ -89,17 +90,16 @@
                                 <div class="item-col item-col-title no-overflow">
                                     <div>
                                         <a href="" class="">
-                                            <h4 class="item-title no-wrap">
-                                                12 Myths Uncovered About IT &amp; Software
-                                            </h4></a>
+                                            <h4 class="item-title no-wrap">{{ journal.title }} </h4></a>
                                     </div>
                                 </div>
                                 <div class="item-col item-col-date">
                                     <div class="item-heading">Published</div>
-                                    <div> 21 SEP 10:45</div>
+                                    <div> {{ journal.created }}</div>
                                 </div>
                             </div>
                         </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
