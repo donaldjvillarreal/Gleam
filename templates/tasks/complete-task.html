@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "core/dashboard/base-patient-dash.html" %}
 {% load staticfiles %}
 {% block title %}Create Homework{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/DateTimePicker.min.css' %}">
 {% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="">
         <div class="row">
             <div class="col-sm-12" id="task-feed">
                 {% for task in tasks %}
