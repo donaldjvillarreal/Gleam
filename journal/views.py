@@ -8,6 +8,7 @@ import requests
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from journal import forms, models
 
+
 # Create your views here.
 @login_required
 def entry(request):
@@ -100,6 +101,7 @@ def word_list(request):
     return render(request, 'journal/wordlist.html', {'wordlist': wordlist,
                                                      'entryvalues': entryvalues})
 
+
 @login_required
 def list_view(request):
     user = User.objects.get(id=request.user.id)
@@ -151,8 +153,12 @@ def list_view(request):
                                                sentiment_type=keyword['sentiment']['type'],
                                                sentiment_score=keyScore)
                 return render(request, 'journal/listview.html', {'entry_form': entry_form, 'entries': entries,
-                                                              'paginator': paginator})
+                                                                 'paginator': paginator})
         else:
             print entry_form.errors
 
     return render(request, 'journal/listview.html', {'entries': entries, 'paginator': paginator})
+
+
+def view_entry(request, entry_id):
+    return render(request, 'journal/view-entry.html', {'entry': models.Entry.objects.get(id=entry_id)})

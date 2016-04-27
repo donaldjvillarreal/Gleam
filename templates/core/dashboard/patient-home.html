@@ -80,25 +80,25 @@
                             </div>
                         </li>
                         {% for journal in journals %}
-                        <li class="item">
-                            <div class="item-row">
-                                <div class="item-col fixed xs">
-                                    <a href="">
-                                        <div class="item-img xs rounded"></div>
-                                    </a>
-                                </div>
-                                <div class="item-col item-col-title no-overflow">
-                                    <div>
-                                        <a href="" class="">
-                                            <h4 class="item-title no-wrap">{{ journal.title }} </h4></a>
+                            <li class="item">
+                                <div class="item-row">
+                                    <div class="item-col fixed xs">
+                                        <a href="">
+                                            <div class="item-img xs rounded"></div>
+                                        </a>
+                                    </div>
+                                    <div class="item-col item-col-title no-overflow">
+                                        <div>
+                                            <a href="{% url 'journal:view_entry' journal.id %}" class="">
+                                                <h4 class="item-title no-wrap">{{ journal.title }} </h4></a>
+                                        </div>
+                                    </div>
+                                    <div class="item-col item-col-date">
+                                        <div class="item-heading">Published</div>
+                                        <div> {{ journal.created }}</div>
                                     </div>
                                 </div>
-                                <div class="item-col item-col-date">
-                                    <div class="item-heading">Published</div>
-                                    <div> {{ journal.created }}</div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>

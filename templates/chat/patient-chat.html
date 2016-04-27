@@ -8,7 +8,7 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="" id="chatLog" style="height: 500px; position: relative;">
+            <div class="" id="chatLog" style="height: 300px; position: relative;">
             </div>
         </div>
         <hr>
@@ -73,6 +73,7 @@
                     '<div class="card-block">' +
                     '<div class="card-text">{0}<br><small class="text-muted pull-right">{1}</small>' +
                     '</div></div></div></div></div>';
+            // TODO: Have a card for empty chat log
             var colorHeaders = {
                 'minor': 'card-success',
                 'moderate': 'card-primary',
@@ -164,6 +165,7 @@
 
 
             $('#messageForm').on('submit', function (e) {
+                console.log(roomId);
                 if (messageBox.val() != '') {
                     socket.send(JSON.stringify({
                         "command": "send",

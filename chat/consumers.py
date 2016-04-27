@@ -57,9 +57,6 @@ def chat_join(message):
     # to so that everyone in the chat room gets them.
     room.websocket_group.add(message.reply_channel)
     message.channel_session['rooms'] = list(set(message.channel_session['rooms']).union([room.id]))
-    # Send a message back that will prompt them to open the room
-    # Done server-side so that we could, for example, make people
-    # join rooms automatically.
     user_id = message.user.id
     if user_id == room.therapist_id:
         title = room.therapist.username
