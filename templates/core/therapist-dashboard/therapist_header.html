@@ -1,35 +1,35 @@
-        <header class="header">
-            <div class="header-block hidden-sm-down hidden-md-down">
-                <div class="brand">
-                    <div class="logo-124"
-                         style="background-image: url('{% static 'images/gleam-124.png' %}')"></div>
+<header class="header">
+    <div class="header-block hidden-sm-down hidden-md-down">
+        <div class="brand">
+            <div class="logo-124"
+                 style="background-image: url('{% static 'images/gleam-124.png' %}')"></div>
+        </div>
+    </div>
+    <div class="header-block header-block-collapse hidden-lg-up">
+        <button class="collapse-btn" id="sidebar-collapse-btn"><i class="fa fa-bars"></i></button>
+    </div>
+    <div class="header-block header-block-nav">
+        <ul class="nav-profile">
+            <li class="notifications">
+                <a href="" data-toggle="dropdown"> <i class="fa fa-bell-o"></i></a>
+            </li>
+            <li class="profile dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                   aria-haspopup="true" aria-expanded="false">
+                    <div class="img"
+                         style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div><span
+                        class="name">{{ request.user.first_name }}</span> </a>
+                <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <a class="dropdown-item" href="{% url 'authenticate:profile' request.user.id %}"> <i
+                            class="fa fa-user icon"></i> Profile </a>
+                    <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </a>
+                    <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item"
+                       href="{% url 'authenticate:logout' %}?next={{ request.path | urlencode }}"> <i
+                            class="fa fa-power-off icon"></i> Logout </a>
                 </div>
-            </div>
-            <div class="header-block header-block-collapse hidden-lg-up">
-                <button class="collapse-btn" id="sidebar-collapse-btn"><i class="fa fa-bars"></i></button>
-            </div>
-            <div class="header-block header-block-nav">
-                <ul class="nav-profile">
-                    <li class="notifications">
-                        <a href="" data-toggle="dropdown"> <i class="fa fa-bell-o"></i></a>
-                    </li>
-                    <li class="profile dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            <div class="img"
-                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div><span
-                                class="name">{{ request.user.first_name }}</span> </a>
-                        <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <a class="dropdown-item" href="{% url 'authenticate:profile' request.user.id %}"> <i
-                                    class="fa fa-user icon"></i> Profile </a>
-                            <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </a>
-                            <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"
-                               href="{% url 'authenticate:logout' %}?next={{ request.path | urlencode }}"> <i
-                                    class="fa fa-power-off icon"></i> Logout </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </header>
+            </li>
+        </ul>
+    </div>
+</header>

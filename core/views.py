@@ -1,11 +1,17 @@
 # coding=utf-8
+import json
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
+from django.utils.decorators import method_decorator
+from django.utils.timezone import datetime
+from django.http import HttpResponseRedirect, HttpResponse
 
 from core import forms
+from tasks.models import MainTask
+from journal.models import Entry
 
 
 def index(request):
@@ -39,6 +45,23 @@ def landing(request):
     return render(request, 'core/landing/landing.html', {})
 
 
-@login_required()
-def patient_home(request):
-    return render(request, 'core/dashboard/patient-home.html', {})
+
+class PatientHomeView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        # user = UserProfile.objects.
+        return render(request, 'core/dashboard/patient-home.html',
+                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id),
+                       'journals': Entry.objects.filter(user_id=request.user.id).order_by('-created')[:5]})
+
+    @method_decorator(login_required)
+    def post(self, request):
+        if 'toggle' in request.POST:
+            task = MainTask.objects.get(id=int(request.POST['task']), patient__user_id=request.user.id)
+            if task.completed:
+                task.completed = False
+            else:
+                task.completed = True
+            task.completed_on = datetime.now()
+            task.save()
+            return HttpResponse(json.dumps({'state': task.completed}))

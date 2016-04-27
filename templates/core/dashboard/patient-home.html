@@ -1,9 +1,166 @@
-{% extends 'core/therapist-dashboard/base-therapist-dash.html' %}
+{% extends 'core/dashboard/base-patient-dash.html' %}
 {% load static from staticfiles %}
 {% block title %}Patient Home{% endblock %}
 {% block head %}
 {% endblock %}
 {% block body %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">Tasks</h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <ul class="item-list" id="task-feed">
+                        {% for task in tasks %}
+                            {% if not task.completed %}
+                                <li class="item" id="task-{{ task.id }}">
+                                    <div class="item-row">
+                                        <div class="item-col item-col-title">
+                                            <label>
+                                                <input class="checkbox task-toggle" type="checkbox" checked="checked"
+                                                       hidden
+                                                       data-task-id="{{ task.id }}">
+                                                <span>{{ task.title }}</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">Upcoming Appointments</h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <ul class="item-list" id="task-feed">
+                        <li class="item" id="task-{{ task.id }}">
+                            <div class="item-row">
+                                <div class="item-col item-col-title">
+                                    <span>Lauren</span>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">Journal</h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <ul class="item-list striped">
+                        <li class="item item-list-header hidden-sm-down">
+                            <div class="item-row">
+                                <div class="item-col item-col-header fixed item-col-img xs"></div>
+                                <div class="item-col item-col-header item-col-title">
+                                    <div><span>Name</span></div>
+                                </div>
+                                <div class="item-col item-col-header item-col-date">
+                                    <div><span>Published</span></div>
+                                </div>
+                            </div>
+                        </li>
+                        {% for journal in journals %}
+                        <li class="item">
+                            <div class="item-row">
+                                <div class="item-col fixed xs">
+                                    <a href="">
+                                        <div class="item-img xs rounded"></div>
+                                    </a>
+                                </div>
+                                <div class="item-col item-col-title no-overflow">
+                                    <div>
+                                        <a href="" class="">
+                                            <h4 class="item-title no-wrap">{{ journal.title }} </h4></a>
+                                    </div>
+                                </div>
+                                <div class="item-col item-col-date">
+                                    <div class="item-heading">Published</div>
+                                    <div> {{ journal.created }}</div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">Progress</h3>
+                    </div>
+                </div>
+                <div class="card-block">
+
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block js_scripts %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            var noTaskCard = '<li class="item">' +
+                    '<div class="item-row">' +
+                    '<div class="item-col item-col-title">' +
+                    '<span>No new tasks</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</li>';
+            var checkTaskFeed = function () {
+                var taskFeed = $('#task-feed').find('> li');
+                if (taskFeed.length === 0) {
+                    $('#task-feed').append(noTaskCard);
+                } else {
+                    $('#empty-task').hide();
+                }
+            };
+            $('#homeSidebar').addClass('active');
+            checkTaskFeed();
+            $('.task-toggle').on('click', function (e) {
+                var that = $(this);
+                $.ajax({
+                    url: '{% url 'tasks:complete' %}',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'task': that.attr('data-task-id'),
+                        'toggle': true
+                    },
+                    success: function (data) {
+                        if (data.state) {
+                            $('#task-' + that.attr('data-task-id')).remove();
+                        }
+                        checkTaskFeed();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

@@ -7,9 +7,10 @@
     <title>Gleam - {% block title %}{% endblock %}</title>
     <script type="application/javascript" src="{% static 'js/kill-iframe.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/dashboard/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     {% block head %}{% endblock %}
 
@@ -65,11 +66,11 @@
                             <div class="side-bar-profile"
                                  style="background-image: url('{{ request.user.userprofile.picture.url }}')"></div>
                         </li>
-                        <li>
-                            <a href="#" id="homeSidebar"> <i class="fa fa-home"></i> Dashboard </a>
+                        <li id="homeSidebar">
+                            <a href="#"> <i class="fa fa-home"></i> Dashboard </a>
                         </li>
-                        <li>
-                            <a href="#" id="appointmentsSidebar"> <i class="fa fa-calendar"></i> Appointments</a>
+                        <li id="appointmentsSidebar">
+                            <a href="#"> <i class="fa fa-calendar"></i> Appointments</a>
                         </li>
                         <li id="chatSidebar">
                             <a href="{% url 'chat:chat_room' %}"> <i class="fa fa-comment"></i> Chat</a>
@@ -97,6 +98,7 @@
 <script type="application/javascript" src="{% static 'js/bootstrap.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/jq.redirect.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/escape-html.js' %}"></script>
+<script type="application/javascript" src="{% static 'js/dashboard/animations.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/dashboard/metisMenu.min.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/base-init.js' %}"></script>
 {% block js_scripts %}
