@@ -40,9 +40,11 @@
     <script type="text/javascript">
         google.charts.load('current', {packages: ['corechart', 'line']});
         google.charts.setOnLoadCallback(drawBasic);
-
+        $('#journalSidebar').addClass('active');
         function drawBasic() {
 
+            var options;
+            var chart;
             var data = new google.visualization.DataTable();
             data.addColumn('date', 'Entry Date');
             data.addColumn('number', 'Sentiment Score');
@@ -53,7 +55,7 @@
                 data.addRows([[newDate, {{ val.sentiment_score }}]]);
             {%  endfor %}
 
-            var options = {
+            options = {
                 hAxis: {
                     title: 'Date'
                 },
@@ -68,7 +70,7 @@
                 width: 600
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
             chart.draw(data, options);
         }
