@@ -37,7 +37,7 @@ class PatientTaskView(View):
     def get(self, request):
         # user = UserProfile.objects.
         return render(request, 'tasks/complete-task.html',
-                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id)})
+                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id)[:4]})
 
     @method_decorator(login_required)
     def post(self, request):

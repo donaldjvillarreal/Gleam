@@ -13,7 +13,7 @@ class MainTask(models.Model):
     task = models.TextField()
     deadline = models.DateTimeField()
     completed = models.BooleanField(default=False)
-    completed_on = models.DateTimeField(null=True)
+    completed_on = models.DateTimeField(null=True, blank=True)
     # created = models.DateTimeField(auto_now_add=True)
     created = models.DateTimeField(blank=False, null=False)
 
@@ -26,7 +26,7 @@ class SubTask(models.Model):
     main_task = models.ForeignKey(MainTask)
     task = models.TextField()
     completed = models.BooleanField(default=False)
-    completed_on = models.DateTimeField(null=True)
+    completed_on = models.DateTimeField(null=True, blank=True)
 
     def __unicode__(self):
         return self.task
