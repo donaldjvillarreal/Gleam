@@ -37,3 +37,8 @@ def therapist_home(request):
 
 def landing(request):
     return render(request, 'core/landing/landing.html', {})
+
+
+@login_required()
+def patient_home(request):
+    return render(request, 'core/dashboard/patient-home.html', {})
