@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from journal import forms, models
 
 
-# Create your views here.
+
 @login_required
 def entry(request):
     user = User.objects.get(id=request.user.id)
@@ -104,18 +104,20 @@ def word_list(request):
 
 @login_required
 def list_view(request):
-    user = User.objects.get(id=request.user.id)
+    if request.method == 'GET':
+        user = User.objects.get(id=request.user.id)
 
-    entry_list = models.Entry.objects.filter(user=user).order_by('-created')
-    paginator = Paginator(entry_list, 5)
+        entry_list = models.Entry.objects.filter(user=user).order_by('-created')
+        paginator = Paginator(entry_list, 5)
 
-    page = request.GET.get('page')
-    try:
-        entries = paginator.page(page)
-    except PageNotAnInteger:
-        entries = paginator.page(1)
-    except EmptyPage:
-        entries = paginator.page(paginator.num_pages)
+        page = request.GET.get('page')
+
+        try:
+            entries = paginator.page(page)
+        except PageNotAnInteger:
+            entries = paginator.page(1)
+        except EmptyPage:
+            entries = paginator.page(paginator.num_pages)
 
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
