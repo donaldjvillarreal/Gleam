@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import datetime
 
+from authenticate.models import Therapist
+
 
 class Entry(models.Model):
     user = models.ForeignKey(User)
@@ -52,6 +54,10 @@ class Entities(models.Model):
 
 class Note(models.Model):
     note = models.TextField()
-    therapist = models.ForeignKey(User)
+    title = models.CharField(max_length=60, null=False, blank=False)
+    therapist = models.ForeignKey(Therapist)
 
     created_on = models.DateTimeField(default=datetime.now())
+
+    def __unicode__(self):
+        return self.therapist.user_profile.user.username + ' ' + self.title[:30]

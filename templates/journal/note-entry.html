@@ -1,8 +1,7 @@
-{% extends "core/dashboard/base-patient-dash.html" %}
-{% load staticfiles %}
+{% extends "core/therapist-dashboard/base-therapist-dash.html" %}
+{% load static from staticfiles %}
 {% block title %}Journal{% endblock %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock %}
 {% block body %}
 
@@ -10,21 +9,20 @@
     <div class="container">
         <form role="form" method="post" action="">
             {% csrf_token %}
-            <div class="col-md-10"><h3>Journal Entry</h3></div>
+            <div class="col-md-10"><h3>Note Entry</h3></div>
             <div class="col-md-4">
                 <fieldset class="form-group">
-                    <input id="title" name="title" class="form-control" placeholder="Title Your Entry">
+                    <input id="title" name="title" class="form-control" placeholder="Title">
                 </fieldset>
             </div>
             <div class="col-md-8" style="text-align: right;"><h5 id="tDate"></h5></div>
             <div class="col-md-12">
-                Let’s take some time to check in with you. How have you been doing for the past week?
+                Enter your note here
             </div>
             <div class="col-md-12">
                 <fieldset class="form-group">
-                    <textarea id="entry" name="entry" class="form-control" type="text"
-                              style="resize: none; height: 500px;"
-                              placeholder="What are the good and bad things that happened? How have you been feeling?  This is your chance to freely reflect- vent, brag, complain, rant, gush, whatever you feel like writing about!"></textarea>
+                    <textarea id="entry" name="note" class="form-control" type="text"
+                              style="resize: none; height: 500px;" required></textarea>
                     <div id="feedbackUser"></div>
                     {% if entry_form.entry.errors %}
                         <div>{{ entry_form.entry.errors }}</div>
@@ -44,7 +42,7 @@
 
             <fieldset class="form-group">
                 <div class="col-md-5">
-                    <input id="created" name="created" type="hidden" class="form-control">
+                    <input id="created" name="created_on" type="hidden" class="form-control">
                 </div>
             </fieldset>
 
@@ -56,9 +54,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var d = new Date();
-            $('#journalSidebar').addClass('active');
-            document.getElementById("tDate").innerHTML = d.toDateString();
-            document.getElementById("created").value = d.toISOString().replace("T", " ").substring(0, 16);
+            $('#notesSidebar').addClass('active');
+
+            $("#tDate").innerHTML = d.toDateString();
+            $("#created").value = d.toISOString().replace("T", " ").substring(0, 16);
 
             $("form").submit(function () {
                 var $input = $(this).find("input[id=title]");
@@ -67,6 +66,5 @@
                 }
             });
         });
-
     </script>
 {% endblock %}
