@@ -42,3 +42,7 @@ def landing(request):
 @login_required()
 def patient_home(request):
     return render(request, 'core/dashboard/patient-home.html', {})
+
+
+def patient_list(request):
+    return render(request, 'therapist/patientlist.html', {})
