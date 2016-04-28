@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -80,3 +81,7 @@ def dashboard(request):
         return therapist_home(request)
     else:
         return PatientHomeView.as_view()(request)
+
+
+def patient_list(request):
+    return render(request, 'therapist/patientlist.html', {})
