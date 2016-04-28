@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'^patient/$', views.PatientHomeView.as_view(), name='patient_home'),
     url(r'^therapist/$', views.therapist_home, name='therapist_home'),
     url(r'^$', views.landing, name='landing'),
+    url(r'^therapist/patient/list/$', views.patient_list, name='patient_list'),
+
 ]

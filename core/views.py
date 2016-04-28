@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -65,3 +66,7 @@ class PatientHomeView(View):
             task.completed_on = datetime.now()
             task.save()
             return HttpResponse(json.dumps({'state': task.completed}))
+
+
+def patient_list(request):
+    return render(request, 'therapist/patientlist.html', {})

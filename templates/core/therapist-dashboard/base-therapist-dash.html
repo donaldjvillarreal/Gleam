@@ -88,9 +88,11 @@
         </aside>
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
         {#    main content #}
-        <article class="content dashboard-page">{% block body %}{% endblock %}</article>
-        {#        <footer class="footer">#}
-        {#        </footer>#}
+        <article class="content dashboard-page">
+            {% block body %}{% endblock %}
+        </article>
+        <footer class="footer">
+        </footer>
     </div>
 </div>
 
@@ -102,6 +104,8 @@
 <script type="application/javascript" src="{% static 'js/dashboard/animations.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/therapist-dash/metisMenu.min.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/therapist-dash/therapist_notes.js' %}"></script>
+<script type="application/javascript" src="{% static 'js/therapist-dash/vendor.js' %}"></script>
+<script type="application/javascript" src="{% static 'js/therapist-dash/app.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/base-init.js' %}"></script>
 {% block js_scripts %}
 {% endblock %}
