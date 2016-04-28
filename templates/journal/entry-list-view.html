@@ -79,7 +79,7 @@
                         <tr>
                             <td>
                                 <div class="col-md-9">
-                                    {{ entry.title }}
+                                    <a href="{% url 'journal:view_entry' entry.id %}">{{ entry.title }}</a>
                                 </div>
                                 <div class="col-md-3">
                                     {{ entry.created|date:"M d, Y" }}
@@ -98,7 +98,8 @@
             {% if entries %}
                 <div class="card">
                     <div class="card-block">
-                        <h3 class="card-title">{{ entries.0.title }}</h3>
+                        <h3 class="card-title"><a
+                                href="{% url 'journal:view_entry' entries.0.id %}">{{ entries.0.title }}</a></h3>
                         <div class="card-text">{{ entries.0.entry }}</div>
                     </div>
                 </div>

@@ -160,10 +160,15 @@ def list_view(request):
         except EmptyPage:
             entries = paginator.page(paginator.num_pages)
 
-        return render(request, 'journal/list-view.html',
-                      {'entries': entries, 'paginator': paginator, 'wordlist': wordlist,
+        return render(request, 'journal/entry-list-view.html',
+                      {'entries': entries,
+                       'paginator': paginator,
+                       'wordlist': wordlist,
                        'entryvalues': entryvalues})
 
 
 def view_entry(request, entry_id):
-    return render(request, 'journal/view-entry.html', {'entry': models.Entry.objects.get(id=entry_id)})
+    if request.user.userprofile.is_therapist:
+        return render(request, 'journal/view-note.html', {'note': models.Note.objects.get(id=entry_id)})
+    else:
+        return render(request, 'journal/view-entry.html', {'entry': models.Entry.objects.get(id=entry_id)})

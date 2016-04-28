@@ -72,17 +72,17 @@
             <div id="listDiv">
                 <table class="table table-striped table-bordered table-hover">
                     <tbody>
-                    {% for entry in entries %}
+                    {% for note in entries %}
                         <tr>
                             <td>
                                 <div class="col-md-9">
-                                    {{ entry.title }}
+                                    <a href="{% url 'journal:view_entry' note.id %}">{{ note.title }}</a>
                                 </div>
                                 <div class="col-md-3">
-                                    {{ entry.created|date:"M d, Y" }}
+                                    {{ note.created|date:"M d, Y" }}
                                 </div>
                                 <div class="col-md-12">
-                                    {{ entry.note|truncatechars:250 }}
+                                    {{ note.note|truncatechars:250 }}
                                 </div>
                             </td>
                         </tr>
@@ -95,7 +95,8 @@
             {% if entries %}
                 <div class="card">
                     <div class="card-block">
-                        <h3 class="card-title">{{ entries.0.title }}</h3>
+                        <h3 class="card-title"><a
+                                href="{% url 'journal:view_entry' entries.0.id %}">{{ entries.0.title }}</a></h3>
                         <div class="card-text">{{ entries.0.note }}</div>
                     </div>
                 </div>

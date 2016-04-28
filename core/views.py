@@ -84,4 +84,4 @@ def dashboard(request):
 
 
 def patient_list(request):
-    return render(request, 'therapist/patientlist.html', {})
+    return render(request, 'therapist/patient-list.html', {})
