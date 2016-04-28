@@ -18,7 +18,16 @@ class MainTask(models.Model):
     created = models.DateTimeField(blank=False, null=False)
 
     def __unicode__(self):
-        return self.patient.user.username + ' ' + self.title
+        return self.patient.user.username + ' ' + self.title + ' completed: ' + str(self.completed)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'completed': self.completed,
+            'completed_on': str(self.completed_on),
+            'created': str(self.created)
+        }
 
 
 class SubTask(models.Model):

@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('points', models.IntegerField(default=0)),
                 ('gender', models.CharField(default='U', max_length=1, choices=[('M', 'Male'), ('F', 'Female'), ('U', 'Prefer Not to Answer')])),
-                ('picture', models.ImageField(null=True, upload_to='static/profile_images', blank=True)),
+                ('picture', models.ImageField(null=True, upload_to='static/profile-images', blank=True)),
                 ('dob', models.DateField()),
                 ('timezone', models.IntegerField(default=0)),
                 ('phone', models.CharField(blank=True, max_length=10, null=True, validators=[django.core.validators.RegexValidator(regex='^\\+?1?\\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])),

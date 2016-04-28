@@ -20,9 +20,8 @@
                                     <div class="item-row">
                                         <div class="item-col item-col-title">
                                             <label>
-                                                <input class="checkbox task-toggle" type="checkbox" checked="checked"
-                                                       hidden
-                                                       data-task-id="{{ task.id }}">
+                                                <input class="checkbox task-toggle pull-left" type="checkbox"
+                                                       data-task-id="{{ task.id }}" unchecked hidden>
                                                 <span>{{ task.title }}</span>
                                             </label>
                                         </div>
@@ -44,10 +43,10 @@
                 </div>
                 <div class="card-block">
                     <ul class="item-list" id="task-feed">
-                        <li class="item" id="task-{{ task.id }}">
+                        <li class="item">
                             <div class="item-row">
                                 <div class="item-col item-col-title">
-                                    <span>Lauren</span>
+                                    Lauren Sherman
                                 </div>
 
                             </div>
@@ -122,6 +121,8 @@
 {% block js_scripts %}
     <script type="application/javascript">
         $(document).ready(function () {
+            var checkTaskFeed;
+            var taskFeed;
             var noTaskCard = '<li class="item">' +
                     '<div class="item-row">' +
                     '<div class="item-col item-col-title">' +
@@ -129,20 +130,43 @@
                     '</div>' +
                     '</div>' +
                     '</li>';
-            var checkTaskFeed = function () {
-                var taskFeed = $('#task-feed').find('> li');
+            var taskCard = '<li class="item" id="task-{0}">' +
+                    '<div class="item-row">' +
+                    '<div class="item-col item-col-title">' +
+                    '<label>' +
+                    '<input class="checkbox task-toggle pull-left" type="checkbox"' +
+                    'data-task-id="{0}" unchecked hidden>' +
+                    '<span>{1}</span>' +
+                    '</label>' +
+                    '</div>' +
+                    '</div>' +
+                    '</li>';
+            if (!String.prototype.format) {
+                String.prototype.format = function () {
+                    var args = arguments;
+                    return this.replace(/{(\d+)}/g, function (match, number) {
+                        return typeof args[number] != 'undefined'
+                                ? args[number]
+                                : match
+                                ;
+                    });
+                };
+            }
+            taskFeed = $('#task-feed');
+            checkTaskFeed = function () {
+                taskFeed.find('> li');
                 if (taskFeed.length === 0) {
-                    $('#task-feed').append(noTaskCard);
+                    taskFeed.append(noTaskCard);
                 } else {
                     $('#empty-task').hide();
                 }
             };
             $('#homeSidebar').addClass('active');
             checkTaskFeed();
-            $('.task-toggle').on('click', function (e) {
+            $('body').on('click', '.task-toggle', function (e) {
                 var that = $(this);
                 $.ajax({
-                    url: '{% url 'tasks:complete' %}',
+                    url: '{% url 'core:patient_home' %}',
                     method: 'post',
                     dataType: 'json',
                     data: {
@@ -151,10 +175,18 @@
                         'toggle': true
                     },
                     success: function (data) {
+                        var i;
                         if (data.state) {
                             $('#task-' + that.attr('data-task-id')).remove();
                         }
-                        checkTaskFeed();
+                        if (data.tasks) {
+                            taskFeed.empty(); //remove children
+                            for (i = 0; i < data.tasks.length; i++) {
+                                taskFeed.append(taskCard.format(data.tasks[i].id, data.tasks[i].title));
+                            }
+                        } else {
+                            checkTaskFeed();
+                        }
                     },
                     error: function (err) {
                         console.log(err);
