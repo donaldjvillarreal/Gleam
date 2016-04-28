@@ -118,7 +118,8 @@ def word_list(request):
 @login_required
 def list_view(request):
     if request.user.userprofile.is_therapist:
-        entry_list = models.Note.objects.filter(therapist__user_profile__user_id=request.user.id).order_by('-created')
+        entry_list = models.Note.objects.filter(therapist__user_profile__user_id=request.user.id).order_by(
+            '-created_on')
         paginator = Paginator(entry_list, 5)
 
         page = request.GET.get('page')

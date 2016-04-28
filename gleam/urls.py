@@ -23,7 +23,6 @@ from authenticate import urls as auth_urls
 # from caseconcept import urls as cc_urls
 from core import urls as core_urls
 from journal import urls as journal_urls
-from therapist import urls as therapist_urls
 from chat import urls as chat_urls
 from tasks import urls as tasks_urls
 
@@ -35,7 +34,6 @@ urlpatterns = [
     # url(r'^qa/', include(qa_urls, namespace='qa')),
     # url(r'^case/', include(cc_urls, namespace='case')),
     url(r'^journal/', include(journal_urls, namespace='journal')),
-    url(r'^therapist/', include(therapist_urls, namespace='therapist')),
     url(r'^chat/', include(chat_urls, namespace='chat')),
     url(r'^tasks/', include(tasks_urls, namespace='tasks'))
 ]

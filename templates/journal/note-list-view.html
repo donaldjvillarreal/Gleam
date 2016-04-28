@@ -82,7 +82,7 @@
                                     {{ entry.created|date:"M d, Y" }}
                                 </div>
                                 <div class="col-md-12">
-                                    {{ entry.entry|truncatechars:250 }}
+                                    {{ entry.note|truncatechars:250 }}
                                 </div>
                             </td>
                         </tr>
@@ -96,7 +96,7 @@
                 <div class="card">
                     <div class="card-block">
                         <h3 class="card-title">{{ entries.0.title }}</h3>
-                        <div class="card-text">{{ entries.0.entry }}</div>
+                        <div class="card-text">{{ entries.0.note }}</div>
                     </div>
                 </div>
             {% endif %}
@@ -107,7 +107,7 @@
 {% block js_scripts %}
     <script type="application/javascript">
         $(document).ready(function () {
-            $('#noteSidebar').addClass('active');
+            $('#notesSidebar').addClass('active');
         });
     </script>
 {% endblock %}

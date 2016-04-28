@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'core',
     # 'caseconcept',
     'journal',
-    'therapist',
     'tasks',
     # Celery
     'djcelery',
