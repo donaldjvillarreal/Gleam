@@ -31,7 +31,7 @@ SECRET_KEY = '$-@3#bhbj9@p_n-gdsqk%h6zqw+74l4lq=yzsw-0f*q5cxq+-b'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '.herokuapp.com', 'localhost', 'www.gleamtherapy.com', 'gleamtherapy.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -145,7 +145,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATIC_PATH = os.path.join(BASE_DIR, 'static')

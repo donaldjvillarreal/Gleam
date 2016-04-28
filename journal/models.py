@@ -1,9 +1,9 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import datetime
 
 
-# Create your models here.
 class Entry(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=60, null=False, blank=False)
@@ -48,3 +48,10 @@ class Entities(models.Model):
 
     class Meta(object):
         verbose_name_plural = 'entities'
+
+
+class Note(models.Model):
+    note = models.TextField()
+    therapist = models.ForeignKey(User)
+
+    created_on = models.DateTimeField(default=datetime.now())

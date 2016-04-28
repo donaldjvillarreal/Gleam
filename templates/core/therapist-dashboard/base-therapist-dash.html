@@ -42,8 +42,8 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
                             <div class="img"
-                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div><span
-                                class="name">{{ request.user.first_name }}</span> </a>
+                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div>
+                            <span class="name">{{ request.user.first_name }}</span> </a>
                         <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item" href="{% url 'authenticate:profile' request.user.id %}"> <i
                                     class="fa fa-user icon"></i> Profile </a>
@@ -62,10 +62,10 @@
             <div class="sidebar-container">
                 <div class="sidebar-header"></div>
                 <nav class="menu">
-                    <ul class="nav metismenu" id="sidebar-menu">
+                    <ul class="nav mentismenu" id="sidebar-menu">
                         <li>
                             <div class="side-bar-profile"
-                                 style="background-image: url('{{ request.user.userprofile.picture.url }}')"></div>
+                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div>
                         </li>
                         <li id="homeSidebar">
                             <a href="{% url 'core:therapist_home' %}"> <i class="fa fa-home"></i> Dashboard </a>
@@ -78,6 +78,14 @@
                         </li>
                         <li id="tasksSidebar">
                             <a href=""> <i class="fa fa-group"></i> Patients</a>
+                            <ul class="collapse">
+                                <li><a href="charts-flot.html">
+                                    Flot Charts
+                                </a></li>
+                                <li><a href="charts-morris.html">
+                                    Morris Charts
+                                </a></li>
+                            </ul>
                         </li>
                         <li id="notesSidebar">
                             <a href="#"> <i class="fa fa-sticky-note-o"></i> Notes</a>

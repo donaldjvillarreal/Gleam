@@ -13,6 +13,8 @@ from core import forms
 from tasks.models import MainTask
 from journal.models import Entry
 
+MAX_ROWS = 5
+
 
 def index(request):
     return render(request, 'index.html', {})
@@ -49,10 +51,11 @@ def landing(request):
 class PatientHomeView(View):
     @method_decorator(login_required)
     def get(self, request):
-        # user = UserProfile.objects.
         return render(request, 'core/dashboard/patient-home.html',
-                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id),
-                       'journals': Entry.objects.filter(user_id=request.user.id).order_by('-created')[:5]})
+                      {'tasks': MainTask.objects.filter(patient__user_id=request.user.id, completed=False).order_by(
+                          'created')[:MAX_ROWS],
+                       'journals': Entry.objects.filter(user_id=request.user.id).order_by('-created')[:MAX_ROWS]
+                       })
 
     @method_decorator(login_required)
     def post(self, request):
@@ -64,4 +67,16 @@ class PatientHomeView(View):
                 task.completed = True
             task.completed_on = datetime.now()
             task.save()
-            return HttpResponse(json.dumps({'state': task.completed}))
+            tasks = MainTask.objects.filter(patient__user_id=request.user.id, completed=False).order_by('created')[
+                    :MAX_ROWS]
+            return HttpResponse(json.dumps(
+                {'state': task.completed,
+                 'tasks': [task.as_dict() for task in tasks]
+                 }))
+
+
+def dashboard(request):
+    if request.user.userprofile.is_therapist:
+        return therapist_home(request)
+    else:
+        return PatientHomeView.as_view()(request)
