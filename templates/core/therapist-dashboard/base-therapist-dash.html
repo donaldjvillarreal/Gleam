@@ -76,16 +76,8 @@
                         <li id="chatSidebar">
                             <a href="{% url 'chat:chat_room' %}"> <i class="fa fa-comment"></i> Chat</a>
                         </li>
-                        <li id="tasksSidebar">
-                            <a href=""> <i class="fa fa-group"></i> Patients</a>
-                            <ul class="collapse">
-                                <li><a href="charts-flot.html">
-                                    Flot Charts
-                                </a></li>
-                                <li><a href="charts-morris.html">
-                                    Morris Charts
-                                </a></li>
-                            </ul>
+                        <li id="patientsSidebar">
+                            <a href="{% url 'core:patient_list' %}"> <i class="fa fa-group"></i> Patients</a>
                         </li>
                         <li id="notesSidebar">
                             <a href="{% url 'journal:entry' %}"> <i class="fa fa-sticky-note-o"></i> Notes</a>
