@@ -1,8 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.timezone import datetime
-
+from django.utils import timezone
 from authenticate.models import Therapist
 
 
@@ -57,7 +56,7 @@ class Note(models.Model):
     title = models.CharField(max_length=60, null=False, blank=False)
     therapist = models.ForeignKey(Therapist)
 
-    created_on = models.DateTimeField(default=datetime.now())
+    created_on = models.DateTimeField()
 
     def __unicode__(self):
         return self.therapist.user_profile.user.username + ' ' + self.title[:30]

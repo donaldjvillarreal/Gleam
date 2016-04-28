@@ -1,9 +1,7 @@
 # coding=utf-8
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 import requests
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from journal import forms, models

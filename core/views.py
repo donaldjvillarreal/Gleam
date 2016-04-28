@@ -1,7 +1,6 @@
 # coding=utf-8
 import json
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -9,10 +8,12 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.utils.timezone import datetime
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from core import forms
 from tasks.models import MainTask
 from journal.models import Entry
+from authenticate.models import Client
 
 MAX_ROWS = 5
 
@@ -83,5 +84,16 @@ def dashboard(request):
         return PatientHomeView.as_view()(request)
 
 
+@login_required()
 def patient_list(request):
-    return render(request, 'therapist/patient-list.html', {})
+    client_list = Client.objects.filter(therapist__user_profile__user_id=request.user.id)
+    paginator = Paginator(client_list, MAX_ROWS)
+    try:
+        clients = paginator.page(request.GET.get('page'))
+    except PageNotAnInteger:
+        clients = paginator.page(1)
+    except EmptyPage:
+        clients = paginator.page(paginator.num_pages)
+    return render(request, 'therapist/patient-list.html',
+                  {'clients': clients,
+                   'paginator': paginator})

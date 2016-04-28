@@ -5,6 +5,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.conf import settings
 
 
 class UserProfile(models.Model):
@@ -19,8 +20,8 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1,
                               choices=GENDER,
                               default='U')
-    # TODO: Change to STATIC_URL, set default
-    picture = models.ImageField(upload_to='static/images/profile-images', null=True, blank=True,
+    # TODO: Change to STATIC_URL
+    picture = models.ImageField(upload_to=settings.PROFILE_IMAGES, null=True, blank=True,
                                 default=static('images/user.png'))
 
     dob = models.DateField(null=False, blank=False)

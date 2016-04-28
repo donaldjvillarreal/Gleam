@@ -88,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -148,6 +149,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = '/media/'
+MEDIA_URL = MEDIA_ROOT
+PROFILE_IMAGES = os.path.join(MEDIA_ROOT, 'profile-images')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
