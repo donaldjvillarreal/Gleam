@@ -12,7 +12,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from core import forms
 from tasks.models import MainTask
-from journal.models import Entry
+from journal.models import Entry, Note
 from authenticate.models import Client
 
 MAX_ROWS = 5
@@ -43,7 +43,11 @@ def progress_delay(request):
 
 @login_required()
 def therapist_home(request):
-    return render(request, 'core/therapist-dashboard/content-tp-dash.html', {})
+    # TODO order clients by last appointment/different metric
+    return render(request, 'core/therapist-dashboard/content-tp-dash.html', {
+        'notes': Note.objects.filter(therapist__user_profile__user_id=request.user.id)[:MAX_ROWS],
+        'clients': Client.objects.filter(therapist__user_profile__user_id=request.user.id)[:MAX_ROWS]
+    })
 
 
 def landing(request):
@@ -77,6 +81,7 @@ class PatientHomeView(View):
                  }))
 
 
+@login_required()
 def dashboard(request):
     if request.user.userprofile.is_therapist:
         return therapist_home(request)

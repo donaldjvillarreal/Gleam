@@ -60,3 +60,6 @@ class Note(models.Model):
 
     def __unicode__(self):
         return self.therapist.user_profile.user.username + ' ' + self.title[:30]
+
+    def created_on_strformat(self):
+        return self.created_on.strftime('%m/%d %I:%M %p')
