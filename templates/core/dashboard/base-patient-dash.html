@@ -41,7 +41,7 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
                             <div class="img"
-                                 style="background-image: url('/{{ request.user.userprofile.picture.url }}');"></div><span
+                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div><span
                                 class="name">{{ request.user.first_name }}</span> </a>
                         <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item" href="{% url 'authenticate:profile' request.user.id %}"> <i
@@ -64,7 +64,7 @@
                     <ul class="nav" id="sidebar-menu">
                         <li>
                             <div class="side-bar-profile"
-                                 style="background-image: url('/{{ request.user.userprofile.picture.url }}');"></div>
+                                 style="background-image: url('{{ request.user.userprofile.picture.url }}');"></div>
                         </li>
                         <li id="homeSidebar">
                             <a href="{% url 'core:patient_home' %}"> <i class="fa fa-home"></i> Dashboard </a>
