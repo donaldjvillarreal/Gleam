@@ -82,7 +82,7 @@
                                     <a href="{% url 'journal:view_entry' entry.id %}">{{ entry.title }}</a>
                                 </div>
                                 <div class="col-md-3">
-                                    {{ entry.created|date:"M d, Y" }}
+                                    {{ entry.created|date:"m/d/Y" }}
                                 </div>
                                 <div class="col-md-12">
                                     {{ entry.entry|truncatechars:250 }}
