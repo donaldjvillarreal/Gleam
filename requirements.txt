@@ -23,7 +23,7 @@ factory-boy==2.6.0
 fake-factory==0.5.3
 kombu==3.0.34
 Markdown==2.6.5
-mistune==0.7.1
+mistune==0.8.1
 Pillow==3.1.0
 pycparser==2.14
 pytz==2016.1
